@@ -1,0 +1,39 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/obligatoriedad#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Obligatoriedad normalizada"@es ;
+    dct:description "Normalización de los literales de obligatoriedad. El literal original se conserva en obligatoriedad_declarada."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:obligatorio a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "obligatorio" ;
+    skos:prefLabel "Obligatorio"@es ;
+    skos:definition "El campo debe diligenciarse siempre."@es ;
+    skos:topConceptOf :scheme .
+
+:condicional a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "condicional" ;
+    skos:prefLabel "Condicional"@es ;
+    skos:definition "Obligatorio según condición descrita en observaciones."@es ;
+    skos:topConceptOf :scheme .
+
+:opcional a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "opcional" ;
+    skos:prefLabel "Opcional"@es ;
+    skos:definition "Diligenciamiento no exigido."@es ;
+    skos:topConceptOf :scheme .
+
+:sin-dato a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "sin-dato" ;
+    skos:prefLabel "Sin dato"@es ;
+    skos:definition "El documento fuente no lo declara."@es ;
+    skos:topConceptOf :scheme .
+

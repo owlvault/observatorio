@@ -1,0 +1,25 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/tipo_reporte#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Tipo de reporte del formato"@es ;
+    dct:description "Naturaleza de la captura declarada en el portal SUI."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:estructurado a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "estructurado" ;
+    skos:prefLabel "Estructurado"@es ;
+    skos:definition "El formato aterriza en una o más tablas físicas del SUI y es explotable analíticamente."@es ;
+    skos:topConceptOf :scheme .
+
+:documental a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "documental" ;
+    skos:prefLabel "Documental"@es ;
+    skos:definition "El formato se carga como PDF/TIFF/ZIP; no tiene tabla física asociada."@es ;
+    skos:topConceptOf :scheme .
+

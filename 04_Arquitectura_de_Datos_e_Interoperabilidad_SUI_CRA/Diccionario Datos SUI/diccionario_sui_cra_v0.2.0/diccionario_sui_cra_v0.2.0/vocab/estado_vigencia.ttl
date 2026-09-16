@@ -1,0 +1,39 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/estado_vigencia#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Estado de vigencia normativa"@es ;
+    dct:description "Estado de la relación norma→formato a la fecha de corte. Nunca se reasigna silenciosamente."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:vigente-declarada a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "vigente-declarada" ;
+    skos:prefLabel "Vigente declarada"@es ;
+    skos:definition "La norma declarada en el portal no tiene indicios de derogatoria en esta extracción."@es ;
+    skos:topConceptOf :scheme .
+
+:vigente-parcial-verificar a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "vigente-parcial-verificar" ;
+    skos:prefLabel "Vigente parcial, verificar"@es ;
+    skos:definition "La norma declarada fue vaciada parcialmente por normas posteriores; verificar artículo aplicable."@es ;
+    skos:topConceptOf :scheme .
+
+:derogada-pendiente-reasignacion a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "derogada-pendiente-reasignacion" ;
+    skos:prefLabel "Derogada, pendiente reasignación"@es ;
+    skos:definition "La norma declarada está derogada; el formato debe reasignarse a la norma vigente del dominio (H2)."@es ;
+    skos:topConceptOf :scheme .
+
+:sin-norma a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "sin-norma" ;
+    skos:prefLabel "Sin norma"@es ;
+    skos:definition "El portal no declara norma para el formato (H3)."@es ;
+    skos:topConceptOf :scheme .
+

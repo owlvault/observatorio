@@ -1,0 +1,7 @@
+id_servicio,descripcion,regulador,valido_desde,valido_hasta
+ACUEDUCTO,Servicio publico domiciliario de acueducto,CRA,,
+ALCANTARILLADO,Servicio publico domiciliario de alcantarillado,CRA,,
+ASEO,Servicio publico domiciliario de aseo,CRA,,
+COSTOS-TARIFAS AA,Reportes de costos y tarifas de acueducto y alcantarillado,CRA,,
+RIESGOS AAA,Reportes de riesgo y viabilidad de prestadores AAA,CRA,,
+TRANSVERSAL,Reportes transversales a todos los servicios,CRA / SSPD,,

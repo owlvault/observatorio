@@ -1,0 +1,25 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/clasificacion_sensibilidad#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Clasificación de sensibilidad (propuesta)"@es ;
+    dct:description "Clasificación provisional; ninguna variable se considera clasificada hasta la validación del steward del dominio."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:publico-propuesto a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "publico-propuesto" ;
+    skos:prefLabel "Público (propuesto)"@es ;
+    skos:definition "Sin indicios de dato personal; pendiente confirmación del steward."@es ;
+    skos:topConceptOf :scheme .
+
+:restringido-propuesto a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "restringido-propuesto" ;
+    skos:prefLabel "Restringido (propuesto)"@es ;
+    skos:definition "Posible dato personal bajo Ley 1581/2012 por heurística de nombre; pendiente confirmación del steward."@es ;
+    skos:topConceptOf :scheme .
+

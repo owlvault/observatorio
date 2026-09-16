@@ -1,0 +1,25 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/calidad_correspondencia#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Calidad de correspondencia variable→formato de catálogo"@es ;
+    dct:description "Filtro obligatorio antes de usar el nivel variable (H11)."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:exacta a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "exacta" ;
+    skos:prefLabel "Exacta"@es ;
+    skos:definition "El nombre del formato en el documento coincide exactamente (normalizado) con uno del catálogo del portal."@es ;
+    skos:topConceptOf :scheme .
+
+:sin-cruce a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "sin-cruce" ;
+    skos:prefLabel "Sin cruce"@es ;
+    skos:definition "No hay coincidencia exacta; el formato puede estar entre los no catalogados (H9)."@es ;
+    skos:topConceptOf :scheme .
+

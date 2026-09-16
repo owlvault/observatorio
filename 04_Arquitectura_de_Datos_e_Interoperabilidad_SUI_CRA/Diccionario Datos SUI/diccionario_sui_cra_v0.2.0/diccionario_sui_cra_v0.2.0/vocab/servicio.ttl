@@ -1,0 +1,53 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/servicio#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Servicios y ejes de reporte del universo CRA"@es ;
+    dct:description "Servicios públicos domiciliarios y ejes transversales regulados por la CRA según el árbol del portal SUI."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:acueducto a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "acueducto" ;
+    skos:prefLabel "Acueducto"@es ;
+    skos:definition "Servicio publico domiciliario de acueducto"@es ;
+    skos:topConceptOf :scheme .
+
+:alcantarillado a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "alcantarillado" ;
+    skos:prefLabel "Alcantarillado"@es ;
+    skos:definition "Servicio publico domiciliario de alcantarillado"@es ;
+    skos:topConceptOf :scheme .
+
+:aseo a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "aseo" ;
+    skos:prefLabel "Aseo"@es ;
+    skos:definition "Servicio publico domiciliario de aseo"@es ;
+    skos:topConceptOf :scheme .
+
+:costos-tarifas-aa a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "costos-tarifas-aa" ;
+    skos:prefLabel "Costos-Tarifas Aa"@es ;
+    skos:definition "Reportes de costos y tarifas de acueducto y alcantarillado"@es ;
+    skos:topConceptOf :scheme .
+
+:riesgos-aaa a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "riesgos-aaa" ;
+    skos:prefLabel "Riesgos Aaa"@es ;
+    skos:definition "Reportes de riesgo y viabilidad de prestadores AAA"@es ;
+    skos:topConceptOf :scheme .
+
+:transversal a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "transversal" ;
+    skos:prefLabel "Transversal"@es ;
+    skos:definition "Reportes transversales a todos los servicios"@es ;
+    skos:topConceptOf :scheme .
+

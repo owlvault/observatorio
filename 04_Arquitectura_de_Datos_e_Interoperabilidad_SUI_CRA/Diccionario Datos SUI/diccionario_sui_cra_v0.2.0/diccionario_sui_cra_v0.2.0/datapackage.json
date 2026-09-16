@@ -1,0 +1,1096 @@
+{
+ "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+ "name": "diccionario-sui-cra",
+ "title": "Diccionario de datos regulatorio del SUI · universo CRA",
+ "version": "0.2.0",
+ "created": "2026-09-14T00:00:00Z",
+ "description": "Modelo de metadatos (capa sui_meta) del Sistema Único de Información de Servicios Públicos (SUI) para el universo misional de la Comisión de Regulación de Agua Potable y Saneamiento Básico: servicios, normas, formatos, tablas físicas, documentos técnicos y variables, con linaje y registro de calidad. Corte de extracción: 2026-09-03. Todas las cifras de cobertura son un piso (H9).",
+ "keywords": [
+  "SUI",
+  "SSPD",
+  "CRA",
+  "acueducto",
+  "alcantarillado",
+  "aseo",
+  "diccionario de datos",
+  "metadatos",
+  "ISO 11179",
+  "DCAT"
+ ],
+ "homepage": "http://www.sui.gov.co/DiccionarioConsultaV2/",
+ "licenses": [
+  {
+   "name": "CC-BY-4.0",
+   "title": "Creative Commons Attribution 4.0",
+   "path": "https://creativecommons.org/licenses/by/4.0/"
+  }
+ ],
+ "sources": [
+  {
+   "title": "Diccionario de Variables SUI (SSPD) - portal DiccionarioConsultaV2",
+   "path": "http://www.sui.gov.co/DiccionarioConsultaV2/"
+  },
+  {
+   "title": "Anexos técnicos e instructivos de cargue SSPD/MVCT (Res. 20171300039945/2017, 20211000316965/2021, 20221000284385/2022, MVCT 276/2016, 20201000034455/2020, 20241000606485/2024, 20261000681915/2026)"
+  }
+ ],
+ "contributors": [
+  {
+   "title": "CRA - Asesor Grado 15 con funciones de CIO",
+   "roles": [
+    "author",
+    "publisher"
+   ]
+  }
+ ],
+ "cra:gobierno": {
+  "steward_negocio": "POR ASIGNAR por dominio funcional (ver README)",
+  "custodio_tecnico": "Oficina TIC CRA",
+  "clasificacion_por_defecto": "publico-propuesto",
+  "marco": [
+   "ISO/IEC 11179",
+   "DAMA-DMBOK",
+   "ISO/IEC 25012",
+   "DCAT / lineamiento datos abiertos MinTIC (Res. 1519/2020)",
+   "Frictionless Data Package / Table Schema",
+   "SKOS",
+   "Ley 1581/2012"
+  ],
+  "fecha_corte_extraccion": "2026-09-03"
+ },
+ "resources": [
+  {
+   "name": "servicio",
+   "path": "data/servicio.csv",
+   "title": "Servicios y ejes de reporte",
+   "description": "Servicios públicos domiciliarios y ejes transversales del universo CRA.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_servicio",
+      "type": "string",
+      "description": "Identificador estable (vocab/servicio.ttl)",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "descripcion",
+      "type": "string",
+      "description": "Descripción"
+     },
+     {
+      "name": "regulador",
+      "type": "string",
+      "description": "Entidad reguladora"
+     },
+     {
+      "name": "valido_desde",
+      "type": "date",
+      "description": "Inicio de vigencia del registro (pendiente)"
+     },
+     {
+      "name": "valido_hasta",
+      "type": "date",
+      "description": "Fin de vigencia (vacío = vigente)"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_servicio"
+    ]
+   }
+  },
+  {
+   "name": "norma",
+   "path": "data/norma.csv",
+   "title": "Normas que originan la obligación de reporte",
+   "description": "Resoluciones y circulares registradas en el portal SUI para el universo CRA.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_norma",
+      "type": "string",
+      "description": "Id estable = id del portal SUI",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "nombre",
+      "type": "string",
+      "description": "Nombre tal como aparece en el portal"
+     },
+     {
+      "name": "tipo",
+      "type": "string",
+      "description": "RESOLUCION | CIRCULAR | OTRO"
+     },
+     {
+      "name": "emisor",
+      "type": "string",
+      "description": "Entidad emisora"
+     },
+     {
+      "name": "anio",
+      "type": "year",
+      "description": "Año de expedición"
+     },
+     {
+      "name": "aplica_aaa",
+      "type": "boolean",
+      "description": "Aplica a acueducto, alcantarillado o aseo"
+     },
+     {
+      "name": "en_arbol_servicios",
+      "type": "boolean",
+      "description": "Aparece en el árbol Servicio→Norma del portal"
+     },
+     {
+      "name": "estado_vigencia",
+      "type": "string",
+      "description": "vigente-declarada | vigente-parcial | derogada",
+      "constraints": {
+       "enum": [
+        "vigente-declarada",
+        "vigente-parcial",
+        "derogada"
+       ]
+      }
+     },
+     {
+      "name": "observacion_vigencia",
+      "type": "string",
+      "description": "Justificación del estado"
+     },
+     {
+      "name": "fuente",
+      "type": "string",
+      "description": "Procedencia"
+     },
+     {
+      "name": "valido_desde",
+      "type": "date",
+      "description": "Inicio de vigencia"
+     },
+     {
+      "name": "valido_hasta",
+      "type": "date",
+      "description": "Fin de vigencia"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_norma"
+    ]
+   }
+  },
+  {
+   "name": "norma_servicio",
+   "path": "data/norma_servicio.csv",
+   "title": "Norma → servicio",
+   "description": "Servicios del universo CRA cubiertos por cada norma.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_norma",
+      "type": "string",
+      "description": "FK norma"
+     },
+     {
+      "name": "id_servicio",
+      "type": "string",
+      "description": "FK servicio"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_norma",
+     "id_servicio"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "id_norma",
+      "reference": {
+       "resource": "norma",
+       "fields": "id_norma"
+      }
+     },
+     {
+      "fields": "id_servicio",
+      "reference": {
+       "resource": "servicio",
+       "fields": "id_servicio"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "formato",
+   "path": "data/formato.csv",
+   "title": "Formatos de reporte (catálogo del portal)",
+   "description": "Formatos del universo CRA levantados del portal SUI. Cifra piso: el barrido llegó al id 1355; los esquemas referencian ids hasta 6097 (H9).",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_formato",
+      "type": "string",
+      "description": "Id estable = id del portal (parámetro tab)",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "nombre",
+      "type": "string",
+      "description": "Nombre normalizado (mojibake corregido, H7)"
+     },
+     {
+      "name": "id_norma",
+      "type": "string",
+      "description": "FK norma; vacío si sin norma (H3)"
+     },
+     {
+      "name": "norma_declarada",
+      "type": "string",
+      "description": "Nombre de norma tal como lo declara el portal"
+     },
+     {
+      "name": "dominio_funcional",
+      "type": "string",
+      "description": "vocab/dominio_funcional.ttl",
+      "constraints": {
+       "enum": [
+        "FINANCIERO Y CONTABLE",
+        "TARIFARIO Y COSTOS",
+        "INSTITUCIONAL Y HABILITACION",
+        "CALIDAD DEL AGUA Y MUESTREO",
+        "RIESGO Y GOBIERNO CORPORATIVO",
+        "COMERCIAL Y FACTURACION",
+        "TECNICO OPERATIVO",
+        "OTROS",
+        "SUBSIDIOS Y CONTRIBUCIONES",
+        "INVERSIONES Y SGP",
+        "PQR Y CONTROL SOCIAL",
+        "ESTRATIFICACION Y TERRITORIO"
+       ]
+      }
+     },
+     {
+      "name": "tipo_reporte",
+      "type": "string",
+      "description": "ESTRUCTURADO | DOCUMENTAL",
+      "constraints": {
+       "enum": [
+        "ESTRUCTURADO",
+        "DOCUMENTAL"
+       ]
+      }
+     },
+     {
+      "name": "estado_vigencia",
+      "type": "string",
+      "description": "vocab/estado_vigencia.ttl",
+      "constraints": {
+       "enum": [
+        "vigente-declarada",
+        "vigente-parcial-verificar",
+        "derogada-pendiente-reasignacion",
+        "sin-norma"
+       ]
+      }
+     },
+     {
+      "name": "n_tablas",
+      "type": "integer",
+      "description": "Tablas físicas asociadas"
+     },
+     {
+      "name": "n_variables_documentadas",
+      "type": "integer",
+      "description": "Variables con cruce exacto (H11)"
+     },
+     {
+      "name": "hallazgos",
+      "type": "string",
+      "description": "Ids de registro_calidad separados por ;"
+     },
+     {
+      "name": "fuente",
+      "type": "string",
+      "description": "Procedencia"
+     },
+     {
+      "name": "valido_desde",
+      "type": "date",
+      "description": "Inicio de vigencia"
+     },
+     {
+      "name": "valido_hasta",
+      "type": "date",
+      "description": "Fin de vigencia"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_formato"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "id_norma",
+      "reference": {
+       "resource": "norma",
+       "fields": "id_norma"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "formato_servicio",
+   "path": "data/formato_servicio.csv",
+   "title": "Formato → servicio",
+   "description": "Servicios del universo CRA a los que aplica cada formato.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_formato",
+      "type": "string",
+      "description": "FK formato"
+     },
+     {
+      "name": "id_servicio",
+      "type": "string",
+      "description": "FK servicio"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_formato",
+     "id_servicio"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "id_formato",
+      "reference": {
+       "resource": "formato",
+       "fields": "id_formato"
+      }
+     },
+     {
+      "fields": "id_servicio",
+      "reference": {
+       "resource": "servicio",
+       "fields": "id_servicio"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "tabla_sui",
+   "path": "data/tabla_sui.csv",
+   "title": "Tablas físicas del SUI",
+   "description": "Tablas de la base de datos del SUI que reciben formatos estructurados. Sus columnas no son accesibles (H1).",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "nombre_tabla",
+      "type": "string",
+      "description": "Nombre físico; id estable",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "descripcion",
+      "type": "string",
+      "description": "Descripción del portal; vacía = H5"
+     },
+     {
+      "name": "n_formatos",
+      "type": "integer",
+      "description": "Formatos que la alimentan"
+     },
+     {
+      "name": "compartida",
+      "type": "boolean",
+      "description": "Alimentada por más de un formato (H8)"
+     },
+     {
+      "name": "hallazgos",
+      "type": "string",
+      "description": "Ids de registro_calidad"
+     },
+     {
+      "name": "columnas_disponibles",
+      "type": "boolean",
+      "description": "Siempre false en esta versión (H1)"
+     },
+     {
+      "name": "motivo_sin_columnas",
+      "type": "string",
+      "description": "Causa"
+     },
+     {
+      "name": "fuente",
+      "type": "string",
+      "description": "Procedencia"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "nombre_tabla"
+    ]
+   }
+  },
+  {
+   "name": "formato_tabla",
+   "path": "data/formato_tabla.csv",
+   "title": "Formato → tabla física",
+   "description": "Relación de carga declarada por el portal.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_formato",
+      "type": "string",
+      "description": "FK formato"
+     },
+     {
+      "name": "nombre_tabla",
+      "type": "string",
+      "description": "FK tabla_sui"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_formato",
+     "nombre_tabla"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "id_formato",
+      "reference": {
+       "resource": "formato",
+       "fields": "id_formato"
+      }
+     },
+     {
+      "fields": "nombre_tabla",
+      "reference": {
+       "resource": "tabla_sui",
+       "fields": "nombre_tabla"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "documento_tecnico",
+   "path": "data/documento_tecnico.csv",
+   "title": "Documentos técnicos fuente del nivel variable",
+   "description": "Anexos técnicos e instructivos de cargue de la SSPD/MVCT de los que se extrajeron las variables.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_documento",
+      "type": "string",
+      "description": "Id estable del documento",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "norma",
+      "type": "string",
+      "description": "Norma que lo expide"
+     },
+     {
+      "name": "id_norma",
+      "type": "string",
+      "description": "FK norma si está en el catálogo del portal; vacío en caso contrario"
+     },
+     {
+      "name": "tipo",
+      "type": "string",
+      "description": "instructivo | anexo tecnico | resolucion"
+     },
+     {
+      "name": "n_formatos",
+      "type": "integer",
+      "description": "Formatos descritos"
+     },
+     {
+      "name": "n_variables",
+      "type": "integer",
+      "description": "Variables extraídas"
+     },
+     {
+      "name": "metodos_extraccion",
+      "type": "string",
+      "description": "Métodos usados"
+     },
+     {
+      "name": "emisor",
+      "type": "string",
+      "description": "SSPD | MVCT"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_documento"
+    ]
+   }
+  },
+  {
+   "name": "variable_formato",
+   "path": "data/variable_formato.csv",
+   "title": "Variables (campos) por formato, según documento técnico",
+   "description": "Nivel variable anclado al FORMATO del documento fuente, no a la columna física (H10). Usar calidad_correspondencia y requiere_validacion como filtros obligatorios.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_variable",
+      "type": "string",
+      "description": "Id estable VF-<hash8>(documento|formato|orden|nombre)",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "id_documento",
+      "type": "string",
+      "description": "FK documento_tecnico"
+     },
+     {
+      "name": "id_norma",
+      "type": "string",
+      "description": "FK norma (vacío si la norma no está en el catálogo del portal)"
+     },
+     {
+      "name": "norma",
+      "type": "string",
+      "description": "Norma según documento"
+     },
+     {
+      "name": "formato_segun_documento",
+      "type": "string",
+      "description": "Nombre del formato en el documento"
+     },
+     {
+      "name": "orden",
+      "type": "integer",
+      "description": "Posición del campo en el formato"
+     },
+     {
+      "name": "nombre_variable",
+      "type": "string",
+      "description": "Nombre del campo"
+     },
+     {
+      "name": "definicion",
+      "type": "string",
+      "description": "Definición según documento (ISO 11179: definition)"
+     },
+     {
+      "name": "tipo_dato_declarado",
+      "type": "string",
+      "description": "Literal original"
+     },
+     {
+      "name": "tipo_dato_normalizado",
+      "type": "string",
+      "description": "vocab/tipo_dato.ttl",
+      "constraints": {
+       "enum": [
+        "numerico",
+        "entero",
+        "decimal",
+        "alfanumerico",
+        "fecha",
+        "hora",
+        "codificado",
+        "archivo",
+        "sin-dato"
+       ]
+      }
+     },
+     {
+      "name": "longitud",
+      "type": "string",
+      "description": "Longitud declarada (texto: puede ser rango)"
+     },
+     {
+      "name": "unidad_medida",
+      "type": "string",
+      "description": "Unidad declarada"
+     },
+     {
+      "name": "obligatoriedad_declarada",
+      "type": "string",
+      "description": "Literal original"
+     },
+     {
+      "name": "obligatoriedad_normalizada",
+      "type": "string",
+      "description": "vocab/obligatoriedad.ttl",
+      "constraints": {
+       "enum": [
+        "obligatorio",
+        "condicional",
+        "opcional",
+        "sin-dato"
+       ]
+      }
+     },
+     {
+      "name": "valores_admisibles",
+      "type": "string",
+      "description": "Dominio de valores (texto)"
+     },
+     {
+      "name": "segmento_prestador",
+      "type": "string",
+      "description": "Segmento al que aplica (serie IUS)"
+     },
+     {
+      "name": "observaciones",
+      "type": "string",
+      "description": "Reglas de validación y notas"
+     },
+     {
+      "name": "id_formato_catalogo",
+      "type": "string",
+      "description": "Ids de formato del portal con cruce exacto, separados por ;"
+     },
+     {
+      "name": "calidad_correspondencia",
+      "type": "string",
+      "description": "vocab/calidad_correspondencia.ttl",
+      "constraints": {
+       "enum": [
+        "exacta",
+        "sin-cruce"
+       ]
+      }
+     },
+     {
+      "name": "clasificacion_sensibilidad",
+      "type": "string",
+      "description": "vocab/clasificacion_sensibilidad.ttl (propuesta, H13)",
+      "constraints": {
+       "enum": [
+        "publico-propuesto",
+        "restringido-propuesto"
+       ]
+      }
+     },
+     {
+      "name": "motivo_clasificacion",
+      "type": "string",
+      "description": "Patrón que activó la clasificación"
+     },
+     {
+      "name": "metodo_extraccion",
+      "type": "string",
+      "description": "PDF_TABLA | PDF_NARRATIVO | WEBFETCH_LECTOR",
+      "constraints": {
+       "enum": [
+        "PDF_TABLA",
+        "PDF_NARRATIVO",
+        "WEBFETCH_LECTOR"
+       ]
+      }
+     },
+     {
+      "name": "pagina",
+      "type": "string",
+      "description": "Página del PDF de la que se leyó"
+     },
+     {
+      "name": "requiere_validacion",
+      "type": "boolean",
+      "description": "true si metodo_extraccion = WEBFETCH_LECTOR (H12)"
+     },
+     {
+      "name": "hallazgos",
+      "type": "string",
+      "description": "Ids de registro_calidad"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_variable"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "id_documento",
+      "reference": {
+       "resource": "documento_tecnico",
+       "fields": "id_documento"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "variable_tabla",
+   "path": "data/variable_tabla.csv",
+   "title": "Columnas físicas del SUI (definida, vacía)",
+   "description": "Entidad reservada para el catálogo de metadatos a nivel columna que solo la SSPD puede entregar (H1). Se mantiene vacía a propósito: fusionarla con variable_formato produciría un mapeo inventado.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_columna",
+      "type": "string",
+      "description": "Id estable"
+     },
+     {
+      "name": "nombre_tabla",
+      "type": "string",
+      "description": "FK tabla_sui"
+     },
+     {
+      "name": "nombre_columna",
+      "type": "string",
+      "description": "Nombre físico"
+     },
+     {
+      "name": "definicion",
+      "type": "string",
+      "description": "Definición"
+     },
+     {
+      "name": "tipo_dato",
+      "type": "string",
+      "description": "Tipo físico"
+     },
+     {
+      "name": "longitud",
+      "type": "string",
+      "description": "Longitud"
+     },
+     {
+      "name": "obligatoriedad",
+      "type": "string",
+      "description": "Nulabilidad"
+     },
+     {
+      "name": "dominio",
+      "type": "string",
+      "description": "FK dominio_valor"
+     },
+     {
+      "name": "llave",
+      "type": "string",
+      "description": "PK | FK | ninguna"
+     },
+     {
+      "name": "id_variable_formato",
+      "type": "string",
+      "description": "FK variable_formato confirmada por SSPD"
+     },
+     {
+      "name": "fuente",
+      "type": "string",
+      "description": "Procedencia"
+     },
+     {
+      "name": "valido_desde",
+      "type": "date",
+      "description": "Inicio"
+     },
+     {
+      "name": "valido_hasta",
+      "type": "date",
+      "description": "Fin"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_columna"
+    ],
+    "foreignKeys": [
+     {
+      "fields": "nombre_tabla",
+      "reference": {
+       "resource": "tabla_sui",
+       "fields": "nombre_tabla"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "dominio_valor",
+   "path": "data/dominio_valor.csv",
+   "title": "Dominios de valores (tablas de codificación)",
+   "description": "Reservada para los 93 códigos extraídos de los anexos de codificación; el archivo fuente no está aún en el repositorio del proyecto y se incorporará en la siguiente versión.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_dominio",
+      "type": "string",
+      "description": "Id del dominio"
+     },
+     {
+      "name": "codigo",
+      "type": "string",
+      "description": "Código"
+     },
+     {
+      "name": "etiqueta",
+      "type": "string",
+      "description": "Etiqueta"
+     },
+     {
+      "name": "definicion",
+      "type": "string",
+      "description": "Definición"
+     },
+     {
+      "name": "fuente_normativa",
+      "type": "string",
+      "description": "Anexo que lo define"
+     },
+     {
+      "name": "valido_desde",
+      "type": "date",
+      "description": "Inicio"
+     },
+     {
+      "name": "valido_hasta",
+      "type": "date",
+      "description": "Fin"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_dominio",
+     "codigo"
+    ]
+   }
+  },
+  {
+   "name": "linaje",
+   "path": "data/linaje.csv",
+   "title": "Linaje norma → formato → tabla → variable",
+   "description": "Cada arista de trazabilidad con la calidad del eslabón (modelo simplificado de PROV-O: origen wasDerivedFrom destino).",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "origen_tipo",
+      "type": "string",
+      "description": "norma | formato"
+     },
+     {
+      "name": "origen_id",
+      "type": "string",
+      "description": "Id del origen"
+     },
+     {
+      "name": "destino_tipo",
+      "type": "string",
+      "description": "formato | tabla_sui | variable_formato"
+     },
+     {
+      "name": "destino_id",
+      "type": "string",
+      "description": "Id del destino"
+     },
+     {
+      "name": "relacion",
+      "type": "string",
+      "description": "exige | alimenta | contiene"
+     },
+     {
+      "name": "calidad",
+      "type": "string",
+      "description": "declarada-portal | sin-norma | cruce-nombre-exacto"
+     },
+     {
+      "name": "fuente",
+      "type": "string",
+      "description": "Procedencia de la arista"
+     }
+    ],
+    "missingValues": [
+     ""
+    ]
+   }
+  },
+  {
+   "name": "registro_calidad",
+   "path": "data/registro_calidad.csv",
+   "title": "Registro de hallazgos de calidad (ISO/IEC 25012)",
+   "description": "Hallazgos H1–H13 con dimensión de calidad, severidad, alcance, estado y acción.",
+   "format": "csv",
+   "mediatype": "text/csv",
+   "encoding": "utf-8",
+   "dialect": {
+    "delimiter": ",",
+    "header": true
+   },
+   "schema": {
+    "fields": [
+     {
+      "name": "id_hallazgo",
+      "type": "string",
+      "description": "Id",
+      "constraints": {
+       "required": true
+      }
+     },
+     {
+      "name": "severidad",
+      "type": "string",
+      "description": "alta | media | baja | informativa"
+     },
+     {
+      "name": "dimension_iso25012",
+      "type": "string",
+      "description": "Dimensiones afectadas separadas por ;"
+     },
+     {
+      "name": "descripcion",
+      "type": "string",
+      "description": "Descripción"
+     },
+     {
+      "name": "entidad_afectada",
+      "type": "string",
+      "description": "Recurso afectado"
+     },
+     {
+      "name": "registros_afectados",
+      "type": "string",
+      "description": "Conteo si aplica"
+     },
+     {
+      "name": "estado",
+      "type": "string",
+      "description": "abierto | mitigado | documentado"
+     },
+     {
+      "name": "accion",
+      "type": "string",
+      "description": "Acción de remediación"
+     }
+    ],
+    "missingValues": [
+     ""
+    ],
+    "primaryKey": [
+     "id_hallazgo"
+    ]
+   }
+  }
+ ]
+}

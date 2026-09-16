@@ -1,0 +1,20 @@
+─────────────────────────────────── Dataset ────────────────────────────────────
+                              dataset                              
+┏━━━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃ name              ┃ type  ┃ path                       ┃ status ┃
+┡━━━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ servicio          │ table │ data/servicio.csv          │ VALID  │
+│ norma             │ table │ data/norma.csv             │ VALID  │
+│ norma_servicio    │ table │ data/norma_servicio.csv    │ VALID  │
+│ formato           │ table │ data/formato.csv           │ VALID  │
+│ formato_servicio  │ table │ data/formato_servicio.csv  │ VALID  │
+│ tabla_sui         │ table │ data/tabla_sui.csv         │ VALID  │
+│ formato_tabla     │ table │ data/formato_tabla.csv     │ VALID  │
+│ documento_tecnico │ table │ data/documento_tecnico.csv │ VALID  │
+│ variable_formato  │ table │ data/variable_formato.csv  │ VALID  │
+│ variable_tabla    │ table │ data/variable_tabla.csv    │ VALID  │
+│ dominio_valor     │ table │ data/dominio_valor.csv     │ VALID  │
+│ linaje            │ table │ data/linaje.csv            │ VALID  │
+│ registro_calidad  │ table │ data/registro_calidad.csv  │ VALID  │
+└───────────────────┴───────┴────────────────────────────┴────────┘
+exit 0

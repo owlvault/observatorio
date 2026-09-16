@@ -1,0 +1,74 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/tipo_dato#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Tipo de dato normalizado"@es ;
+    dct:description "Normalización de los 23 literales de tipo de dato encontrados en anexos e instructivos. El literal original se conserva en tipo_dato_declarado."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:numerico a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "numerico" ;
+    skos:prefLabel "Numérico"@es ;
+    skos:definition "Valor numérico sin precisión declarada."@es ;
+    skos:topConceptOf :scheme .
+
+:entero a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "entero" ;
+    skos:prefLabel "Entero"@es ;
+    skos:definition "Número entero."@es ;
+    skos:topConceptOf :scheme .
+
+:decimal a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "decimal" ;
+    skos:prefLabel "Decimal"@es ;
+    skos:definition "Número con parte fraccionaria."@es ;
+    skos:topConceptOf :scheme .
+
+:alfanumerico a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "alfanumerico" ;
+    skos:prefLabel "Alfanumérico"@es ;
+    skos:definition "Cadena de texto."@es ;
+    skos:topConceptOf :scheme .
+
+:fecha a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "fecha" ;
+    skos:prefLabel "Fecha"@es ;
+    skos:definition "Fecha, formato declarado en unidad_medida u observaciones."@es ;
+    skos:topConceptOf :scheme .
+
+:hora a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "hora" ;
+    skos:prefLabel "Hora"@es ;
+    skos:definition "Hora en formato 24 horas."@es ;
+    skos:topConceptOf :scheme .
+
+:archivo a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "archivo" ;
+    skos:prefLabel "Archivo"@es ;
+    skos:definition "Adjunto binario (PDF, imagen)."@es ;
+    skos:topConceptOf :scheme .
+
+:codificado a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "codificado" ;
+    skos:prefLabel "Codificado / lista"@es ;
+    skos:definition "Valor tomado de un dominio de códigos o lista desplegable."@es ;
+    skos:topConceptOf :scheme .
+
+:sin-dato a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "sin-dato" ;
+    skos:prefLabel "Sin dato"@es ;
+    skos:definition "El documento fuente no declara tipo."@es ;
+    skos:topConceptOf :scheme .
+

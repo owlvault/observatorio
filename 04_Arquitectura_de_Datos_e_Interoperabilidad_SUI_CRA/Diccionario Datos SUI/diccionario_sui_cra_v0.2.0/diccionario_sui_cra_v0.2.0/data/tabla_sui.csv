@@ -1,0 +1,130 @@
+nombre_tabla,descripcion,n_formatos,compartida,hallazgos,columnas_disponibles,motivo_sin_columnas,fuente
+T_ESTADOS_FINANCIEROS,Planes contables de las ESP.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T455_FORMATO18,"INFORMACIÓN ALMACENADA POR LOS prestadores relacionada con las inversiones en recursos propios, aportes de capital nacional, aportes de capital extranjero, deudas a nivel nacional, deudas a nivel extr",1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_FAAC_ACDCTO,Informacion de la facturacion de acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_FAAL_ALCNTRLDO,Informacion de facturacion de Acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_FAAS_ASEO,Informacion de facturacion de aseo.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T704_TARIFA_ACDCTO,Tarifas proyectadas Acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T705_TARAPL_ACDCTO,Tarifas aplicadas para el servicio de acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T706_TARIFA_ALCNTRLDO,Tarifas proyectadas para el servicio de alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T707_TARAPL_ALCNTRLDO,Tarifas aplicadas del servicio de alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T708_708,Informacion de tarifas proyectadas de aseo.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T709_709,Tarifas aplicadas para el servicio de aseo.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T710_710,Contribuciones y subsidios de Acueducto y Alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T711_711,Contribuciones y subsidios de aseo.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T715_715,Informacion comercial 2002 para el servicio de acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T716_716,Comercial (Facturación) 2002 Alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T717_717,REDES SISTEMA ACUEDUCTO-,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T718_718,Redes sistema alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T719_719,Continuidad Acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T720_720,Plan de transición de Acueducto.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T721_721,Plan de transiccion de alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T722_722,Contribuciones y subsidios de Alcantarillado.,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T730_730,Informes cuentas por pagar de AAA.,3,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T733_733,Técnico Aseo,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T734_734,Técnico Aseo,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T735_CONTINUIDAD,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T751_VERTICES_AREA,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T752_RECOLECCIONTRANSPORTE,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T753_SITIOSAPROVECHAMIENTO,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T754_VEHICULOS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T755_COMERCIAL,INFORMACION COMERCIAL,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T756_ESTACIONESTRANS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T757_VALOR_PEAJES,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T758_SITIOSDISPOSICION,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T761_MATRIZRIESGO,,7,true,H5;H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T733_SUS_PROY_ACU,,2,true,H5;H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T857_TAR_APLICA_ASEO,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T858_DISP_FINAL_SINNUAP,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_870_CTAXCOBRAR,"Tabla Información de Ctas x Cobrar , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_871_CTASXPAGAR,"Tabla Información de Ctas x Pagar , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_872_FLUJOCAJA,"Tabla Información Flujo de Caja , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_873_CONFLCAJA,"Tabla Información Flujo de Caja , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_874_ESTRESPROY,"Tabla de Estado de Resultados Proyectados , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_875_CESRESULT,"Tabla Información Flujo de Caja , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_876_BALGENPRO,"Tabla de Balance General Proyectados , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_877_BALGENPA,"Tabla Información Conceptos Adicionales de Balance General , Res SSPD 2395",7,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_880_M3VERTIDOS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_881_MULTIUSUA,Tabla que almacena el tema de M3 Vertidos Facturados,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_882_MULTIUSUAL,Tabla que almacena el tema deM3 Vertidos Facturados,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_935_MATRIZR,Tabla Información de Matriz de Riesgo,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_936_CODIGOSN,Tabla Información Codigos Adicionales sobre Matriz Riesgo,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T971_PQR,ALMACENA LA INFORMACION REFERENTE AL FORMATO A RECALMACIONES DEL LA RESOLUCION SSPD 2305 DEL 2006,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T972_PETICION,ALMACENA INFORMACIÓN RELACIONADA CON PETICIONES QUE NO CONSTITUYEN UNA RECLAMACIÓN DE ACUERDO CON LO SEÑALADO EN LA RESOLUCION SSPD 2305 DEL 2006,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T995_USUARIOS_FACTURADOS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T996_CONSUMO_FACTURADO,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T998_METAS_GLOBALES,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1010_TAR_TEL_PUBLICOS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T210_210,Información CITS - (centros integrados de telecomunicaciones).,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1014_TAR_PLAN_EMPAQUET,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1019_TAR_PAR_AISLADO,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1021_TAR_SER_COMPLEM,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1022_TAR_SER_SUPLEMEN,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1023_TAR_SER_CORPORAT,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1030_BALANCESUBCONT,FORMATO BALANCE SUBSIDIOS Y CONTRIBUCIONES (ALCALDES),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1032_AMB_CARS,FORMATO AUTORIZACIONES AMBIENTALES PARA EL MANEJO DE RESIDUOS SÓLIDOS (CAR'S),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1033_PLAN_DEPTO_CARS,FORMATO PLANES DEPARTAMENTALES DE AGUA Y SANEAMIENTO AUTORIDADES AMBIENTALES (CAR'S),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1038_RES_HOSPCARS,FORMATO MANEJO DE RESIDUOS HOSPITALARIOS Y PELIGROSOS (CARS),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1041_REGISTRO_PSMV,FORMATO TASAS POR UTILIZACIÓN DE AGUA (CAR'S),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1048_VERT_ALC,FORMATO PERMISOS DE VERTIMIENTO PARA PRESTADORES DE ALCANTARILLADO (CAR'S),1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1050_F1001_PRES,PETICIONES QUE NO CONSTITUYEN UNA RECLAMACIÓN,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1051_FACT_SUBCONT,FACTORES DE SUBSIDIOS Y CONTRIBUCIONES AAA,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1056_F45_FRECOTORGASUB,FUENTES DE RECURSOS PARA OTORGAR SUBSIDIOS,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1057_FACT_ACU,FACTURACION ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1058_FACT_ALC,FACTURACION ALCANTARILLADO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1059_SUSPENSERVACU,SUSPENSIONES SERVICIO DE ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1061_REDESSISALC,REDES SISTEMA DE ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1062_FORMPROYECTOS,FORMULACIÓN DE PROYECTOS ACU - ALC,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1064_EJECPROYECTOS,EJECUCIÓN DE PROYECTOS ACU - ALC,3,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1069_FORMPROYEC_ASEO,FORMULACIÓN DE PROYECTOS ASEO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1070_EJECPROYEC_ASEO,EJECUCION DE PROYECTOS ASEO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1067_CONTRATACION_SGP,CONTRATACIÓN CON RECURSOS SGP - ALCALDÍAS,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1073_CXCSERVPUBLICOS,,3,true,H5;H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1080_LIQUIDACION_SGP,LIQUIDACION CON RECURSOS SGP - ALCALDÍAS,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1234_ADICIONALES,CARACTERISTICAS ADICIONALES,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1081_CARAC_ESPEC,CARACTERÍSTICAS ESPECIALES,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1085_OPER_SITIOS_DF,COMERCIAL ASEO OPERADORES DE SITIOS DE DF,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1087_BAR_LIMPIEZA,BARRIDO Y LIMPIEZA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1102_F141_CALIDADAGUAFSUP,MUESTREO CALIDAD DEL AGUA FUENTE SUPERFICIAL,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1103_F142_CALIDADAGUAFSUB,MUESTREO CALIDAD DEL AGUA FUENTE SUBTERRÁNEA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1105_F134_REGESTMEDPREC,REGISTRO DE ESTACIONES DE MEDICIÓN DE PRECIPITACIÓN,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1106_F135_PREC,PRECIPITACION,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1107_ESTACION_TRANS,ESTACIONES DE TRANSFERENCIA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1109_COMERCIAL_ASEO,,4,true,H5;H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1055_RECLAMACIONES,FORMATO TARIFAS APLICADAS ALCANTARILLADO,4,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1126_FACT_SUBCONT,FACTORES DE SUBSIDIOS Y CONTRIBUCIONES AAA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1227_DANE_IGAC,CARGA DANE - IGAC,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1229_REG_PUNTOS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1230_OBLIGATORIOS,CARACTERISTICAS ANALISIS OBLIGATORIOS,4,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1242_DANE_IGAC_ANTIOQUIA,FORMATO PARA REPORTAR LA ESTRATIFICACION AL SUI. ANTIOQUIA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1243_DANE_IGAC_CALI,FORMATO PARA REPORTAR LA ESTRATIFICACION AL SUI. CALI,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1244_DANE_IGAC_BOGOTA,FORMATO PARA REPORTAR LA ESTRATIFICACION AL SUI. BOGOTA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1245_DANE_IGAC_MEDELLIN,FORMATO PARA REPORTAR LA ESTRATIFICACION AL SUI. MEDELLIN,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1246CXC_SECTOROFICIAL,REGISTRO DE TONELADAS PROVENIENTES A LA ACTIVIDAD DE RECOLECCIÓN Y TRANSPORTE,3,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1249_COMP_ING_OPERA,COMPOSICION INGRESOS OPERACIONALES,2,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1267_CONV_COLEC,CONVENCIONES COLECTIVAS AAA,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1268_CAT_EMPLEADO,PERSONAL POR CATEGORIA DE EMPLEO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1269_COMP_ING_OPER_AS,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1271_FLUJO_CAJA_REAL,FORMATO FLUJO DE CAJA REAL,3,true,H8,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1272_COSTO_PAR_BOMBEO,CPB - COSTOS PARTICULARES DE BOMBEO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1273_COSTO_TASA_AMBIENTAL,CMT - COSTO DE TASAS AMBIENTALES ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1274_COSTOS_ENERGIA_ALC,COSTOS DE ENERGIA ALCANTARILLADO UTILIZADA EN TRATAMIENTO DE AGUAS RESIDUALES,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1275_COSTOS_ENERGIA_CE,COSTOS DE ENERGIA ALCANTARILLADO - CE,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1276_COST_INSUM_QUIMIC,COSTOS DE INSUMOS QUIMICOS ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1277_COSTOS_ENERGIA_ACU,COSTOS DE ENERGIA ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1278_COST_AGUABLOQ_CMOp,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1279_IMP_TASAS_OPE_ACU,IMPUESTOS Y TASAS OPERATIVAS ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1290_COSTINSQUIM,ESTA TABLA GUARDA LOS COSTOS DE INSUMOS QUIMICOS UTILIZADOS EN EL TRATAMIENTO DE AGUAS RESIDUALES,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1291_COSTSERVPERS,ESTA TABLA GUARDA LOS COSTOS DE INSUMOS QUIMICOS UTILIZADOS EN EL TRATAMIENTO DE AGUAS RESIDUALES,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1292_IMPUESTYTASAS,IMPUESTOS Y TASAS OPERATIVAS ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1293_COSTOPARTBOMBEO,CPB - COSTOS PARTICULARES DE BOMBEO ALCANTARILLADO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1294_COSTOTASASAMBIENT,CMT - COSTO DE TASAS AMBIENTALES ALCANTARILLADO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1295_OTR_COS_OPERA_AR,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1083_MICRO_RUTA,REGISTRO DE MICRORUTAS DE RECOLECCION Y TRANSPORTE,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1086_DISFIN_OPER,DISPOSICIÓN FINAL OPERADOR DEL SITIO DE DISPOSICIÓN FINAL,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1088_PEAJES,PEAJES,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1052_F22_PRESTACUEDUCTO,FORMATO TARIFAS APLICADAS ACUEDUCTO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1053_TARAPL_ALC,FORMATO TARIFAS APLICADAS ALCANTARILLADO,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1084_REG_TONELA,REGISTRO DE TONELADAS PROVENIENTES A LA ACTIVIDAD DE RECOLECCIÓN Y TRANSPORTE,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1108_REGISTRO_VEHIC,REGISTRO DE VEHICULOS DE RECOLECCION Y TRANSPORTE,1,false,,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2
+CAR_T1349_PUNT_VERT_CRECEP,,1,false,H5,false,H1: consulta por tablas del portal responde HTTP 500 (NullPointerException TablaBean.getEsq),portal SUI DiccionarioConsultaV2

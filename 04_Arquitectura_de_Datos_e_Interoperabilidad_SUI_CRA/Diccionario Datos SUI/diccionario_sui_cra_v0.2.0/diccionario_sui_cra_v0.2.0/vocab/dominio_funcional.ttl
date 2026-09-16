@@ -1,0 +1,95 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix : <https://cra.gov.co/vocab/sui/dominio_funcional#> .
+
+:scheme a skos:ConceptScheme ;
+    dct:title "Dominios funcionales del universo regulatorio CRA"@es ;
+    dct:description "Clasificación derivada por reglas explícitas sobre el nombre del formato (build_model.py, REGLAS_DOMINIO). Reclasificar es cambiar una regla."@es ;
+    dct:creator "CRA - Comisión de Regulación de Agua Potable y Saneamiento Básico" ;
+    dct:issued "2026-09-14" ;
+    dct:hasVersion "0.2.0" .
+
+:financiero-y-contable a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "financiero-y-contable" ;
+    skos:prefLabel "Financiero Y Contable"@es ;
+    skos:definition "Estados financieros, PUC, cuentas por cobrar/pagar, flujos de caja, viabilidad financiera."@es ;
+    skos:topConceptOf :scheme .
+
+:tarifario-y-costos a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "tarifario-y-costos" ;
+    skos:prefLabel "Tarifario Y Costos"@es ;
+    skos:definition "Tarifas proyectadas y aplicadas, costos de referencia, estudios de costos, actos de aprobación tarifaria."@es ;
+    skos:topConceptOf :scheme .
+
+:institucional-y-habilitacion a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "institucional-y-habilitacion" ;
+    skos:prefLabel "Institucional Y Habilitacion"@es ;
+    skos:definition "Actos de habilitación, invitaciones públicas, reconocimiento SSPD, reglamentos y autorizaciones."@es ;
+    skos:topConceptOf :scheme .
+
+:calidad-del-agua-y-muestreo a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "calidad-del-agua-y-muestreo" ;
+    skos:prefLabel "Calidad Del Agua Y Muestreo"@es ;
+    skos:definition "Puntos y actas de muestreo, características básicas/especiales, IRCA, calidad de fuentes."@es ;
+    skos:topConceptOf :scheme .
+
+:riesgo-y-gobierno-corporativo a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "riesgo-y-gobierno-corporativo" ;
+    skos:prefLabel "Riesgo Y Gobierno Corporativo"@es ;
+    skos:definition "Matrices de riesgo, control interno, organigrama, personal, convenciones colectivas."@es ;
+    skos:topConceptOf :scheme .
+
+:comercial-y-facturacion a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "comercial-y-facturacion" ;
+    skos:prefLabel "Comercial Y Facturacion"@es ;
+    skos:definition "Facturación, suscriptores, consumos, multiusuarios, proyección de demanda."@es ;
+    skos:topConceptOf :scheme .
+
+:tecnico-operativo a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "tecnico-operativo" ;
+    skos:prefLabel "Tecnico Operativo"@es ;
+    skos:definition "Redes, continuidad, vehículos, rutas, sitios de disposición, estaciones, vertimientos."@es ;
+    skos:topConceptOf :scheme .
+
+:otros a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "otros" ;
+    skos:prefLabel "Otros"@es ;
+    skos:definition "Formatos no clasificados por las reglas de nombre; requieren revisión manual."@es ;
+    skos:topConceptOf :scheme .
+
+:subsidios-y-contribuciones a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "subsidios-y-contribuciones" ;
+    skos:prefLabel "Subsidios Y Contribuciones"@es ;
+    skos:definition "Factores y balances de subsidios y contribuciones, FSRI, acuerdos municipales."@es ;
+    skos:topConceptOf :scheme .
+
+:inversiones-y-sgp a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "inversiones-y-sgp" ;
+    skos:prefLabel "Inversiones Y Sgp"@es ;
+    skos:definition "Formulación y ejecución de proyectos, contratación y liquidación con recursos SGP, metas."@es ;
+    skos:topConceptOf :scheme .
+
+:pqr-y-control-social a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "pqr-y-control-social" ;
+    skos:prefLabel "Pqr Y Control Social"@es ;
+    skos:definition "Peticiones, quejas, reclamos e indicadores de control social."@es ;
+    skos:topConceptOf :scheme .
+
+:estratificacion-y-territorio a skos:Concept ;
+    skos:inScheme :scheme ;
+    skos:notation "estratificacion-y-territorio" ;
+    skos:prefLabel "Estratificacion Y Territorio"@es ;
+    skos:definition "Estratificación socioeconómica, áreas de prestación, vértices, DANE-IGAC."@es ;
+    skos:topConceptOf :scheme .
+

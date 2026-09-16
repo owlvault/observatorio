@@ -1,0 +1,42 @@
+# ==============================================================================
+# Gitignore - Observatorio Regulatorio CRA (Context Lake)
+# ==============================================================================
+
+# Archivos virtuales / accesos directos de Google Drive (causan error 'Invalid argument' en Git)
+*.gdoc
+*.gsheet
+*.gslides
+*.gform
+*.gdraw
+*.gtable
+
+# Archivos del sistema operativo y metadatos de sincronización
+desktop.ini
+Thumbs.db
+ehthumbs.db
+.DS_Store
+*.tmp
+~$*
+
+# Backups, versiones obsoletas y copias de conflicto de sincronización de Google Drive
+*.superseded-*
+* (1).*
+* (2).*
+* (3).*
+* (4).*
+* (5).*
+* ([0-9]).*
+* ([0-9][0-9]).*
+
+# IDEs y editores
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Entornos virtuales Python o node_modules si llegasen a crearse
+.venv/
+env/
+node_modules/
+__pycache__/
+*.pyc
