@@ -1,0 +1,23 @@
+indicador,variables,nivel_medio,completitud_pct,nivel_min_critico,depende_externa,con_variable,validadas,con_tabla,categoria,veredicto,ajuste_semantico,brecha_critica
+IND-PER-01,4,3.0,60,3,False,4,4,2,A,Calculable al cerrar puente físico,directo,Puente variable→columna y formatos IUS fuera del catálogo (H9/H10)
+IND-PER-02,4,3.0,60,3,False,4,4,3,A,Calculable al cerrar puente físico,directo,Igual que IND-PER-01; periodo de facturación como divisor
+IND-CON-01,3,3.0,60,3,False,3,3,2,B,SUI suficiente con ajuste metodológico,parcial,IC del IUS es índice adimensional; el catálogo pide horas/día (derivable de discontinuidades por ruta)
+IND-COB-01,2,1.5,30,0,True,1,1,1,C,Requiere fuente externa integrable,directo (numerador),Denominador DANE y Q-GLO-02; suscriptor ≠ vivienda (multiusuarios 881 sin variables)
+IND-COB-02,2,1.5,30,0,True,1,1,1,C,Requiere fuente externa integrable,directo (numerador),Igual que IND-COB-01
+IND-COB-03,2,1.0,20,0,True,1,0,1,D,Documentación insuficiente,débil,Formatos comerciales de aseo sin variables; único campo es lectura asistida
+IND-CAL-01,1,1.0,20,1,True,0,0,1,F,Fuera del SUI / sin formato,ausente,IRCA no está en el SUI; formatos de muestreo derogados o por verificar (Q-CAT-01)
+IND-ECI-01,2,3.5,70,3,False,2,2,1,B,SUI suficiente con ajuste metodológico,proxy en denominador,VTA directo; m3 vertidos facturados ≠ agua residual generada (ODS 6.3)
+IND-ECI-02,3,2.0,40,2,False,3,0,2,D,Documentación insuficiente,parcial,Todas las variables de aseo son lectura asistida; denominador sale de formato de productividad
+IND-EFI-01,3,1.67,33,4,False,1,1,2,E,Brecha semántica,proxy,"SUI trae CMA tarifario aplicado por factura, no gasto administrativo real; PUC sin variables"
+IND-EFI-02,3,1.67,33,4,False,1,1,2,E,Brecha semántica,proxy,Igual que IND-EFI-01 para CMO
+IND-FIN-01,3,2.67,53,1,True,2,2,3,B,SUI suficiente con ajuste metodológico,parcial,Subsidios/contribuciones y FSRI documentados; transferencias territoriales sin variables (Q-CAT-02)
+IND-ASE-01,3,2.33,47,0,True,2,2,1,C,Requiere fuente externa integrable,directo (numerador),Ingreso de hogares por estrato es externo; códigos de estrato en dominio_valor vacío
+IND-INV-01,3,3.0,60,3,False,3,3,2,A,Calculable al cerrar puente físico,directo,VP ejecutado vs proyectado ya definido en el IUS (extracción mecánica)
+NMT-ADO-01,2,1.5,30,0,True,1,1,0,F,Fuera del SUI / sin formato,ausente,"No hay campo de ""estudio de costos reportado bajo marco"" en el SUI"
+NMT-ADO-02,2,3.0,60,3,False,2,2,0,E,Brecha semántica,proxy,"Fecha de inicio de aplicación de tarifas refiere a marcos anteriores, no a la Res. 1032"
+NMT-TAR-01,1,4.0,80,4,False,1,1,1,B,SUI suficiente con ajuste metodológico,parcial,Cargos por factura y clase de uso existen; estructura de cargos bajo Res. 1032 sin formato
+NMT-LB-01,1,0.0,0,0,True,0,0,0,F,Fuera del SUI / sin formato,ausente,Sin formato de línea base 2026
+NMT-EST-01,2,1.5,30,0,True,1,1,0,B,SUI suficiente con ajuste metodológico,parcial,Componentes IDH/IRD observados documentados; metas por segmento pendientes (Q-NMT-01)
+NMT-EST-02,1,3.0,60,3,False,1,1,0,B,SUI suficiente con ajuste metodológico,parcial,IPUF observado calculable; meta pendiente (Q-NMT-01)
+NMT-INC-01,1,3.0,60,3,False,1,1,0,E,Brecha semántica,proxy,Descuentos ICAP/ICON/IQR son del esquema anterior; incentivos Tablas 17-25 sin formato
+NMT-RIE-01,1,0.0,0,0,True,0,0,0,F,Fuera del SUI / sin formato,ausente,"Diccionario tiene insumos del IUS, no el nivel de riesgo publicado por la SSPD"
