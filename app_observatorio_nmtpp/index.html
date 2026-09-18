@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatorio CRA — Monitoreo del Marco Tarifario de Pequeños Prestadores de Acueducto (Res. CRA 1038 de 2026)</title>
+    
+    <!-- Tipografía Institucional Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Estilos del Sistema de Diseño Institucional CRA -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Chart.js para Visualizaciones Analíticas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="modo-analista">
+
+    <!-- BANNER PERMANENTE DE DATOS SINTÉTICOS (INV-01 / RF-PROTO-06) -->
+    <div class="synthetic-banner-top" role="alert" aria-label="Aviso de datos sintéticos">
+        <div class="synthetic-banner-content">
+            <span class="synthetic-icon">⚠️</span>
+            <span>
+                <strong>DATOS SINTÉTICOS PARA PROTOTIPO — NO SON INFORMACIÓN REAL.</strong>
+                Prestadores, municipios, radicados, publicaciones del ISE y valores son ficticios. Los parámetros regulatorios (metas, pisos, porcentajes) sí son los de la Res. CRA 1038 de 2026 y viven en parametros-res-1038.json.
+            </span>
+        </div>
+        <span class="badge-sim">Prototipo CRA</span>
+    </div>
+
+    <!-- CABECERA INSTITUCIONAL CRA -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="brand-section">
+                <div class="cra-logo-badge" aria-label="Comisión de Regulación de Agua Potable y Saneamiento Básico">
+                    CRA
+                </div>
+                <div class="title-group">
+                    <h1>Observatorio Regulatorio de Agua Potable y Saneamiento Básico</h1>
+                    <p>
+                        <span>Tablero de Monitoreo de Implementación del Nuevo Marco Tarifario de Pequeños Prestadores de Acueducto</span>
+                        <span class="chip font-bold">Res. CRA 1038 de 2026</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Métricas Rápidas de la Cabecera -->
+            <div class="header-quick-stats" aria-label="Resumen rápido del ámbito">
+                <div class="stat-item">👥 <strong>40</strong> Prestadores</div>
+                <span>•</span>
+                <div class="stat-item">💧 <strong>41</strong> APS</div>
+                <span>•</span>
+                <div class="stat-item">📑 <strong>8</strong> Subsegmentos</div>
+            </div>
+
+            <div class="header-controls">
+                <!-- Selector Segmentado de Modo de Consulta (Ciudadano / Analista) -->
+                <div class="mode-segmented-control" role="group" aria-label="Modo de consulta">
+                    <button id="btn-modo-ciudadano" class="mode-segmented-btn mode-btn" onclick="AppNMTPP.setModo('ciudadano')">
+                        <span>👤</span> Modo Ciudadano
+                    </button>
+                    <button id="btn-modo-analista" class="mode-segmented-btn mode-btn active" onclick="AppNMTPP.setModo('analista')">
+                        <span>🔬</span> Modo Analista CRA
+                    </button>
+                </div>
+
+                <!-- Interruptor de Simulación de Respuesta a Q-NMTPP-01 (Analista) -->
+                <div class="sim-switch-pill analyst-only" title="Simula que la CRA aclaró la equivalencia de 24 horas para continuidad del S1">
+                    <label class="switch-toggle" for="check-sim-q01">
+                        <input type="checkbox" id="check-sim-q01" onchange="AppNMTPP.toggleSimulacionQ01(this.checked)">
+                        <span class="switch-slider"></span>
+                    </label>
+                    <label for="check-sim-q01">Simular Q-NMTPP-01</label>
+                </div>
+
+                <!-- Fecha de Corte del Escenario Simulador -->
+                <div class="date-pill" title="Fecha de corte simulada para evaluación de estados e hitos">
+                    <span>📅</span> Corte: <strong>2028-09-15</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de Integridad Analítica y Verificación (Oráculo vs Motor) -->
+        <div class="verification-subbar analyst-only">
+            <div id="oraculo-verification-banner" class="oracle-status">
+                <span style="color: var(--text-muted);">Verificando consistencia del motor determinista...</span>
+            </div>
+            <div style="font-size: 0.76rem; color: var(--text-muted); font-family: var(--font-mono);">
+                Motor Regulatorio v1.0.4 • Verificación 100% Determinista
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO EDITORIAL INSTITUCIONAL (ESTILO OECD WATER TOPIC PORTAL) -->
+    <section class="oecd-hero" aria-label="Introducción al marco regulatorio">
+        <div class="hero-inner">
+            <div class="hero-eyebrow">
+                <span>💧</span> Observatorio Regulatorio CRA • Agua Potable y Saneamiento Básico
+            </div>
+            <h1 class="hero-title">
+                Agua potable para pequeñas poblaciones y comunidades rurales
+            </h1>
+            <p class="hero-subtitle">
+                Monitoreo de implementación de la <strong>Resolución CRA 1038 de 2026</strong>. Hacia un esquema tarifario adaptativo que equilibra la sostenibilidad financiera, el agua segura y el fortalecimiento operativo de prestadores y gestores comunitarios en municipios de hasta 5.000 suscriptores.
+            </p>
+
+            <!-- Cifras Clave de Impacto (OECD Highlights) -->
+            <div class="hero-metrics-grid">
+                <div class="hero-metric-card">
+                    <div class="hero-metric-value">
+                        40
+                        <span class="hero-metric-fraction">prestadores</span>
+                    </div>
+                    <div class="hero-metric-label">Universo Piloto en Monitoreo</div>
+                    <div class="hero-metric-desc">Empresas municipales y gestores comunitarios del agua</div>
+                </div>
+
+                <div class="hero-metric-card">
+                    <div class="hero-metric-value">
+                        41
+                        <span class="hero-metric-fraction">APS</span>
+                    </div>
+                    <div class="hero-metric-label">Áreas de Prestación del Servicio</div>
+                    <div class="hero-metric-desc">Distribuidas en zonas urbanas, rurales e insulares</div>
+                </div>
+
+                <div class="hero-metric-card">
+                    <div class="hero-metric-value">
+                        65.0%
+                        <span class="hero-metric-fraction">(26/40)</span>
+                    </div>
+                    <div class="hero-metric-label">Adopción de Estudio Inicial</div>
+                    <div class="hero-metric-desc">Prestadores con estudio de costos radicado ante la CRA</div>
+                </div>
+
+                <div class="hero-metric-card">
+                    <div class="hero-metric-value">
+                        82.5%
+                        <span class="hero-metric-fraction">(33/40)</span>
+                    </div>
+                    <div class="hero-metric-label">Recálculo 2028 Oportuno</div>
+                    <div class="hero-metric-desc">Radicado dentro de la ventana legal (1-ene a 31-may)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BARRA DE PESTAÑAS TEMÁTICAS AMIGABLES (INSPIRADA EN OECD TOPICS) -->
+    <nav class="nav-tabs-wrapper" aria-label="Navegación temática del tablero">
+        <div class="nav-tabs">
+            <button class="nav-tab-btn active" data-tab="tab-resumen">
+                <span>🌊</span> 1. Panorama General
+                <span class="tab-badge">Adopción</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-calendario">
+                <span>📅</span> 2. Calendario y Plazos
+                <span class="tab-badge">2026-2036</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-nivel-servicio">
+                <span>💧</span> 3. Nivel de Servicio
+                <span class="tab-badge">Metas</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-ise-incentivos">
+                <span>⚡</span> 4. Eficiencia e Incentivos
+                <span class="tab-badge">ISE CRA</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-prestadores">
+                <span>🏢</span> 5. Directorio de Prestadores
+                <span class="tab-badge">40 Prestadores</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-regimen-especial">
+                <span>🛡️</span> 6. Zonas Especiales
+                <span class="tab-badge">Régimen S2</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-aclaraciones">
+                <span>⚖️</span> 7. Aclaraciones Normativas
+                <span class="tab-badge">14 Consultas</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-metodologia">
+                <span>📖</span> 8. Guía Metodológica
+                <span class="tab-badge">25 Fichas</span>
+            </button>
+            <button class="nav-tab-btn" data-tab="tab-datos">
+                <span>💾</span> 9. Centro de Datos
+                <span class="tab-badge">Descargas CSV</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- BARRA DE FILTROS GLOBALES -->
+    <section class="filters-bar" aria-label="Filtros del tablero">
+        <div class="filters-container">
+            <div class="filter-item">
+                <label for="filtro-segmento">Tipo de Operador:</label>
+                <select id="filtro-segmento" class="filter-select">
+                    <option value="todos">Todos los operadores</option>
+                    <option value="S1">Empresas de Acueducto (Segmento 1)</option>
+                    <option value="S2">Gestores Comunitarios del Agua (Segmento 2)</option>
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <label for="filtro-subsegmento">Tamaño del Acueducto:</label>
+                <select id="filtro-subsegmento" class="filter-select">
+                    <option value="todos">Todos los tamaños</option>
+                    <option value="S1-1">Empresas: 3.201 a 5.000 familias (S1-1)</option>
+                    <option value="S1-2">Empresas: 1.401 a 3.200 familias (S1-2)</option>
+                    <option value="S1-3">Empresas: 601 a 1.400 familias (S1-3)</option>
+                    <option value="S1-4">Empresas: hasta 600 familias (S1-4)</option>
+                    <option value="S2-1">Comunitarios: 3.201 a 5.000 familias (S2-1)</option>
+                    <option value="S2-2">Comunitarios: 1.401 a 3.200 familias (S2-2)</option>
+                    <option value="S2-3">Comunitarios: 601 a 1.400 familias (S2-3)</option>
+                    <option value="S2-4">Comunitarios: hasta 600 familias (S2-4)</option>
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <label for="filtro-regimen">Territorios Especiales:</label>
+                <select id="filtro-regimen" class="filter-select">
+                    <option value="todos">Todos los territorios</option>
+                    <option value="con_condicion">Con trato especial (Islas, alta vulnerabilidad o PDET)</option>
+                    <option value="sin_condicion">En régimen estándar</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-reset-filters" onclick="AppNMTPP.resetFiltros()" title="Limpiar todos los filtros aplicados">
+                ↺ Restablecer
+            </button>
+
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <label for="filtro-busqueda" class="sr-only">Buscar por nombre del acueducto o municipio</label>
+                <input type="text" id="filtro-busqueda" class="search-input" placeholder="Buscar por nombre de acueducto, municipio o ID...">
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENEDOR PRINCIPAL DE PESTAÑAS -->
+    <main class="main-content">
+        <!-- V1: RESUMEN DE ADOPCIÓN -->
+        <section id="tab-resumen" class="tab-pane active" aria-labelledby="v1-heading"></section>
+
+        <!-- V2: CALENDARIO DE HITOS -->
+        <section id="tab-calendario" class="tab-pane" aria-labelledby="v2-heading"></section>
+
+        <!-- V3: NIVEL DE SERVICIO -->
+        <section id="tab-nivel-servicio" class="tab-pane" aria-labelledby="v3-heading"></section>
+
+        <!-- V4: EFICIENCIA E INCENTIVOS (ISE) -->
+        <section id="tab-ise-incentivos" class="tab-pane" aria-labelledby="v4-heading"></section>
+
+        <!-- V5: PRESTADORES Y DETALLE -->
+        <section id="tab-prestadores" class="tab-pane" aria-labelledby="v5-heading"></section>
+
+        <!-- V6: RÉGIMEN ESPECIAL -->
+        <section id="tab-regimen-especial" class="tab-pane" aria-labelledby="v6-heading"></section>
+
+        <!-- V7: ACLARACIONES PENDIENTES -->
+        <section id="tab-aclaraciones" class="tab-pane" aria-labelledby="v7-heading"></section>
+
+        <!-- V8: METODOLOGÍA Y FICHAS -->
+        <section id="tab-metodologia" class="tab-pane" aria-labelledby="v8-heading"></section>
+
+        <!-- V9: DATOS Y DESCARGAS -->
+        <section id="tab-datos" class="tab-pane" aria-labelledby="v9-heading"></section>
+    </main>
+
+    <!-- MODAL DE PERFIL INTEGRAL DE PRESTADOR (V5 / RF-PORTAL-12) -->
+    <div id="modal-perfil-prestador" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-perfil-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-perfil-title">Ficha Integral de Prestador</h3>
+                <button class="modal-close-btn" onclick="Prestadores.cerrarModal()" aria-label="Cerrar ficha">&times;</button>
+            </div>
+            <div id="modal-perfil-body" class="modal-body">
+                <!-- Inyectado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PIE DE PÁGINA INSTITUCIONAL CRA -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <strong>Comisión de Regulación de Agua Potable y Saneamiento Básico — CRA</strong><br>
+                <span>Observatorio Regulatorio • Dirección Técnica de Regulación</span>
+                <div class="footer-legal-notice">
+                    seguimiento informativo, sin efecto jurídico; la verificación del cumplimiento y funciones de inspección, vigilancia y control son de competencia exclusiva de la Superintendencia de Servicios Públicos Domiciliarios — SSPD (RN-NMTPP-05)
+                </div>
+            </div>
+            <div class="footer-links">
+                <span class="mono" style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px;">Res. CRA 1038 de 2026</span>
+                <a href="../specs/seguimiento-nmt-pequenos-prestadores.md" target="_blank">Especificación Técnica</a>
+                <a href="../docs/glosario.md" target="_blank">Glosario</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INCLUSIÓN DE SCRIPTS Y DATASET SINTÉTICO -->
+    <script src="data/datos-sinteticos-prototipo.js"></script>
+    <script src="js/motor_estados.js"></script>
+    <script src="js/components/resumen_adopcion.js"></script>
+    <script src="js/components/calendario_hitos.js"></script>
+    <script src="js/components/nivel_servicio.js"></script>
+    <script src="js/components/ise_incentivos.js"></script>
+    <script src="js/components/prestadores.js"></script>
+    <script src="js/components/regimen_especial.js"></script>
+    <script src="js/components/aclaraciones.js"></script>
+    <script src="js/components/fichas.js"></script>
+    <script src="js/components/exportar.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

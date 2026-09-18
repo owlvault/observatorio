@@ -3,8 +3,8 @@ id: spec-ingesta-sui-y-fuentes
 tipo: spec
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-13
-fuentes: [README_Context_Lake matriz de fuentes (Drive), Plan_de_Investigacion Fase I (Drive)]
+actualizado: 2026-09-18
+fuentes: [README_Context_Lake matriz de fuentes (Drive), Plan_de_Investigacion Fase I (Drive), adr/ADR-0002, adr/ADR-0006, adr/ADR-0008, adr/ADR-0014, Res. CRA 1038 de 2026]
 ---
 
 # Spec — Ingesta de fuentes oficiales
@@ -17,8 +17,8 @@ Define cómo el Observatorio obtiene, registra y versiona los datos de fuentes o
 
 - Flujo de negocio: `docs/business_context.md` → FL-01
 - Contrato de zonas y modelo de datos: `docs/architecture.md`
-- Decisión que aplica: `adr/ADR-0002-sui-fuente-autoritativa.md`
-- Términos: `docs/glosario.md` → Linaje, Formulario SUI, Periodo de reporte, Cuarentena
+- Decisiones que aplican: `adr/ADR-0002-sui-fuente-autoritativa.md`, `adr/ADR-0006-acceso-sui-consulta-directa.md`, `adr/ADR-0008-ingesta-asistida-por-operador.md`, `adr/ADR-0014-estudios-de-costos-fuente-complementaria.md`
+- Términos: `docs/glosario.md` → Linaje, Formulario SUI, Periodo de reporte, Cuarentena, Estudio de costos
 
 ## Requisitos funcionales
 
@@ -163,6 +163,53 @@ Escenario: Indicador mensual con denominador poblacional anual
 
 **Prioridad:** debe
 **Origen:** matriz de fuentes del README (periodicidades heterogéneas)
+
+### RF-SUI-09 — Ventana de re-extracción periódica
+
+El sistema DEBE re-extraer periódicamente los periodos históricos dentro de la ventana de retransmisión autorizada por la SSPD (`Q-SUI-03`), para capturar actualizaciones o rectificaciones reportadas formalmente por los prestadores.
+
+```gherkin
+Escenario: Ventana de retransmisión abierta
+  Dado un periodo cerrado hace 3 meses dentro de la ventana permitida
+  Cuando se ejecuta el ciclo mensual de re-extracción
+  Entonces el sistema consulta las tablas del SUI para ese periodo
+  Y procesa cualquier variación según RF-SUI-04
+```
+
+**Prioridad:** debe
+**Depende de:** `Q-SUI-03`
+**Origen:** disciplina de actualización y linaje histórico (`adr/ADR-0006`, `AGENTS.md`)
+
+### RF-SUI-10 — Extracción segmentable y reanudable por operador
+
+DADO que la conexión VPN al SUI es site-to-person (`adr/ADR-0008`), los procesos de extracción DEBEN ejecutarse en paquetes segmentables y reanudables dentro de las franjas de operación autorizadas (máximo 4 horas continuas en días hábiles).
+
+```gherkin
+Escenario: Interrupción de la sesión de extracción
+  Dado un paquete de extracción del SUI en curso que alcanza el límite de 4 horas
+  Cuando el operador finaliza la sesión VPN
+  Entonces el sistema registra el punto de control alcanzado (última tabla/prestador)
+  Y permite reanudar la extracción al siguiente día hábil sin duplicar registros crudos
+```
+
+**Prioridad:** debe
+**Origen:** `adr/ADR-0008`
+
+### RF-SUI-11 — Fuente complementaria: Radicado CRA de Estudios de Costos (Res. 1038)
+
+El sistema DEBE admitir como fuente complementaria oficial del componente NMTPP los documentos de estudios de costos remitidos formalmente a la CRA en cumplimiento de la Res. CRA 1038 de 2026. La captura se realiza exclusivamente por `ACT-CURADOR-DATOS` con registro de radicado, fecha, prestador, subsegmento declarado, línea base y metas proyectadas. El prestador NO tiene canal de cargue directo en el Observatorio.
+
+```gherkin
+Escenario: Captura de estudio de costos recibido
+  Dado un estudio de costos recibido por la CRA con número de radicado oficial
+  Cuando ACT-CURADOR-DATOS registra los metadatos y parámetros del estudio
+  Entonces el sistema genera un registro en la zona cruda con source="radicado_cra_ec"
+  Y asocia el file_hash y número de radicado como identificador de linaje
+  Y rotula todo valor derivado como "declarado por el prestador en su estudio de costos"
+```
+
+**Prioridad:** debe
+**Origen:** `adr/ADR-0014`, `specs/seguimiento-nmt-pequenos-prestadores.md` (RF-NMTPP-04, RN-NMTPP-08)
 
 ## Requisitos no funcionales
 

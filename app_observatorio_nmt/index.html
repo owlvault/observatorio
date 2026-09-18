@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Observatorio CRA · Monitoreo de Nuevos Marcos Tarifarios (Res. CRA 1032/2026)</title>
+  <meta name="description" content="Plataforma regulatoria de seguimiento a la implementación de los nuevos marcos tarifarios de grandes prestadores de acueducto y ciclo de gobernanza OCDE." />
+  
+  <!-- Tipografía Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Estilos del Sistema de Diseño Institucional CRA -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ENCABEZADO INSTITUCIONAL -->
+  <header class="header-cra">
+    <div class="header-topbar">
+      <span>República de Colombia · Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA)</span>
+      <span>Corte de Información: <strong>31 de agosto de 2026</strong> | Fuente Oficial: SUI / SSPD</span>
+    </div>
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-logo-badge">CRA</div>
+        <div>
+          <h1 class="brand-title">Observatorio Regulatorio CRA</h1>
+          <div class="brand-subtitle">Monitoreo de Implementación de Marcos Tarifarios · Grandes Prestadores (Res. CRA 1032/2026)</div>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="mode-badge-toggle" title="Alternar entre visión ciudadana y analítica interna">
+          <button id="btn-mode-analista" class="mode-btn active">Modo Analista CRA</button>
+          <button id="btn-mode-ciudadano" class="mode-btn">Modo Ciudadano</button>
+        </div>
+        <button class="btn-export-quick" onclick="window.DataExport.exportCSV(window.AppNMT.filteredProviders)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar CSV
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE PESTAÑAS -->
+  <nav class="nav-tabs-bar" aria-label="Navegación del Observatorio">
+    <div class="nav-tabs-container">
+      <button class="tab-btn active" data-tab="tablero" id="tab-btn-tablero">
+        <span>Tablero NMT</span>
+      </button>
+      <button class="tab-btn" data-tab="ciclo" id="tab-btn-ciclo">
+        <span>Modelo OCDE & Impacto Regulatorio</span>
+        <span class="tab-counter">AIR Ex-Post</span>
+      </button>
+      <button class="tab-btn" data-tab="prestadores" id="tab-btn-prestadores">
+        <span>Directorio de Prestadores</span>
+        <span class="tab-counter" id="filtered-count-badge">188 prestadores</span>
+      </button>
+      <button class="tab-btn" data-tab="mapa" id="tab-btn-mapa">
+        <span>Mapa Territorial</span>
+      </button>
+      <button class="tab-btn" data-tab="metodologia" id="tab-btn-metodologia">
+        <span>Metodología y Compuerta</span>
+      </button>
+      <button class="tab-btn" data-tab="datos" id="tab-btn-datos">
+        <span>Datos Abiertos & API</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="main-layout">
+
+    <!-- BANNER CONTEXTO NORMATIVO -->
+    <section class="regulatory-banner" aria-label="Marco Normativo">
+      <span class="banner-badge">Marco Regulatorio Vigente</span>
+      <h2 class="banner-title">Resolución CRA 1032 de 2026 · Nuevos Marcos Tarifarios de Acueducto y Alcantarillado</h2>
+      <p class="banner-desc">
+        Aplica a prestadores urbanos con más de 5.000 suscriptores en Colombia (Segmentos 1 a 4). 
+        Este observatorio institucionaliza la evaluación y monitoreo continuo del ciclo de implementación de la regulación, 
+        articulado con las mejores prácticas de la <strong>OCDE para la Evaluación del Impacto Regulatorio (AIR Ex-Post)</strong>.
+      </p>
+    </section>
+
+    <!-- TRAZABILIDAD DE VACÍOS NORMATIVOS (RF-NMT-12) -->
+    <div class="gap-alert-box" id="gap-alert-container">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div>
+        <strong>Trazabilidad Regulatoria Activa (RF-NMT-12):</strong>
+        Las metas de pérdidas (IPUF) y continuidad de las Tablas 16 y 50-51 se despliegan con valores de referencia de 6.0 m³/susc/mes sujetos a ratificación formal (Q-NMT-01). 
+        Los descuentos de servicio (Tabla 31) se registran conforme al procedimiento preliminar acordado con SSPD (Q-NMT-02).
+      </div>
+    </div>
+
+    <!-- BANNER DE NO COMPARABILIDAD (RN-NMT-02) -->
+    <div class="non-comparability-banner" id="non-comparability-banner"></div>
+
+    <!-- BARRA DE FILTROS REACTIVOS (RF-NMT-10) -->
+    <section class="filters-toolbar" aria-label="Filtros de Datos">
+      <div class="filter-group">
+        <label for="filter-segmento" class="filter-label">Segmento CRA (Res. 1032)</label>
+        <select id="filter-segmento" class="filter-select">
+          <option value="">Todos los Segmentos (S1 a S4)</option>
+          <option value="Segmento 1">Segmento 1 (>100.000 susc)</option>
+          <option value="Segmento 2">Segmento 2 (30.001 - 100.000 susc)</option>
+          <option value="Segmento 3">Segmento 3 (15.001 - 30.000 susc)</option>
+          <option value="Segmento 4">Segmento 4 (5.001 - 15.000 susc)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-departamento" class="filter-label">Departamento</label>
+        <select id="filter-departamento" class="filter-select">
+          <option value="">Todos los Departamentos</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-calidad" class="filter-label">Compuerta de Calidad (ADR-0003)</label>
+        <select id="filter-calidad" class="filter-select">
+          <option value="">Todos los Estados</option>
+          <option value="VERIFIED">VERIFICADO (Reporte Completo)</option>
+          <option value="WARNING">OBSERVADO (Línea Base Parcial)</option>
+          <option value="QUARANTINE">EN CUARENTENA (En Revisión)</option>
+          <option value="NO_REPORT">NO REPORTÓ AL SUI</option>
+        </select>
+      </div>
+
+      <div class="filter-group" style="flex: 1.5;">
+        <label for="filter-search" class="filter-label">Buscar Prestador / Municipio / ID SUI</label>
+        <input type="text" id="filter-search" class="filter-input" placeholder="Ej: EAAB, EPM, Cali, 1141, Villavicencio..." />
+      </div>
+
+      <div class="filter-actions">
+        <button id="btn-reset-filters" class="btn-reset-filters">Limpiar Filtros</button>
+      </div>
+    </section>
+
+    <!-- PESTAÑA 1: TABLERO PRINCIPAL NMT -->
+    <div id="pane-tablero" class="tab-content-pane">
+      <!-- Tarjetas KPI -->
+      <section class="kpi-grid" id="kpi-cards-container" aria-label="Indicadores Clave NMT"></section>
+
+      <!-- Gráficas Analíticas -->
+      <section class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Tasa de Adopción por Segmento (NMT-ADO-01)</h3>
+              <span class="chart-subtitle">Proporción de prestadores con estudio de costos formalmente cargado en SUI/SURICATA</span>
+            </div>
+            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-ADO-01')">Ficha</a>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-adoption-segment"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Variación Tarifaria de Transición por Estrato (NMT-TAR-01)</h3>
+              <span class="chart-subtitle">Desagregación obligatoria (RN-PORTAL-04) vs Res. 688/2014 en pesos constantes 2024</span>
+            </div>
+            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-TAR-01')">Ficha</a>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-tariff-variation"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Brecha de Pérdidas IPUF vs Meta de 6 m³ (NMT-EST-02)</h3>
+              <span class="chart-subtitle">IPUF observado (m³/susc/mes) con banda de incertidumbre percentil p10-p90 (RF-BENCH-03)</span>
+            </div>
+            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-EST-02')">Ficha</a>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-losses-gap"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Distribución de Riesgo IUS - SSPD (NMT-RIE-01)</h3>
+              <span class="chart-subtitle">Indicador Único Sectorial (Fase I 2020-2026) · Escala donde mayor riesgo es peor</span>
+            </div>
+            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-RIE-01')">Ficha</a>
+          </div>
+          <div class="chart-body">
+            <canvas id="chart-ius-risk"></canvas>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 2: MODELO OCDE & IMPACTO REGULATORIO -->
+    <div id="pane-ciclo" class="tab-content-pane" style="display: none;">
+      <section class="timeline-section-card">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span class="banner-badge" style="background: var(--color-deep-navy); color: #fff;">Metodología OCDE</span>
+              <span class="quality-badge badge-verified">AIR EX-POST ACTIVA</span>
+            </div>
+            <h3 class="section-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Monitoreo de Impacto Regulatorio bajo el Modelo OCDE · Res. CRA 1032/2026
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; max-width: 920px;">
+              Alineado con las directrices de la <strong>Organización para la Cooperación y el Desarrollo Económicos (OCDE)</strong> sobre Gobernanza y Política Regulatoria. 
+              Evalúa sistemáticamente la efectividad, eficiencia, asequibilidad social, sostenibilidad hídrica y gobernanza del nuevo marco tarifario de grandes prestadores.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-export-quick" onclick="window.ImpactoOCDE.openExecutiveReportModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Dictamen Ejecutivo AIR
+            </button>
+          </div>
+        </div>
+
+        <!-- SUBNAVEGACIÓN INTERNA OCDE -->
+        <div class="ocde-subnav-bar">
+          <button class="ocde-subnav-btn active" data-ocde-target="dimensiones">
+            5 Dimensiones de Impacto (AIR)
+          </button>
+          <button class="ocde-subnav-btn" data-ocde-target="radar">
+            12 Principios de Gobernanza del Agua
+          </button>
+          <button class="ocde-subnav-btn" data-ocde-target="asequibilidad">
+            Calculadora de Asequibilidad Social
+          </button>
+          <button class="ocde-subnav-btn" data-ocde-target="ciclo">
+            Línea de Tiempo del Ciclo (E0-E9)
+          </button>
+        </div>
+
+        <!-- SUBPANEL 1: 5 DIMENSIONES DE IMPACTO OCDE & SCORECARD -->
+        <div id="ocde-pane-dimensiones" class="ocde-subpane">
+          <div class="ocde-dimensions-grid" id="ocde-dimensions-grid"></div>
+
+          <!-- MATRIZ AIR EX-POST (SCORECARD COMPARATIVO) -->
+          <div class="scorecard-section-card" style="margin-top: 24px;">
+            <div class="section-header">
+              <div>
+                <h4 class="section-title">Matriz de Evaluación de Impacto Regulatorio Ex-Post (AIR Scorecard)</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                  Comparativa canónica entre Línea Base Pre-Regulación, Meta Regulatoria OCDE / CRA y Resultado Observado bajo la Res. CRA 1032/2026.
+                </p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table-cra" id="air-scorecard-table">
+                <thead>
+                  <tr>
+                    <th>Dimensión OCDE</th>
+                    <th>Indicador Canónico</th>
+                    <th>Línea Base</th>
+                    <th>Meta Regulatoria OCDE</th>
+                    <th>Observado 2026</th>
+                    <th>Calificación AIR</th>
+                    <th>Sustento Normativo</th>
+                  </tr>
+                </thead>
+                <tbody id="air-scorecard-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBPANEL 2: RADAR DE LOS 12 PRINCIPIOS DE GOBERNANZA DEL AGUA -->
+        <div id="ocde-pane-radar" class="ocde-subpane" style="display: none;">
+          <div class="scorecard-section-card">
+            <div class="section-header">
+              <div>
+                <h4 class="section-title">Radar de los 12 Principios de Gobernanza del Agua de la OCDE</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                  Evaluación estructurada en los 3 pilares de la OCDE: 
+                  <strong>Efectividad</strong> (P1 a P4), <strong>Eficiencia</strong> (P5 a P8) y <strong>Confianza & Participación</strong> (P9 a P12) para el sector de agua en Colombia.
+                </p>
+              </div>
+            </div>
+            <div class="radar-container" style="position: relative; height: 440px; margin-top: 12px;">
+              <canvas id="chart-radar-ocde"></canvas>
+            </div>
+            <div class="radar-legend-clusters" style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+              <div class="cluster-box cluster-efectividad">
+                <strong style="color: var(--color-deep-navy);">Pilar I: Efectividad (P1-P4)</strong>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+                  Roles regulatorios asignados (CRA / SSPD), gestión por escalas territoriales diferenciadas (Segmentos 1 al 4), coherencia sectorial y fortalecimiento de capacidades.
+                </p>
+              </div>
+              <div class="cluster-box cluster-eficiencia">
+                <strong style="color: var(--color-deep-navy);">Pilar II: Eficiencia (P5-P8)</strong>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+                  Datos oficiales del SUI, tarifas eficientes sostenibles (Res. 1032), marcos regulatorios proporcionados y adopción de mejores prácticas analíticas.
+                </p>
+              </div>
+              <div class="cluster-box cluster-confianza">
+                <strong style="color: var(--color-deep-navy);">Pilar III: Confianza y Participación (P9-P12)</strong>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
+                  Transparencia activa, control social con vocales de control, compensaciones equitativas (subsidios cruzados E1-E6) y evaluación ex-post AIR sistemática.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBPANEL 3: CALCULADORA Y SIMULADOR DE ASEQUIBILIDAD SOCIAL -->
+        <div id="ocde-pane-asequibilidad" class="ocde-subpane" style="display: none;">
+          <div class="scorecard-section-card">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h4 class="section-title">Calculadora y Simulador de Asequibilidad Social (OECD Water Affordability)</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                  Directriz OCDE: El gasto mensual en agua potable y saneamiento para hogares vulnerables debe ser inferior al <strong>3.0% del ingreso familiar</strong>. 
+                  Simule aquí el impacto real de la factura por estrato socioeconómico y volumen de consumo.
+                </p>
+              </div>
+              <span class="quality-badge badge-verified">Principio 6 OCDE · Ley 142/94</span>
+            </div>
+
+            <div class="calc-grid-layout" style="margin-top: 16px;">
+              <div class="calc-controls-box">
+                <div class="filter-group" style="margin-bottom: 14px;">
+                  <label for="calc-estrato-select" class="filter-label">Estrato Socioeconómico del Hogar</label>
+                  <select id="calc-estrato-select" class="filter-select">
+                    <option value="1">Estrato 1 (Bajo-Bajo) · Subsidio hasta 70%</option>
+                    <option value="2">Estrato 2 (Bajo) · Subsidio hasta 40%</option>
+                    <option value="3">Estrato 3 (Medio-Bajo) · Subsidio hasta 15%</option>
+                    <option value="4">Estrato 4 (Medio) · Tarifa Plena (Sin subsidio ni aporte)</option>
+                    <option value="5">Estrato 5 (Medio-Alto) · Aporte Solidario +50%</option>
+                    <option value="6">Estrato 6 (Alto) · Aporte Solidario +60%</option>
+                  </select>
+                </div>
+
+                <div class="filter-group" style="margin-bottom: 14px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label for="calc-consumo-slider" class="filter-label" style="margin: 0;">Consumo Mensual Simulado</label>
+                    <span id="calc-consumo-value" class="mono font-bold" style="color: var(--color-cra-blue); font-size: 0.95rem;">11 m³/mes</span>
+                  </div>
+                  <input type="range" id="calc-consumo-slider" min="5" max="25" step="1" value="11" class="calc-slider" style="width: 100%; cursor: pointer;" />
+                  <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+                    <span>5 m³ (Mínimo vital)</span>
+                    <span>11 m³ (Frío)</span>
+                    <span>13 m³ (Templado)</span>
+                    <span>16 m³ (Cálido)</span>
+                    <span>25 m³</span>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--color-ice-blue); padding: 12px; border-radius: 8px; border-left: 3px solid var(--color-cra-blue);">
+                  <span><strong>Prestador / Grupo de Referencia:</strong> <span id="calc-target-provider-name" style="font-weight: 700; color: var(--color-deep-navy);">Promedio del Grupo Seleccionado</span></span>
+                </div>
+              </div>
+
+              <div class="calc-results-box">
+                <div class="calc-metric-cards-row">
+                  <div class="dim-metric-box">
+                    <span class="dim-metric-label">Factura Bruta (Costo Real)</span>
+                    <span class="dim-metric-val mono" id="calc-factura-bruta">$0 COP</span>
+                    <span class="dim-metric-sub">CMA + CMO*m³</span>
+                  </div>
+                  <div class="dim-metric-box">
+                    <span class="dim-metric-label">Factura Neta al Usuario</span>
+                    <span class="dim-metric-val mono text-primary" id="calc-factura-neta">$0 COP</span>
+                    <span class="dim-metric-sub" id="calc-subsidio-label">Subsidio Ley 142/94</span>
+                  </div>
+                  <div class="dim-metric-box">
+                    <span class="dim-metric-label">Esfuerzo Tarifario</span>
+                    <span class="dim-metric-val mono" id="calc-esfuerzo-pct">0.0%</span>
+                    <span class="dim-metric-sub">del ingreso del hogar</span>
+                  </div>
+                  <div class="dim-metric-box">
+                    <span class="dim-metric-label">Umbral Límite OCDE</span>
+                    <span class="dim-metric-val mono">3.00%</span>
+                    <span class="dim-metric-sub">Techo de asequibilidad</span>
+                  </div>
+                </div>
+
+                <div id="calc-asequibilidad-status-box" style="margin-top: 14px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBPANEL 4: LÍNEA DE TIEMPO DEL CICLO REGULATORIO (E0-E9) -->
+        <div id="ocde-pane-ciclo" class="ocde-subpane" style="display: none;">
+          <div class="analyst-only gap-alert-box" style="margin-bottom: 16px;">
+            <strong>Vista Analista CRA (RF-NMT-11):</strong>
+            Alerta activa para prestadores con fecha límite de estudio de costos vencida (31 de agosto de 2026). 
+            Los prestadores que no han reportado están en fase de requerimiento formal conjunto con la SSPD.
+          </div>
+
+          <div class="timeline-ocde-container" id="timeline-ocde-view"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 3: DIRECTORIO DE PRESTADORES (ADR-0005) -->
+    <div id="pane-prestadores" class="tab-content-pane" style="display: none;">
+      <section class="providers-section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Directorio Oficial de Grandes Prestadores (>5.000 Suscriptores)</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+              Publicación a nivel de prestador individual con semáforo de calidad y derecho de contradicción (ADR-0005). 
+              Haga clic en cualquier prestador para consultar su ficha técnica detallada.
+            </p>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table-cra" id="providers-table">
+            <thead>
+              <tr>
+                <th>ID SUI</th>
+                <th>Prestador / Sigla</th>
+                <th>Municipio (Depto)</th>
+                <th>Segmento</th>
+                <th>Suscriptores</th>
+                <th>Estudio Costos</th>
+                <th>Var. Tarifa E3</th>
+                <th>Calidad</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="providers-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 4: MAPA TERRITORIAL -->
+    <div id="pane-mapa" class="tab-content-pane" style="display: none;">
+      <section class="providers-section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Distribución Geográfica de Prestadores del Ámbito NMT</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+              Ubicación espacial de los prestadores en Colombia. Los marcadores azules indican adopción formal del estudio de costos; los marcadores rojos señalan reporte pendiente.
+            </p>
+          </div>
+        </div>
+        <div id="map-container"></div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 5: METODOLOGÍA Y COMPUERTA -->
+    <div id="pane-metodologia" class="tab-content-pane" style="display: none;">
+      <section class="providers-section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Compuerta de Calidad y Catálogo de Fichas Metodológicas</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+              En cumplimiento del <strong>ADR-0003</strong>, ningún indicador se publica sin ficha metodológica aprobada, 
+              fórmula canónica, sustento normativo y semáforo de confiabilidad.
+            </p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-ADO-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-ADO-01</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
+            <div class="kpi-label">Tasa de Adopción del Marco 1032</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Proporción de prestadores con estudio de costos formalmente radicado ante SUI/SURICATA.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-ADO-02')">
+            <div class="kpi-header"><span class="kpi-code">NMT-ADO-02</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
+            <div class="kpi-label">Oportunidad de Adopción</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Días calendario transcurridos desde expedición hasta la primera factura emitida bajo Res. 1032.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-TAR-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-TAR-01</span><span class="quality-badge badge-warning">DESAGREGADO</span></div>
+            <div class="kpi-label">Variación Tarifaria de Transición</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Comparación de factura resultante por estrato socioeconómico (RN-PORTAL-04: sin tarifa promedio).</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-LB-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-LB-01</span><span class="quality-badge badge-warning">EN ALISTAMIENTO</span></div>
+            <div class="kpi-label">Cobertura de Línea Base 2026</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Porcentaje de prestadores con información histórica completa reportada para el cierre 2026.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-EST-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-EST-01</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
+            <div class="kpi-label">Cumplimiento Estándares IDH/IRD</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Continuidad (IDH2), calidad del agua (IRCA IDH5) y presión frente a metas del segmento.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-EST-02')">
+            <div class="kpi-header"><span class="kpi-code">NMT-EST-02</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
+            <div class="kpi-label">Brecha de Pérdidas con Banda de Incertidumbre</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Diferencia entre IPUF observado y meta estándar de 6 m³, con banda percentil p10-p90.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-INC-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-INC-01</span><span class="quality-badge badge-warning">EN TRÁMITE</span></div>
+            <div class="kpi-label">Descuentos e Incentivos Tarifarios</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Aplicación de descuentos por fallas de servicio (Tabla 31) e incentivos por eficiencia (Tablas 17-25).</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+
+          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-RIE-01')">
+            <div class="kpi-header"><span class="kpi-code">NMT-RIE-01</span><span class="quality-badge badge-verified">SSPD IUS</span></div>
+            <div class="kpi-label">Prestadores en Riesgo Alto (IUS)</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Niveles 4 y 5 del Indicador Único Sectorial publicado oficialmente por la SSPD.</p>
+            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PESTAÑA 6: DATOS ABIERTOS & API -->
+    <div id="pane-datos" class="tab-content-pane" style="display: none;">
+      <section class="providers-section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Descarga de Datos Abiertos y Espejo de API</h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+              En cumplimiento de la Ley 1712 de 2014 (Transparencia) y la Resolución MinTIC 1519 de 2020. 
+              Los datos se descargan con trazabilidad, llaves canónicas y semáforo de calidad.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+          <button class="mode-btn active" style="padding: 10px 20px; font-size: 0.88rem;" onclick="window.DataExport.exportCSV(window.AppNMT.filteredProviders)">
+            Descargar Dataset en CSV (Filtrado)
+          </button>
+          <button class="btn-export-quick" style="padding: 10px 20px; font-size: 0.88rem;" onclick="window.DataExport.exportJSON(window.AppNMT.filteredProviders)">
+            Descargar Dataset en JSON (Filtrado)
+          </button>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-title">Contrato de API REST / Zona de Publicación (ADR-0007 / RF-PORTAL-03)</div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;">
+            Endpoint canónico previsto para consumo público de la serie de monitoreo:
+          </p>
+          <pre class="mono" style="background: #ffffff; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; overflow-x: auto;">
+GET /api/v1/nmt/res-1032/prestadores?segmento={segmento}&periodo=2026-08
+Headers:
+  Accept: application/json
+Response:
+  {
+    "status": "success",
+    "fecha_corte": "2026-08-31",
+    "total": 188,
+    "quality_gateway": "APPROVED",
+    "data": [ ... ]
+  }
+          </pre>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- MODAL: FICHA TÉCNICA INDIVIDUAL DE PRESTADOR (ADR-0005) -->
+  <div class="modal-overlay" id="provider-detail-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div id="provider-modal-title" class="modal-title">Ficha del Prestador</div>
+        <button class="modal-close-btn" onclick="window.ProviderDetail.close()">&times;</button>
+      </div>
+      <div class="modal-body" id="provider-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: FICHA METODOLÓGICA DE INDICADOR (ADR-0003) -->
+  <div class="modal-overlay" id="ficha-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div id="ficha-modal-title" class="modal-title">Ficha Metodológica</div>
+        <button class="modal-close-btn" onclick="window.ModalsFichas.close()">&times;</button>
+      </div>
+      <div class="modal-body" id="ficha-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: INFORME EJECUTIVO DE IMPACTO REGULATORIO AIR EX-POST (OCDE) -->
+  <div class="modal-overlay" id="modal-air-report" style="display: none;">
+    <div class="modal-content" style="max-width: 860px; max-height: 90vh;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Dictamen Ejecutivo de Impacto Regulatorio (AIR OCDE)
+        </div>
+        <button class="modal-close-btn" onclick="window.ImpactoOCDE.closeExecutiveReportModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="air-report-content" style="padding: 24px;"></div>
+      <div class="modal-footer" style="padding: 16px 24px; background: var(--color-ice-blue); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color);">
+        <span style="font-size: 0.76rem; color: var(--text-muted);">Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA) · República de Colombia</span>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-export-quick" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Imprimir / Guardar PDF
+          </button>
+          <button class="btn-view-detail" onclick="window.ImpactoOCDE.closeExecutiveReportModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA INSTITUCIONAL -->
+  <footer class="footer-cra">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-title">Observatorio Regulatorio CRA</div>
+        <div class="footer-desc">
+          Órgano de monitoreo, analítica y transparencia del sector de agua potable y saneamiento básico en Colombia. 
+          Desarrollado bajo el modelo metodológico del Context Lake y los estándares de evaluación regulatoria de la OCDE.
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Marco Institucional</div>
+        <div class="footer-desc">
+          Comisión de Regulación de Agua Potable y Saneamiento Básico<br>
+          Edificio CRA, Carrera 12 No. 97-80, Bogotá D.C., Colombia<br>
+          Línea Gratuita Nacional: 01 8000 517 565
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">Gobernanza y Salvaguardas</div>
+        <div class="footer-desc">
+          • Prohibición de rankings compuestos (RN-PORTAL-05)<br>
+          • Desagregación tarifaria por estrato (RN-PORTAL-04)<br>
+          • Semáforos de calidad y trazabilidad oficial (ADR-0003)<br>
+          • Publicación por prestador con ventana previa (ADR-0005)
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA). Todos los derechos reservados.</span>
+      <span>Versión MVP 1.0.0 · Corte de Datos 2026-08-31</span>
+    </div>
+  </footer>
+
+  <!-- DEPENDENCIAS EXTERNAS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- DATASET CANÓNICO EMBEBIDO -->
+  <script src="js/data_nmt.js"></script>
+
+  <!-- COMPONENTES ANALÍTICOS Y VISUALES -->
+  <script src="js/components/timeline_ocde.js"></script>
+  <script src="js/components/impacto_ocde.js"></script>
+  <script src="js/components/kpi_cards.js"></script>
+  <script src="js/components/charts_nmt.js"></script>
+  <script src="js/components/map_colombia.js"></script>
+  <script src="js/components/provider_detail.js"></script>
+  <script src="js/components/modals_fichas.js"></script>
+  <script src="js/components/data_export.js"></script>
+
+  <!-- CONTROLADOR PRINCIPAL -->
+  <script src="js/app.js"></script>
+</body>
+</html>

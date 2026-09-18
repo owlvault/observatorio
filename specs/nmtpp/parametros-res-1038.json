@@ -1,0 +1,318 @@
+{
+  "_meta": {
+    "id": "parametros-res-1038",
+    "tipo": "parametros-regulatorios",
+    "proyecto": "observatorio-regulatorio-cra",
+    "estado": "borrador",
+    "actualizado": "2026-09-18",
+    "fuente": "Resolución CRA 1038 de 2026 (30-jun-2026), transcripción literal de los valores. Documento Técnico NMTPPAA (26-jun-2026) solo donde se indica.",
+    "regla": "Estos valores son parámetros REGULATORIOS REALES tomados de la norma. Ningún agente DEBE modificarlos, completarlos ni interpolarlos. Donde la norma no fija un valor, el campo vale null y 'bloqueado_por' nombra la pregunta abierta (specs/aclaraciones-regulatorias-nmtpp.md).",
+    "version": 1
+  },
+  "marco_tarifario": {
+    "id": "CRA-1038-2026",
+    "norma": "Resolución CRA 1038 de 2026",
+    "fecha_expedicion": "2026-06-30",
+    "subroga": "Título 1, Parte 1, Libro 2 de la Resolución CRA 943 de 2021",
+    "marco_anterior": "Resolución CRA 825 de 2017 (compilada en Res. CRA 943 de 2021)",
+    "fecha_corte_ambito_y_segmentacion": "2024-12-31",
+    "inicio_aplicacion": "2027-01-01",
+    "anio_tarifario_1": 2027,
+    "anio_tarifario_definicion": "1-ene a 31-dic (art. 2.1.1.1.1.3)",
+    "transicion_res_825_hasta": "2026-12-31",
+    "vigencia_formula_anios": 5,
+    "vigencia_nota": "Rige 5 años desde la aplicación; vencido el plazo sigue rigiendo mientras la CRA no expida una nueva (art. 2.1.1.1.8.1)",
+    "linea_base": "Situación real de los indicadores de nivel de servicio al final de la vigencia de la Res. CRA 825 de 2017; si no hay información anual completa, el periodo disponible más cercano (art. 2.1.1.1.1.7 par. 4; art. 2.1.1.1.2.1.1 par. 1)",
+    "horizonte_metas_segmento_1_anios": 5,
+    "horizonte_metas_esquema_diferencial_rural_anios": 10,
+    "articulos": {
+      "ambito": "2.1.1.1.1.1",
+      "segmentacion": "2.1.1.1.1.6",
+      "inicio": "2.1.1.1.1.7",
+      "seguimiento": "2.1.1.1.1.8",
+      "vigencia": "2.1.1.1.8.1",
+      "transicion": "Artículo vigésimo tercero"
+    }
+  },
+  "ambito": {
+    "condiciones": [
+      "Hasta 5.000 suscriptores (urbanos y/o rurales), sumando todas las APS, interconectadas o no",
+      "Más de 5.000 suscriptores con suscriptores rurales >= 50 %",
+      "APS exclusivamente rurales, sin importar el número de suscriptores",
+      "Gestor Comunitario del Agua y el Saneamiento Básico, sin importar número ni zona"
+    ],
+    "permanencia": "Una vez en el ámbito, se mantiene durante la vigencia (par. 6)",
+    "servicio_conjunto": "Si presta acueducto y alcantarillado, para el ámbito se toma el servicio con mayor número de suscriptores (par. 3)",
+    "articulo": "2.1.1.1.1.1"
+  },
+  "segmentos": [
+    {
+      "id": "S1",
+      "nombre": "Primer segmento",
+      "quienes": "Todas las personas prestadoras del ámbito excepto los gestores comunitarios",
+      "regimen": "libertad_regulada",
+      "subsegmentos": [
+        {"id": "S1-1", "min_exclusivo": 3200, "max_inclusivo": 5000},
+        {"id": "S1-2", "min_exclusivo": 1400, "max_inclusivo": 3200},
+        {"id": "S1-3", "min_exclusivo": 600, "max_inclusivo": 1400},
+        {"id": "S1-4", "min_exclusivo": null, "max_inclusivo": 600}
+      ]
+    },
+    {
+      "id": "S2",
+      "nombre": "Segundo segmento — gestores comunitarios",
+      "quienes": "Gestores Comunitarios del Agua y el Saneamiento Básico (GC)",
+      "regimen": "libertad_vigilada",
+      "regimen_nota": "La CRA puede pasar un GC a libertad regulada (art. 2.1.1.1.1.4 par. 3); condiciones y procedimiento pendientes de acto de la CRA",
+      "subsegmentos": [
+        {"id": "S2-1", "min_exclusivo": 1600, "max_inclusivo": null},
+        {"id": "S2-2", "min_exclusivo": 500, "max_inclusivo": 1600},
+        {"id": "S2-3", "min_exclusivo": 300, "max_inclusivo": 500},
+        {"id": "S2-4", "min_exclusivo": null, "max_inclusivo": 300}
+      ]
+    }
+  ],
+  "reglas_segmentacion": {
+    "fecha_corte": "2024-12-31",
+    "clasificacion_unica": "Una sola vez al inicio de la vigencia; invariable (par. 3)",
+    "conteo_resolucion": "Se cuentan por separado suscriptores de acueducto y de alcantarillado de todas las APS; si presta ambos, se toma la cifra MAYOR; aplica unificada para ambos servicios (par. 1)",
+    "conteo_documento_tecnico": "Si presta ambos, se toma la cifra de ACUEDUCTO (DT §5.3)",
+    "conflicto": "Q-NMTPP-03",
+    "mas_de_5000_rurales": "Más de 5.000 suscriptores con >= 50 % rurales: subsegmento 1 del segmento que corresponda (par. 5)",
+    "opcion_s2_a_s1": "El GC puede aplicar la metodología del S1 desde el inicio, comunicándolo a CRA y SSPD en el estudio de costos; irreversible (par. 2)",
+    "nuevos_prestadores": "Subsegmento por catastro de usuarios al iniciar operación (par. 4)",
+    "articulo": "2.1.1.1.1.6"
+  },
+  "metas_acueducto": {
+    "S1": {
+      "articulo": "2.1.1.1.2.1.2",
+      "formulas": "Anexo 6.2.1.10 literal a)",
+      "indicadores": {
+        "IRCA": {
+          "estandar": {"operador": "<=", "valor": 5, "unidad": "%"},
+          "exigible_desde": "entrada_en_vigencia",
+          "subsegmentos": {"S1-1": null, "S1-2": null, "S1-3": null, "S1-4": null},
+          "tipo_meta": "absoluta_desde_inicio",
+          "articulo": "2.1.1.1.2.1.2 par. 3"
+        },
+        "MICROMEDICION": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%"},
+          "tipo_meta": "absoluta_en_anio",
+          "subsegmentos": {"S1-1": {"anio_cumplimiento": 1}, "S1-2": {"anio_cumplimiento": 2}, "S1-3": {"anio_cumplimiento": 3}, "S1-4": {"anio_cumplimiento": 5}},
+          "metas_anuales_intermedias": null,
+          "bloqueado_por_intermedias": "Q-NMTPP-08",
+          "no_residenciales": "Micromedición obligatoria desde la entrada en vigencia (par. 5)"
+        },
+        "CONTINUIDAD": {
+          "estandar": {"operador": ">=", "valor": 97.26, "unidad": "%", "equivalencia_texto": "Máximo 10 días sin servicio al año"},
+          "tipo_meta": "cierre_de_brecha",
+          "definicion_meta": "Reducción de la diferencia entre el índice de continuidad del prestador al inicio de aplicación y el valor del estándar",
+          "subsegmentos": {
+            "S1-1": {"anio_cumplimiento": 3, "cierre_brecha_pct": 70},
+            "S1-2": {"anio_cumplimiento": 3, "cierre_brecha_pct": 60},
+            "S1-3": {"anio_cumplimiento": 5, "cierre_brecha_pct": 50},
+            "S1-4": {"anio_cumplimiento": 5, "cierre_brecha_pct": 40}
+          },
+          "unidad_formula_anexo": "horas/día (IC_g multiplica por 24 h/día)",
+          "conflicto_unidades": "Q-NMTPP-01",
+          "conflicto_linea_base": "Q-NMTPP-02",
+          "metas_anuales_intermedias": null,
+          "bloqueado_por_intermedias": "Q-NMTPP-08",
+          "exclusion_eventos": "Pueden excluirse interrupciones por eventos naturales extremos acreditados (par. 6)"
+        },
+        "MACROMEDICION": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%"},
+          "tipo_meta": "absoluta_en_anio",
+          "subsegmentos": {"S1-1": {"anio_cumplimiento": 1}, "S1-2": {"anio_cumplimiento": 1}, "S1-3": {"anio_cumplimiento": 1}, "S1-4": {"anio_cumplimiento": 2}}
+        },
+        "COBERTURA": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%"},
+          "tipo_meta": "autoproyectada",
+          "definicion_meta": "El prestador proyecta metas para aumentar la cobertura en concordancia con su plan de inversiones y reporta el indicador cada año tarifario",
+          "subsegmentos": {"S1-1": "autoproyectada", "S1-2": "autoproyectada", "S1-3": "autoproyectada", "S1-4": "autoproyectada"}
+        },
+        "IPUF": {
+          "estandar": {"operador": "<=", "valor": 6, "unidad": "m3/suscriptor/mes", "simbolo": "IPUF*"},
+          "tipo_meta": "autoproyectada_condicional",
+          "definicion_meta": "Si IPUF > IPUF*: senda anual de reducción autoproyectada. Si IPUF <= IPUF*: mantener o mejorar",
+          "subsegmentos": {"S1-1": "autoproyectada_condicional", "S1-2": "autoproyectada_condicional", "S1-3": "autoproyectada_condicional", "S1-4": "autoproyectada_condicional"},
+          "reporte": "Calcular y reportar anualmente (par. 7)",
+          "ambiguedad_denominador": "Q-NMTPP-07"
+        },
+        "PSH": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%", "tipo": "binario"},
+          "tipo_meta": "absoluta_en_anio",
+          "subsegmentos": {"S1-1": {"anio_cumplimiento": 2}, "S1-2": "no_exigible", "S1-3": "no_exigible", "S1-4": "no_exigible"},
+          "nota_no_exigible": "No debe cumplir el estándar; debe soportar los costos ambientales realizados"
+        }
+      }
+    },
+    "S2": {
+      "articulo": "2.1.1.1.3.1.2",
+      "formulas": "Anexo 6.2.1.10 literal b)",
+      "indicadores": {
+        "IRCA": {
+          "estandar": {"operador": "<=", "valor": 5, "unidad": "%"},
+          "exigible_desde": "entrada_en_vigencia",
+          "tipo_meta": "absoluta_desde_inicio",
+          "articulo": "2.1.1.1.3.1.2 par. 3"
+        },
+        "MICROMEDICION_RESIDENCIAL": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%"},
+          "tipo_meta": "absoluta_en_anio",
+          "subsegmentos": {"S2-1": {"anio_cumplimiento": 2}, "S2-2": {"anio_cumplimiento": 3}, "S2-3": {"anio_cumplimiento": 4}, "S2-4": {"anio_cumplimiento": 5}},
+          "no_residenciales": "Micromedición obligatoria desde la entrada en aplicación (par. 6)",
+          "metas_anuales_intermedias": null,
+          "bloqueado_por_intermedias": "Q-NMTPP-08"
+        },
+        "CONTINUIDAD": {
+          "estandar": {"operador": ">=", "valor": 86.3, "unidad": "%", "equivalencia_texto": "Máximo 50 días sin servicio al año"},
+          "tipo_meta": "cierre_de_brecha",
+          "subsegmentos": {
+            "S2-1": {"anio_cumplimiento": 3, "cierre_brecha_pct": 35},
+            "S2-2": {"anio_cumplimiento": 3, "cierre_brecha_pct": 30},
+            "S2-3": {"anio_cumplimiento": 5, "cierre_brecha_pct": 20},
+            "S2-4": {"anio_cumplimiento": 5, "cierre_brecha_pct": 10}
+          },
+          "unidad_formula_anexo": "%",
+          "conflicto_linea_base": "Q-NMTPP-02",
+          "metas_anuales_intermedias": null,
+          "bloqueado_por_intermedias": "Q-NMTPP-08"
+        },
+        "MACROMEDICION": {
+          "estandar": {"operador": "=", "valor": 100, "unidad": "%", "tipo": "binario", "definicion": "100 % si cuenta con al menos dos puntos de control (captación y salida de PTAP o equivalentes) con medición instalada y operativa"},
+          "tipo_meta": "absoluta_en_anio",
+          "minimo_inicial": "Al menos un punto de macromedición al inicio de la aplicación (par. 5)",
+          "subsegmentos": {"S2-1": {"anio_cumplimiento": 2}, "S2-2": {"anio_cumplimiento": 3}, "S2-3": {"anio_cumplimiento": 5}, "S2-4": {"anio_cumplimiento": 5}}
+        }
+      },
+      "plan_de_gestion": "Si no alcanza calidad, medición del consumo o continuidad: Plan de Gestión según art. 2.3.8.2.7 Decreto 1077 de 2015 (subrogado por Decreto 960 de 2025) (art. 2.1.1.1.3.1.4)",
+      "isgp": "Solo con medición suficiente (macromedición operativa + micromedición al 100 %). ISGP = (1 - VFact/VSum) x 100. No genera incentivos ni descuentos (art. 2.1.1.1.3.2.3.1)"
+    }
+  },
+  "regimenes_especiales_acueducto": {
+    "condiciones_especiales_estructurales": {
+      "articulo": "2.1.1.1.1.3 (definición); 2.1.1.1.4.1 (tratamiento)",
+      "tipos": [
+        {"codigo": "INSULAR", "criterio": "Territorios insulares y extracontinentales"},
+        {"codigo": "IVH", "criterio": "Índice de Vulnerabilidad Hídrica IDEAM alto o muy alto en la subzona hidrográfica de captación (la de mayor volumen si hay varias fuentes)"},
+        {"codigo": "IPM", "criterio": "IPM departamental DANE (ECV) > 30 % o indicador 'sin acceso a fuente mejorada' > 30 %"},
+        {"codigo": "PDET_ZOMAC", "criterio": "APS en municipio PDET (Decreto Ley 893 de 2017) y/o ZOMAC (art. 236 Ley 1819 de 2016)"},
+        {"codigo": "TOMA_POSESION", "criterio": "Prestador en toma de posesión de la SSPD; transitorio (par. 7)"}
+      ],
+      "tratamiento": "Aplican fórmulas y estándares del segmento 2 para calidad, continuidad, micromedición y macromedición; IRCA <= 5 % sin excepción; macromedición: 1 punto al inicio + 1 adicional a más tardar al año 5; solo en las APS con la condición (par. 6)"
+    },
+    "pilas_publicas": {
+      "articulo": "2.1.1.1.5.1",
+      "indicadores": [
+        {"codigo": "ICPP", "nombre": "Calidad en punto de entrega de la pila pública", "estandar": 100, "unidad": "%", "exigible_anio": 1},
+        {"codigo": "COPP", "nombre": "Continuidad operativa programada", "estandar": 100, "unidad": "% de días programados", "restriccion": "Sin interrupciones continuas > 15 días calendario", "exigible_anio": 1},
+        {"codigo": "ICVP", "nombre": "Control volumétrico colectivo", "estandar": 100, "unidad": "%", "exigible_anio_max": 2}
+      ],
+      "reporte": "A cargo del prestador, gestor comunitario, operador de la pila o entidad territorial, según corresponda (par. 9). Canal no definido."
+    },
+    "esquema_diferencial_rural": {
+      "articulo": "2.1.1.1.6.1",
+      "indicadores_minimos": ["MICROMEDICION", "CONTINUIDAD"],
+      "estandares": {"MICROMEDICION": 100, "CONTINUIDAD": 86.3},
+      "metas": "Las que se proyecten en el Plan de Gestión del Esquema Diferencial (art. 2.3.7.1.2.3 Decreto 1077 de 2015); trayectoria de 10 años; nunca por debajo de la situación inicial",
+      "costos": "Metodología del S2; si el prestador tiene ánimo de lucro, metodología del S1 (art. 2.1.1.1.6.2)"
+    }
+  },
+  "ise": {
+    "aplica_a": "Solo segmento 1; sobre CMA y CMOG",
+    "articulos": "2.1.1.1.2.2.7.1; 2.1.1.1.2.2.7.2; Anexo 6.2.1.4",
+    "calculo_por": "servicio y APS (CRA decide si por conjunto de APS cuando hay costos unificados — Q-NMTPP-13)",
+    "fuente": "Información reportada al SUI; la CRA publica",
+    "publicacion": {"responsable": "CRA", "anticipacion_minima_meses": 4, "referencia": "antes del inicio del año tarifario", "sin_publicacion": "Se reconoce el máximo valor del ISE para cada servicio"},
+    "ponderaciones_acueducto": {
+      "tecnica": {"peso": 49.40, "indicadores": {"macromedicion": 7.3, "reporte_y_calidad_agua_potable": 61.5, "continuidad": 31.1}},
+      "administrativa": {"peso": 14.00, "indicadores": {"micromedicion_efectiva": 81.3, "atencion_pqr_acueducto": 18.7}},
+      "financiera": {"peso": 36.60, "indicadores": {"costo_administrativo_mas_operativo_promedio_por_suscriptor": 100}}
+    },
+    "ponderaciones_alcantarillado": {
+      "tecnica": {"peso": 49.40, "indicadores": {"reporte_danos_red_alcantarillado": 100}},
+      "administrativa": {"peso": 14.00, "indicadores": {"atencion_pqr_alcantarillado": 100}},
+      "financiera": {"peso": 36.60, "indicadores": {"costo_administrativo_mas_operativo_promedio_por_suscriptor": 100}}
+    },
+    "normalizacion": {"resolucion": null, "documento_tecnico": "min-max a [0,100] (DT §7.1.8), sin conjunto de referencia ni sentido declarado", "bloqueado_por": "Q-NMTPP-04"},
+    "umbral_eficiencia": {"ise_menor_igual": 70, "porcentaje_aplicable": 70, "si_mayor": "valor calculado"},
+    "sin_informacion": "Se aplica 70 %",
+    "exencion": "Prestadores en zonas insulares (par. 4 art. 2.1.1.1.2.2.7.1; par. 2 art. 2.1.1.1.2.2.7.2)",
+    "transicion_piso_reconocimiento": [
+      {"anio_tarifario": 1, "calendario": 2027, "piso_pct": 100, "ise_aplica": false},
+      {"anio_tarifario": 2, "calendario": 2028, "piso_pct": 100, "ise_aplica": false},
+      {"anio_tarifario": 3, "calendario": 2029, "piso_pct": 90, "ise_aplica": true},
+      {"anio_tarifario": 4, "calendario": 2030, "piso_pct": 80, "ise_aplica": true},
+      {"anio_tarifario": 5, "calendario": 2031, "piso_pct": 70, "ise_aplica": true}
+    ]
+  },
+  "incentivos_s1": {
+    "regla_temporal": "Se reconocen desde el año tarifario 3; el año de aplicación i se evalúa con el año i-2",
+    "tope": "ISE con incentivos <= 100 %; no acumulables entre años",
+    "sin_reporte": "No procede el incentivo",
+    "determina": "CRA, en la publicación anual del ISE",
+    "cmog": {
+      "articulo": "2.1.1.1.2.2.6.2",
+      "incentivos": {
+        "continuidad": {"condicion": "Cumplir o superar las metas anuales de continuidad del subsegmento", "bloqueado_por": "Q-NMTPP-08"},
+        "perdidas": {"condicion": "IPUF <= IPUF* o, si IPUF > IPUF*, cumplir la meta anual proyectada de reducción"}
+      },
+      "porcentajes": {"anio_3": 5, "anio_4": 10, "anio_5_y_siguientes": 15}
+    },
+    "cma": {
+      "articulo": "2.1.1.1.2.2.6.3",
+      "incentivos": {
+        "micromedicion": {"condicion": "Cumplir o superar las metas anuales de micromedición del subsegmento", "bloqueado_por": "Q-NMTPP-08"},
+        "asociatividad": {"condicion": "Asociatividad formal (convenio, contrato o acuerdo vigente y ejecutado) en i-2"},
+        "buen_gobierno": {"condicion": "IUS CPGR >= 80 y CPUEAA = 100 (si no hay reporte CPUEAA no imputable al prestador, se evalúa solo CPGR)"},
+        "reporte_informacion": {"condicion": "100 % de los reportes obligatorios exigibles cuyo plazo venció en i-2", "bloqueado_por": "Q-NMTPP-12"}
+      },
+      "porcentajes": {"anio_3": 2.5, "anio_4": 5, "anio_5_y_siguientes": 7.5}
+    },
+    "tasa_incentivo_cmi": {
+      "articulo": "2.1.1.1.2.2.6.4",
+      "aplica_a": "Tecnologías, innovación, buenas prácticas, energías renovables, reúso, inversiones ambientales adicionales",
+      "tasa_anual_pct": {"S1-1": 11.82, "S1-2": 11.68, "S1-3": 11.41, "S1-4": 11.35}
+    }
+  },
+  "autodiagnostico": {
+    "S1": {"obligatorio": true, "frecuencia": "Al menos una vez por vigencia tarifaria", "umbral_accion_pct": 50, "escala": [{"rango": "76-100", "lectura": "infraestructura existente, se garantiza la prestación"}, {"rango": "51-75", "lectura": "falencias en la infraestructura"}, {"rango": "26-50", "lectura": "infraestructura deficiente, prestación no garantizada"}, {"rango": "0-25", "lectura": "infraestructura inoperante o inexistente"}], "articulo": "Anexo 6.2.1.5"},
+    "S2": {"obligatorio": false, "frecuencia": "Puede aplicarla al menos una vez en el periodo tarifario", "articulo": "2.1.1.1.3.1.5; Anexo 6.2.1.6"}
+  },
+  "calendario": [
+    {"codigo": "H-01", "hito": "Expedición de la Res. CRA 1038", "fecha": "2026-06-30", "actor": "CRA", "articulo": "Resolución, p. 185"},
+    {"codigo": "H-02", "hito": "Fin de la transición: se aplica la Res. 825 hasta esta fecha", "fecha": "2026-12-31", "actor": "Prestador", "articulo": "Art. vigésimo tercero"},
+    {"codigo": "H-03", "hito": "Cierre de la línea base (fin de vigencia Res. 825)", "fecha": "2026-12-31", "actor": "Prestador", "articulo": "2.1.1.1.1.7 par. 4"},
+    {"codigo": "H-04", "hito": "Inicio de aplicación del costo de referencia o tarifa comunitaria (año tarifario 1)", "fecha": "2027-01-01", "actor": "Prestador", "articulo": "2.1.1.1.1.7"},
+    {"codigo": "H-05", "hito": "Ventana del primer recálculo anual", "fecha_inicio": "2028-01-01", "fecha": "2028-05-31", "actor": "Prestador", "articulo": "2.1.1.1.2.2.1.2; 2.1.1.1.3.2.2.6", "recurrente": "anual 1-ene a 31-may"},
+    {"codigo": "H-06", "hito": "Publicación del ISE e incentivos aplicables a 2029 (evaluado 2027)", "fecha": "2028-08-31", "actor": "CRA", "articulo": "2.1.1.1.2.2.7.1 par. 2", "nota": "'por lo menos cuatro (4) meses antes del inicio del año tarifario'; la fecha es el último día que cumple la regla", "recurrente": "anual"},
+    {"codigo": "H-07", "hito": "Primer año con ISE aplicado (piso 90 %) e incentivos", "fecha": "2029-01-01", "actor": "Prestador", "articulo": "2.1.1.1.2.2.7.2"},
+    {"codigo": "H-08", "hito": "Fin del horizonte de metas del S1 y de la vigencia de la fórmula", "fecha": "2031-12-31", "actor": "CRA", "articulo": "2.1.1.1.2.1.1 par. 5; 2.1.1.1.8.1"},
+    {"codigo": "H-09", "hito": "Fin del horizonte de metas de esquemas diferenciales rurales", "fecha": "2036-12-31", "actor": "Prestador", "articulo": "2.1.1.1.6.1 par. 1"}
+  ],
+  "referente_ex_ante_dt": {
+    "fuente": "Documento Técnico NMTPPAA, Anexo 13, Tabla 104 (SURICATA y SUI; tarifas dic-2024; estados financieros 2023-2024)",
+    "naturaleza": "Estimación ex ante del regulador. NO es meta ni tope.",
+    "factura_promedio_estimada": [
+      {"servicio": "acueducto", "segmento": "S1", "res_825": 26332, "nmt": 31106, "variacion_pct": 18.1},
+      {"servicio": "acueducto", "segmento": "S2", "res_825": 34036, "nmt": 36097, "variacion_pct": 6.1},
+      {"servicio": "alcantarillado", "segmento": "S1", "res_825": 17949, "nmt": 12703, "variacion_pct": -29.2},
+      {"servicio": "alcantarillado", "segmento": "S2", "res_825": 11817, "nmt": null, "variacion_pct": null, "nota": "Sin estimación comparable"}
+    ],
+    "unidad": "pesos colombianos corrientes por factura promedio (año base no declarado en el DT)"
+  },
+  "linea_de_referencia_dt": {
+    "fuente": "Documento Técnico NMTPPAA §3 y §6.1 (SUI/RUPS corte 7-nov-2024)",
+    "pequenos_prestadores_rups": 2795,
+    "atienden_acueducto": 2739,
+    "aps_acueducto": 2833,
+    "organizaciones_autorizadas_acueducto": 1948,
+    "certificaron_estudio_suricata_res_825_pct": 17.03,
+    "organizaciones_autorizadas_certificaron_pct": 16,
+    "prestadores_con_info_certificada": 219,
+    "cumplen_nivel_de_servicio": 36,
+    "sin_reporte_continuidad_2016_2021_pct": 96,
+    "distribucion_s1_subsegmentos_pct": {"S1-1": 15.0, "S1-2": 29.6, "S1-3": 27.6, "S1-4": 27.9}
+  }
+}

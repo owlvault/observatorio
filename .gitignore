@@ -28,6 +28,9 @@ ehthumbs.db
 * ([0-9]).*
 * ([0-9][0-9]).*
 
+# Salidas y paquetes temporales o externos de modelos/agentes
+Claude outputs/*.zip
+
 # IDEs y editores
 .idea/
 .vscode/

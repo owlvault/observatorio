@@ -3,8 +3,8 @@ id: spec-portal-publico
 tipo: spec
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-13
-fuentes: [decisión de sesión 2026-09-13 (plataforma pública), Ley 1712 de 2014, Resolución MinTIC 1519 de 2020]
+actualizado: 2026-09-18
+fuentes: [decisión de sesión 2026-09-13 (plataforma pública), Ley 1712 de 2014, Resolución MinTIC 1519 de 2020, adr/ADR-0005, adr/ADR-0009, adr/ADR-0010, adr/ADR-0011, adr/ADR-0012, adr/ADR-0015]
 ---
 
 # Spec — Portal público, API y datos abiertos
@@ -15,9 +15,10 @@ Define la capa de publicación del Observatorio: qué se expone, con qué garant
 
 ## Contexto relevante
 
-- Flujo de negocio: `docs/business_context.md` → FL-02 paso 5, FL-03
-- Decisión que aplica: `adr/ADR-0003-compuerta-de-publicacion.md`
-- Términos: `docs/glosario.md` → Semáforo de calidad, Tarifa aplicada, Costo Unitario
+- Flujos de negocio: `docs/business_context.md` → FL-02 paso 5, FL-03, FL-04
+- Decisiones que aplican: `adr/ADR-0003-compuerta-de-publicacion.md`, `adr/ADR-0005-publicacion-por-prestador.md`, `adr/ADR-0009-nombre-y-lema.md`, `adr/ADR-0010-motor-de-tableros.md`, `adr/ADR-0011-micrositio-en-sede-electronica.md`, `adr/ADR-0012-agregacion-territorial.md`, `adr/ADR-0015-ise-indice-oficial-de-la-cra.md`
+- Estándares UI/UX: `.agents/rules/ui-ux-design-standards.md`
+- Términos: `docs/glosario.md` → Ficha metodológica, Semáforo de calidad, Cuarentena, Contenido editorial, Regla de agregación territorial, Tarifa aplicada, Costo Unitario, ISE
 
 ## Requisitos funcionales
 
@@ -185,6 +186,7 @@ El sistema DEBE poder reconstruir el estado exacto de lo publicado en cualquier 
 | RN-PORTAL-02 | Todo dato publicado es descargable. No existe información visible que no se pueda extraer. | RF-PORTAL-03 |
 | RN-PORTAL-03 | Retirar un valor publicado requiere aprobación de ACT-CURADOR-DATOS y queda en el historial público. | RF-PORTAL-07 |
 | RN-PORTAL-04 | El portal NO DEBE presentar la Tarifa aplicada y el Costo Unitario como el mismo concepto. | RF-PORTAL-09 |
+| RN-PORTAL-05 | El portal NO DEBE mostrar rankings, puntajes compuestos ni índices que agreguen dimensiones distintas en un solo número, salvo el ISE oficial en los términos de `adr/ADR-0015` (que se muestra tal como lo publica la CRA, con su descomposición completa y sin ordenar ni clasificar prestadores). | RF-PORTAL-01, `adr/ADR-0005`, `adr/ADR-0012`, `adr/ADR-0015` |
 
 ## Casos borde y errores
 

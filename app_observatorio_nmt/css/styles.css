@@ -1,0 +1,1169 @@
+/* ==========================================================================
+   SISTEMA DE DISEÑO VISUAL INSTITUCIONAL CRA - OBSERVATORIO REGULATORIO
+   Tablero de Seguimiento a los Nuevos Marcos Tarifarios (NMT)
+   Cumplimiento: WCAG 2.1 AA / Res. MinTIC 1519 de 2020 / Context Lake CRA
+   ========================================================================== */
+
+:root {
+  /* Fondo Luminoso Institucional */
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f1f5f9;
+  --bg-surface-elevated: #e2e8f0;
+
+  /* Gama Canónica de Azules de Alta Sofisticación */
+  --blue-deep-navy: #072b42;   /* Títulos, encabezados, contrastes máximos */
+  --blue-primary: #0b5e87;     /* Azul institucional CRA */
+  --blue-royal: #1d4ed8;       /* Acento visual activo e interactivos */
+  --blue-cerulean: #0284c7;    /* Cifras destacadas y datos vivos */
+  --blue-sky: #0ea5e9;         /* Resplandores y microinteracciones */
+  --blue-ice: #e0f2fe;         /* Badges y fondos suaves */
+  --blue-border: #cbd5e1;      /* Líneas de corte sutiles */
+  --blue-glow: rgba(2, 132, 199, 0.15);
+
+  /* Texto y Neutrales */
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+
+  /* Semáforos de Calidad y Alertas (Accesibles WCAG AA) */
+  --verified-color: #059669;
+  --verified-bg: #ecfdf5;
+  --verified-border: #a7f3d0;
+  --verified-text: #065f46;
+
+  --warning-color: #b45309;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --warning-text: #92400e;
+
+  --quarantine-color: #d97706;
+  --quarantine-bg: #fff7ed;
+  --quarantine-border: #fed7aa;
+  --quarantine-text: #9a3412;
+
+  --noreport-color: #dc2626;
+  --noreport-bg: #fef2f2;
+  --noreport-border: #fecaca;
+  --noreport-text: #991b1b;
+
+  /* Sombras y Elevaciones */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+
+  /* Curvaturas y Transiciones */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Aliases Canónicos Institucionales (ui-ux-design-standards.md) */
+  --color-deep-navy: var(--blue-deep-navy);
+  --color-cra-blue: var(--blue-primary);
+  --color-royal-blue: var(--blue-royal);
+  --color-cerulean: var(--blue-cerulean);
+  --color-ice-blue: var(--blue-ice);
+  --color-emerald: var(--verified-color);
+  --color-amber: var(--warning-color);
+  --color-danger: var(--noreport-color);
+  --border-color: var(--border-light);
+}
+
+.text-primary { color: var(--blue-primary) !important; }
+.text-success { color: var(--verified-color) !important; }
+.text-danger { color: var(--noreport-color) !important; }
+.text-amber { color: var(--warning-color) !important; }
+.font-bold { font-weight: 700 !important; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==========================================================================
+   ENCABEZADO INSTITUCIONAL
+   ========================================================================== */
+.header-cra {
+  background: #ffffff;
+  border-bottom: 2px solid var(--blue-primary);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-topbar {
+  background: var(--blue-deep-navy);
+  color: #ffffff;
+  font-size: 0.78rem;
+  padding: 4px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-topbar a {
+  color: var(--blue-ice);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-logo-badge {
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(135deg, var(--blue-primary), var(--blue-deep-navy));
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(11, 94, 135, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mode-badge-toggle {
+  display: flex;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.mode-btn.active {
+  background: var(--blue-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(11, 94, 135, 0.2);
+}
+
+.btn-export-quick {
+  background: #ffffff;
+  border: 1px solid var(--blue-border);
+  color: var(--blue-primary);
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-export-quick:hover {
+  background: var(--blue-ice);
+  border-color: var(--blue-cerulean);
+}
+
+/* ==========================================================================
+   NAVEGACIÓN POR PESTAÑAS
+   ========================================================================== */
+.nav-tabs-bar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.nav-tabs-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: var(--blue-primary);
+  background: var(--bg-surface-subtle);
+}
+
+.tab-btn.active {
+  color: var(--blue-primary);
+  border-bottom-color: var(--blue-primary);
+  background: rgba(11, 94, 135, 0.04);
+}
+
+.tab-counter {
+  font-size: 0.72rem;
+  background: var(--blue-ice);
+  color: var(--blue-primary);
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   CONTENIDO PRINCIPAL Y BANNER REGULATORIO
+   ========================================================================== */
+.main-layout {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.regulatory-banner {
+  background: linear-gradient(135deg, #072b42 0%, #0b5e87 100%);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 22px 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.regulatory-banner::after {
+  content: "CRA 1032/2026";
+  position: absolute;
+  right: -15px;
+  bottom: -20px;
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.banner-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.banner-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.banner-desc {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 960px;
+  line-height: 1.5;
+}
+
+/* Trazabilidad de Vacíos Normativos (RF-NMT-12) */
+.gap-alert-box {
+  background: #fffbeb;
+  border-left: 4px solid var(--warning-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.82rem;
+  color: var(--warning-text);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gap-alert-box strong {
+  color: #78350f;
+}
+
+/* Barra de Filtros Reactivos (RF-NMT-10) */
+.filters-toolbar {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.filter-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-select, .filter-input {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-main);
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.filter-select:focus, .filter-input:focus {
+  border-color: var(--blue-primary);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+
+.filter-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.btn-reset-filters {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-reset-filters:hover {
+  background: var(--bg-surface-subtle);
+  color: var(--blue-primary);
+}
+
+/* Banner de No Comparabilidad (RN-NMT-02) */
+.non-comparability-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 0.82rem;
+  display: none; /* Se activa dinámicamente */
+  align-items: center;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   TARJETAS KPI Y CIFRAS DESTACADAS (RF-NMT-02 a 09)
+   ========================================================================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-border);
+}
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.kpi-code {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--blue-primary);
+  background: var(--blue-ice);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.kpi-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+  letter-spacing: -0.5px;
+}
+
+.kpi-unit {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.kpi-subinfo {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+  padding-top: 10px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kpi-footer-link {
+  color: var(--blue-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.kpi-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Semáforos de Calidad */
+.quality-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.badge-verified {
+  background: var(--verified-bg);
+  color: var(--verified-text);
+  border: 1px solid var(--verified-border);
+}
+
+.badge-warning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border: 1px solid var(--warning-border);
+}
+
+.badge-quarantine {
+  background: var(--quarantine-bg);
+  color: var(--quarantine-text);
+  border: 1px solid var(--quarantine-border);
+}
+
+.badge-noreport {
+  background: var(--noreport-bg);
+  color: var(--noreport-text);
+  border: 1px solid var(--noreport-border);
+}
+
+/* ==========================================================================
+   LÍNEA DE TIEMPO CICLO REGULATORIO OCDE (E0 A E9)
+   ========================================================================== */
+.timeline-section-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeline-ocde-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.timeline-step-card {
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.timeline-step-card.cumplida {
+  border-left: 4px solid var(--verified-color);
+  background: #ffffff;
+}
+
+.timeline-step-card.en_curso {
+  border-left: 4px solid var(--blue-primary);
+  background: #f0f9ff;
+  box-shadow: 0 0 0 2px rgba(11, 94, 135, 0.15);
+}
+
+.timeline-step-card.pendiente {
+  border-left: 4px solid var(--text-muted);
+  opacity: 0.85;
+}
+
+.timeline-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.step-code-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.step-code-badge.cumplida {
+  background: var(--verified-bg);
+  color: var(--verified-text);
+}
+
+.step-code-badge.en_curso {
+  background: var(--blue-ice);
+  color: var(--blue-primary);
+}
+
+.step-code-badge.pendiente {
+  background: #e2e8f0;
+  color: var(--text-secondary);
+}
+
+.step-fase-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.step-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blue-deep-navy);
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.step-desc {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.step-meta-row {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px dashed var(--border-light);
+  padding-top: 6px;
+}
+
+/* ==========================================================================
+   PANELES DE GRÁFICAS ANALÍTICAS (CHART.JS)
+   ========================================================================== */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.chart-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.chart-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+}
+
+.chart-subtitle {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.chart-body {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+}
+
+/* ==========================================================================
+   TABLA DE PRESTADORES Y DETALLE INDIVIDUAL (ADR-0005)
+   ========================================================================== */
+.providers-section-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-top: 16px;
+}
+
+.table-cra {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.table-cra th {
+  background: var(--bg-surface-subtle);
+  color: var(--blue-deep-navy);
+  font-weight: 700;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border-light);
+  white-space: nowrap;
+}
+
+.table-cra td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.table-cra tbody tr:hover {
+  background: var(--blue-ice);
+  cursor: pointer;
+}
+
+.btn-view-detail {
+  background: var(--blue-ice);
+  border: 1px solid var(--blue-cerulean);
+  color: var(--blue-primary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-view-detail:hover {
+  background: var(--blue-primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   MODALES (FICHA DE PRESTADOR & FICHAS METODOLÓGICAS)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(7, 43, 66, 0.65);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-surface-subtle);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.info-block {
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.info-block-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--blue-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   MAPA Y TERRITORIO
+   ========================================================================== */
+#map-container {
+  height: 520px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  z-index: 10;
+}
+
+/* ==========================================================================
+   PIE DE PÁGINA INSTITUCIONAL
+   ========================================================================== */
+.footer-cra {
+  background: var(--blue-deep-navy);
+  color: #ffffff;
+  padding: 36px 24px 24px;
+  margin-top: 48px;
+  border-top: 4px solid var(--blue-primary);
+}
+
+.footer-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 0.85rem;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 260px;
+}
+
+.footer-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.footer-desc {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  font-size: 0.82rem;
+}
+
+.footer-bottom {
+  max-width: 1440px;
+  margin: 24px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   ADAPTATIVIDAD MÓVIL
+   ========================================================================== */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   MÓDULO DE IMPACTO REGULATORIO BAJO EL MODELO OCDE
+   ========================================================================== */
+.ocde-subnav-bar {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.ocde-subnav-btn {
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ocde-subnav-btn:hover {
+  background: var(--blue-ice);
+  color: var(--blue-primary);
+  border-color: var(--blue-cerulean);
+}
+
+.ocde-subnav-btn.active {
+  background: var(--blue-primary);
+  color: #ffffff;
+  border-color: var(--blue-primary);
+  box-shadow: 0 2px 6px rgba(11, 94, 135, 0.3);
+}
+
+/* 5 Dimensiones de Impacto OCDE */
+.ocde-dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ocde-dimension-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ocde-dimension-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.dim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dim-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.dim-pill-econ { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.dim-pill-calidad { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.dim-pill-social { background: #faf5ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+.dim-pill-amb { background: #ecfeff; color: #155e75; border: 1px solid #a5f3fc; }
+.dim-pill-gob { background: #f8fafc; color: #334155; border: 1px solid #cbd5e1; }
+
+.dim-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--blue-deep-navy);
+  margin-bottom: 4px;
+}
+
+.dim-desc {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.dim-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dim-metric-box {
+  background: var(--bg-surface-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dim-metric-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.dim-metric-val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--blue-deep-navy);
+  margin: 2px 0;
+}
+
+.dim-metric-sub {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+.dim-footer-note {
+  border-top: 1px solid var(--border-light);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+/* Scorecard Section */
+.scorecard-section-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Cluster Boxes para los 12 Principios OCDE */
+.cluster-box {
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  background: #ffffff;
+}
+
+.cluster-efectividad { border-left: 4px solid var(--blue-primary); }
+.cluster-eficiencia { border-left: 4px solid var(--blue-cerulean); }
+.cluster-confianza { border-left: 4px solid var(--verified-color); }
+
+/* Calculadora de Asequibilidad */
+.calc-grid-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 900px) {
+  .calc-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-controls-box {
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.calc-results-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.calc-metric-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.calc-slider {
+  accent-color: var(--blue-primary);
+  height: 6px;
+  border-radius: 4px;
+}
+
+/* Dictamen Ejecutivo */
+.report-official-header {
+  border-bottom: 2px solid var(--blue-primary);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+}

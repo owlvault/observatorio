@@ -3,7 +3,7 @@ id: spec-seguimiento-implementacion-nmt
 tipo: spec
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-16
+actualizado: 2026-09-18
 fuentes: [claude/hoja-de-ruta-nuevos-marcos-tarifarios-2026-09-15.md, docs/business_context.md, specs/ontologia-indicadores.md, specs/portal-publico.md, 05_Bateria_de_Indicadores/catalogo-v1.md, adr/ADR-0003, adr/ADR-0005, adr/ADR-0010, adr/ADR-0012, Res. CRA 1032 de 2026, Res. CRA 1038 de 2026, Res. CRA 1040 de 2026, Res. CRA 1014/2025 (IUS)]
 ---
 
@@ -235,7 +235,7 @@ CUANDO la SSPD publique el IUS anual (antes del 30 de junio, ver RF-NMT-09), el 
 
 ## Fuera de alcance de esta spec
 
-- Los marcos de **pequeños prestadores, rurales y gestores comunitarios (Res. 1038)** y de **aseo, grandes prestadores (Res. 1040)**: su período de inicio, línea base y vigencia están "por confirmar" en la fuente (sección 6 de la hoja de ruta). El modelo de datos (`marco_tarifario`, `etapa_ciclo`) se diseñó para admitirlos sin cambio estructural, pero sus indicadores NMT-ASE-01/02 y las metas de la 1038 quedan para una versión posterior, una vez se cierren Q-NMT-03 y Q-NMT-04.
+- Los marcos de **pequeños prestadores, rurales y gestores comunitarios (Res. 1038)** y de **aseo, grandes prestadores (Res. 1040)**. La Res. 1038 tiene spec propia: `specs/seguimiento-nmt-pequenos-prestadores.md` (familia NMTPP-*, `adr/ADR-0013`), que reutiliza `marco_tarifario` y `hito` de esta spec y las reglas RN-NMT-01..04. La Res. 1040 sigue pendiente de Q-NMT-04; sus indicadores NMT-ASE-01/02 quedan para una versión posterior.
 - El **régimen transitorio de aseo en Bogotá (Res. 1027/1037)**: tiene su propio cronograma de verificación por la CRA hacia la Corte Constitucional; no comparte el ciclo E0-E9 de los otros tres marcos y merece spec propia si se decide incluirlo.
 - **Evaluación ex post formal del marco**: la CRA no la tiene institucionalizada (E9 de la hoja de ruta); este tablero documenta el proceso de implementación, no sustituye ni simula una evaluación de impacto regulatorio.
 - **Proyección de tarifas futuras**: ningún requisito de esta spec calcula o muestra una tarifa esperada para años tarifarios que aún no han cerrado.
@@ -247,7 +247,7 @@ CUANDO la SSPD publique el IUS anual (antes del 30 de junio, ver RF-NMT-09), el 
 |---|---|---|---|
 | Q-NMT-01 | ¿Cuáles son los valores de metas y gradualidad por segmento de la Res. 1032 (Tablas 16, 50-51)? | RF-NMT-06 | Subdirección de Regulación |
 | Q-NMT-02 | ¿Cuáles son los porcentajes de descuento por incumplimiento de la Res. 1032 (Tabla 31)? | RF-NMT-08 | Subdirección de Regulación |
-| Q-NMT-03 | ¿Cuáles son el período de inicio, la línea base y la vigencia de la Res. 1038 (pequeños prestadores)? | Extensión de esta spec a la Res. 1038 | Subdirección de Regulación |
+| Q-NMT-03 | ~~¿Cuáles son el período de inicio, la línea base y la vigencia de la Res. 1038 (pequeños prestadores)?~~ **Cerrada 2026-09-18:** inicio 1-ene-2027 (art. 2.1.1.1.1.7); línea base = situación real al final de la vigencia de la Res. 825 (art. 2.1.1.1.1.7 par. 4); vigencia 5 años desde la aplicación, prorrogable hasta nueva fórmula (art. 2.1.1.1.8.1). Ver `specs/nmtpp/parametros-res-1038.json` | — | Subdirección de Regulación |
 | Q-NMT-04 | ¿Cuál es la fecha oficial de expedición, el número de resolución definitivo y la vigencia (10 o 15 años) de la Res. 1040 (aseo)? | Extensión de esta spec a la Res. 1040 | Subdirección de Regulación / Oficina Jurídica |
 | Q-NMT-05 | ¿Cómo se ingiere `prestador_marco.etapa_actual` en la práctica: por reporte directo del prestador a SUI/SURICATA, por proceso batch desde SSPD, o por captura manual del equipo del Observatorio? | RF-NMT-01, RF-NMT-02 | CIO / Ciencia de Datos |
 | Q-NMT-06 | ¿La regla de agregación territorial de `ADR-0012` (umbral 80%, peso material 5%) aplica sin cambios a los indicadores NMT-*, o necesitan un umbral propio dado que la implementación apenas empieza (menor cobertura de reporte en 2026-2027)? | Vista territorial de RF-NMT-02, RF-NMT-05 | Subdirección de Regulación |
@@ -257,3 +257,4 @@ CUANDO la SSPD publique el IUS anual (antes del 30 de junio, ver RF-NMT-09), el 
 | Fecha | Cambio | Origen |
 |---|---|---|
 | 2026-09-16 | Versión inicial, generada bajo el método SDD del Context Lake, a partir de `claude/hoja-de-ruta-nuevos-marcos-tarifarios-2026-09-15.md` (sección 5, "Implicaciones para el Observatorio") | Sesión con Camilo Carvajalino |
+| 2026-09-18 | Q-NMT-03 cerrada con la lectura de la Res. CRA 1038; la Res. 1038 sale a spec propia (`specs/seguimiento-nmt-pequenos-prestadores.md`); nota: NMT-ADO/TAR/INC/RIE se reclasifican en la dimensión SEG en la próxima revisión (`adr/ADR-0013`) | Sesión con Camilo Carvajalino |

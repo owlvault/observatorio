@@ -3,8 +3,8 @@ id: catalogo-indicadores-v1
 tipo: spec
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-14
-fuentes: [decisión de sesión 2026-09-13, specs/ontologia-indicadores.md, README_Context_Lake]
+actualizado: 2026-09-18
+fuentes: [decisión de sesión 2026-09-13, specs/ontologia-indicadores.md, README_Context_Lake, adr/ADR-0013, nmtpp/catalogo-nmtpp.md]
 ---
 
 # Catálogo V1 de indicadores y plantilla de ficha metodológica
@@ -44,6 +44,17 @@ Un indicador que falla el filtro 1 no entra a V1 aunque sea deseable; se marca c
 | `IND-INV-01` | Ejecución de inversiones frente a lo proyectado | INV | AA | SUI | Requiere serie plurianual |
 
 **Cobertura por dimensión:** 3 de cobertura, 1 continuidad, 2 pérdidas, 1 calidad, 2 eficiencia, 1 financiera, 1 asequibilidad, 2 economía circular, 1 inversiones. Riesgo climático (`CLI`) queda sin indicador en V1 por falta de fuente estructurada; se aborda en V1.1 con SIRH del IDEAM.
+
+## Relación con el Catálogo NMTPP (Res. CRA 1038 de 2026)
+
+Para el seguimiento al Nuevo Marco Tarifario de pequeños prestadores de acueducto (Res. CRA 1038 de 2026), los indicadores forman la familia `NMTPP-*` y se documentan en un catálogo especializado con 25 fichas metodológicas:
+- Catálogo NMTPP: `nmtpp/catalogo-nmtpp.md`
+- Fichas individuales: `nmtpp/ficha-NMTPP-*.md`
+- Sustento de separación y dimensión `SEG`: `adr/ADR-0013-familia-indicadores-nmtpp.md`
+- Parámetros oficiales: `specs/nmtpp/parametros-res-1038.json`
+- Especificación funcional: `specs/seguimiento-nmt-pequenos-prestadores.md`
+
+Los indicadores `NMTPP-*` NO se combinan ni se promedian con los indicadores `IND-*` de este catálogo general (regla de oro 10).
 
 ## Secuencia de construcción
 
@@ -101,3 +112,4 @@ El campo 14 fija cómo sube el indicador de prestador a municipio, departamento 
 |---|---|---|
 | 2026-09-13 | Versión inicial del catálogo V1 y plantilla de ficha | Sesión con Camilo Carvajalino |
 | 2026-09-14 | Campo 14 de la plantilla (regla de agregación territorial) y funciones asignadas por indicador | `adr/ADR-0012` |
+| 2026-09-18 | Referencia cruzada al catálogo NMTPP (Res. 1038) y dimensión SEG | `adr/ADR-0013`, `nmtpp/catalogo-nmtpp.md` |

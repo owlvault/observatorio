@@ -3,25 +3,25 @@ id: spec-ontologia-indicadores
 tipo: spec
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-14
-fuentes: [README_Context_Lake seccion 4 (Drive), 05_Bateria_de_Indicadores/catalogo-v1.md (Drive), Plan_de_Investigacion 3.1 (Drive), adr/ADR-0012, carpeta 09_ (propuesta y mockup v2)]
+actualizado: 2026-09-18
+fuentes: [README_Context_Lake seccion 4 (Drive), 05_Bateria_de_Indicadores/catalogo-v1.md (Drive), Plan_de_Investigacion 3.1 (Drive), adr/ADR-0012, adr/ADR-0013, carpeta 09_ (propuesta y mockup v2)]
 ---
 
 # Spec — Ontología y cálculo de indicadores
 
 ## Propósito
 
-Define qué es un indicador en el Observatorio, qué debe contener su ficha metodológica, cómo se calcula, se versiona y se desagrega. **No cubre** la ingesta de los datos que lo alimentan, las reglas de calidad, ni cómo se visualiza.
+Define qué es un indicador en el Observatorio, qué debe contener su ficha metodológica, cómo se calcula, se versiona y se desagrega. **No cubre** la ingesta de los datos que lo alimentan, las reglas de validación de contenido (`specs/calidad-de-datos.md`) ni la publicación (`specs/portal-publico.md`).
 
 ## Contexto relevante
 
 - Flujo de negocio: `docs/business_context.md` → FL-02
-- Decisión que aplica: `adr/ADR-0003-compuerta-de-publicacion.md`
-- Términos: `docs/glosario.md` → Indicador, Ficha metodológica, Versión de ficha, IANC, IPUF, IRCA, IRABAm, CMA, CMO, CMI, CMT, Costo Unitario, Asequibilidad
+- Decisión que aplica: `adr/ADR-0003-compuerta-de-publicacion.md`, `adr/ADR-0013-familia-indicadores-nmtpp.md`
+- Términos: `docs/glosario.md` → Indicador, Ficha metodológica, Versión de ficha, IANC, IPUF, IRCA, IRABAm, CMA, CMO, CMI, CMT, Costo Unitario, Asequibilidad, Dimensión SEG
 
 ## Dimensiones del catálogo
 
-El catálogo se organiza en diez dimensiones. Un indicador pertenece a **una sola** dimensión: la clasificación múltiple hace que el mismo concepto se cuente dos veces en los tableros.
+El catálogo se organiza en diez dimensiones temáticas y una dimensión de navegación transversal (`SEG`, incorporada en `adr/ADR-0013`). Un indicador pertenece a **una sola** dimensión: la clasificación múltiple hace que el mismo concepto se cuente dos veces en los tableros.
 
 | Código | Dimensión | Ejemplos de indicador |
 |---|---|---|
@@ -35,10 +35,11 @@ El catálogo se organiza en diez dimensiones. Un indicador pertenece a **una sol
 | `ASE` | Asequibilidad | Peso de la factura sobre gasto del hogar |
 | `CLI` | Riesgo climático y resiliencia | Exposición de fuentes de abastecimiento, planes de contingencia |
 | `ECI` | Economía circular | Aprovechamiento, tratamiento de aguas residuales |
+| `SEG` | Seguimiento regulatorio de marcos tarifarios | Adopción, ISE, incentivos, régimen especial y tarifa (`adr/ADR-0013`) |
 
-Código de indicador: `IND-<DIMENSION>-<NN>`, por ejemplo `IND-PER-01` para IANC.
+Código de indicador: `IND-<DIMENSION>-<NN>` para el catálogo general V1 (por ejemplo `IND-PER-01`), o `NMTPP-<CAPA>-<NN>` / `NMTPP-<SEGMENTO>-<TEMA>` para el seguimiento de la Res. 1038 (`adr/ADR-0013`).
 
-> **ASUNCIÓN (sin validar):** Estas diez dimensiones se derivan del README y del Plan. La batería concreta de indicadores por dimensión **no existe todavía**. Cada uno requiere ficha aprobada antes de implementarse.
+> **ASUNCIÓN (sin validar):** Las diez dimensiones temáticas originales se derivan del README y del Plan. La dimensión `SEG` proviene de `adr/ADR-0013`. Cada indicador requiere ficha aprobada antes de implementarse.
 
 ## Requisitos funcionales
 
