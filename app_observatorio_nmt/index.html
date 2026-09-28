@@ -3,97 +3,369 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Observatorio CRA · Monitoreo de Nuevos Marcos Tarifarios (Res. CRA 1032/2026)</title>
-  <meta name="description" content="Plataforma regulatoria de seguimiento a la implementación de los nuevos marcos tarifarios de grandes prestadores de acueducto y ciclo de gobernanza OCDE." />
-  
+  <title>Observatorio CRA · Agua potable y saneamiento básico</title>
+  <meta name="description" content="Observatorio Regulatorio de Agua Potable y Saneamiento Básico – CRA. Seguimiento a la implementación de los nuevos marcos tarifarios (Res. CRA 1032 y 1038 de 2026) con datos abiertos." />
+  <meta name="theme-color" content="#0a2f55" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a2f55'/%3E%3Cpath d='M16 6c-4 5.2-7 9-7 12.6A7 7 0 0 0 23 18.6C23 15 20 11.2 16 6z' fill='%23fff'/%3E%3C/svg%3E" />
+
   <!-- Tipografía Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- Leaflet Map CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <!-- Estilos del Sistema de Diseño Institucional CRA -->
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/nmtpp.css" />
+  <!-- Capa editorial del portal (se carga al final: redefine tokens y componentes) -->
+  <link rel="stylesheet" href="css/portal.css" />
+  <!-- Capa visual cinemática (escala editorial, bento, escenas y movimiento) -->
+  <link rel="stylesheet" href="css/cinematica.css" />
+  <!-- Capa cinemática por sección -->
+  <link rel="stylesheet" href="css/cx-paginas.css" />
+  <link rel="stylesheet" href="css/cx-nmtpp.css" />
+  <link rel="stylesheet" href="css/cx-ocde.css" />
 </head>
 <body>
 
-  <!-- ENCABEZADO INSTITUCIONAL -->
-  <header class="header-cra">
-    <div class="header-topbar">
-      <span>República de Colombia · Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA)</span>
-      <span>Corte de Información: <strong>31 de agosto de 2026</strong> | Fuente Oficial: SUI / SSPD</span>
-    </div>
-    <div class="header-container">
-      <div class="brand-section">
-        <div class="brand-logo-badge">CRA</div>
-        <div>
-          <h1 class="brand-title">Observatorio Regulatorio CRA</h1>
-          <div class="brand-subtitle">Monitoreo de Implementación de Marcos Tarifarios · Grandes Prestadores (Res. CRA 1032/2026)</div>
+  <a class="obs-skip" href="#contenido">Saltar al contenido</a>
+
+  <!-- FRANJA GUBERNAMENTAL -->
+  <div class="obs-govbar">
+    <div class="obs-wrap obs-govbar-inner">
+      <span class="obs-govbar-entity">República de Colombia · Comisión de Regulación de Agua Potable y Saneamiento Básico</span>
+      <div class="obs-govbar-right">
+        <span class="obs-govbar-cut">Corte de información: <strong>31 ago 2026</strong> · Fuente: SUI / SSPD</span>
+        <div class="obs-view-toggle" role="group" aria-label="Vista de la información" title="Alternar entre visión ciudadana y analítica interna">
+          <span class="obs-view-label">Vista</span>
+          <button id="btn-mode-ciudadano" class="mode-btn">Ciudadana</button>
+          <button id="btn-mode-analista" class="mode-btn active">Analista CRA</button>
         </div>
       </div>
-      <div class="header-controls">
-        <div class="mode-badge-toggle" title="Alternar entre visión ciudadana y analítica interna">
-          <button id="btn-mode-analista" class="mode-btn active">Modo Analista CRA</button>
-          <button id="btn-mode-ciudadano" class="mode-btn">Modo Ciudadano</button>
-        </div>
-        <button class="btn-export-quick" onclick="window.DataExport.exportCSV(window.AppNMT.filteredProviders)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Descargar CSV
+    </div>
+  </div>
+
+  <!-- AVISO DE PROTOTIPO (transparencia sobre el origen de las cifras) -->
+  <div class="obs-proto-ribbon" role="note">
+    <div class="obs-wrap">
+      <strong>Prototipo en construcción.</strong>
+      Las cifras de prestadores son simuladas con fines de diseño y validación; los parámetros regulatorios corresponden a las Resoluciones CRA 1032 y 1038 de 2026.
+      Seguimiento informativo, sin efecto jurídico; la verificación del cumplimiento es de la SSPD.
+    </div>
+  </div>
+
+  <!-- ENCABEZADO INSTITUCIONAL -->
+  <header class="obs-header">
+    <div class="obs-wrap obs-header-inner">
+      <a class="obs-brand" href="#inicio" onclick="event.preventDefault(); window.AppNMT.goTo('inicio')" aria-label="Observatorio CRA, ir al inicio">
+        <span class="obs-brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" rx="9" fill="#0a2f55"/><path d="M20 7c-5 6.4-8.6 11.2-8.6 15.6a8.6 8.6 0 0 0 17.2 0C28.6 18.2 25 13.4 20 7z" fill="#fff"/><path d="M14.6 24.4c1.6 1.2 3.4 1.8 5.4 1.8s3.8-.6 5.4-1.8" stroke="#2a78d6" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        </span>
+        <span class="obs-brand-text">
+          <span class="obs-brand-name">Observatorio CRA</span>
+          <span class="obs-brand-sub">Agua potable y saneamiento básico</span>
+        </span>
+      </a>
+      <div class="obs-header-actions">
+        <button class="obs-btn obs-btn-ghost" onclick="window.AppNMT.goTo('metodologia')">Metodología</button>
+        <button class="obs-btn obs-btn-primary" onclick="window.AppNMT.goTo('datos')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Datos abiertos
         </button>
       </div>
     </div>
+
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="obs-nav" aria-label="Navegación del Observatorio">
+      <div class="obs-wrap obs-nav-inner">
+        <button class="tab-btn active" data-tab="inicio" id="tab-btn-inicio">Inicio</button>
+        <button class="tab-btn" data-tab="tablero" id="tab-btn-tablero">Grandes prestadores</button>
+        <button class="tab-btn" data-tab="nmtpp" id="tab-btn-nmtpp">Pequeños prestadores y rurales</button>
+        <button class="tab-btn" data-tab="ciclo" id="tab-btn-ciclo">Impacto regulatorio</button>
+        <button class="tab-btn" data-tab="prestadores" id="tab-btn-prestadores">Prestadores</button>
+        <button class="tab-btn" data-tab="mapa" id="tab-btn-mapa">Mapa</button>
+        <button class="tab-btn" data-tab="metodologia" id="tab-btn-metodologia">Metodología</button>
+        <button class="tab-btn" data-tab="datos" id="tab-btn-datos">Datos abiertos</button>
+      </div>
+    </nav>
   </header>
 
-  <!-- BARRA DE PESTAÑAS -->
-  <nav class="nav-tabs-bar" aria-label="Navegación del Observatorio">
-    <div class="nav-tabs-container">
-      <button class="tab-btn active" data-tab="tablero" id="tab-btn-tablero">
-        <span>Tablero NMT</span>
-      </button>
-      <button class="tab-btn" data-tab="ciclo" id="tab-btn-ciclo">
-        <span>Modelo OCDE & Impacto Regulatorio</span>
-        <span class="tab-counter">AIR Ex-Post</span>
-      </button>
-      <button class="tab-btn" data-tab="prestadores" id="tab-btn-prestadores">
-        <span>Directorio de Prestadores</span>
-        <span class="tab-counter" id="filtered-count-badge">188 prestadores</span>
-      </button>
-      <button class="tab-btn" data-tab="mapa" id="tab-btn-mapa">
-        <span>Mapa Territorial</span>
-      </button>
-      <button class="tab-btn" data-tab="metodologia" id="tab-btn-metodologia">
-        <span>Metodología y Compuerta</span>
-      </button>
-      <button class="tab-btn" data-tab="datos" id="tab-btn-datos">
-        <span>Datos Abiertos & API</span>
-      </button>
-    </div>
-  </nav>
-
   <!-- CONTENEDOR PRINCIPAL -->
-  <main class="main-layout">
+  <main class="main-layout" id="contenido" tabindex="-1">
 
-    <!-- BANNER CONTEXTO NORMATIVO -->
-    <section class="regulatory-banner" aria-label="Marco Normativo">
-      <span class="banner-badge">Marco Regulatorio Vigente</span>
-      <h2 class="banner-title">Resolución CRA 1032 de 2026 · Nuevos Marcos Tarifarios de Acueducto y Alcantarillado</h2>
-      <p class="banner-desc">
-        Aplica a prestadores urbanos con más de 5.000 suscriptores en Colombia (Segmentos 1 a 4). 
-        Este observatorio institucionaliza la evaluación y monitoreo continuo del ciclo de implementación de la regulación, 
-        articulado con las mejores prácticas de la <strong>OCDE para la Evaluación del Impacto Regulatorio (AIR Ex-Post)</strong>.
-      </p>
+    <!-- ENCABEZADO DE SECCIÓN (se completa desde app.js según la pestaña activa) -->
+    <section class="obs-page-head cx-page-hero" id="page-head" aria-live="polite" hidden>
+      <canvas class="cx-page-hero-canvas" id="page-head-canvas" aria-hidden="true"></canvas>
+      <div class="obs-page-head-text">
+        <nav class="obs-crumbs" aria-label="Ruta"><a href="#inicio" onclick="event.preventDefault(); window.AppNMT.goTo('inicio')">Inicio</a><span aria-hidden="true">/</span><span id="page-head-crumb"></span></nav>
+        <span class="obs-eyebrow" id="page-head-eyebrow"></span>
+        <h1 class="obs-page-title" id="page-head-title"></h1>
+        <p class="obs-page-lead" id="page-head-lead"></p>
+        <ul class="cx-page-pillars" id="page-head-pillars" aria-label="Cifras de la sección"></ul>
+      </div>
+      <div class="obs-page-head-media" id="page-head-media" aria-hidden="true"></div>
     </section>
 
-    <!-- TRAZABILIDAD DE VACÍOS NORMATIVOS (RF-NMT-12) -->
-    <div class="gap-alert-box" id="gap-alert-container">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <div>
-        <strong>Trazabilidad Regulatoria Activa (RF-NMT-12):</strong>
-        Las metas de pérdidas (IPUF) y continuidad de las Tablas 16 y 50-51 se despliegan con valores de referencia de 6.0 m³/susc/mes sujetos a ratificación formal (Q-NMT-01). 
-        Los descuentos de servicio (Tabla 31) se registran conforme al procedimiento preliminar acordado con SSPD (Q-NMT-02).
+    <!-- ================================================================
+         PORTADA (INICIO)
+         ================================================================ -->
+    <div id="pane-inicio" class="tab-content-pane">
+
+      <!-- 1 · Hero: escena de agua sobre Deep Navy (lema de ADR-0009) -->
+      <section class="cx-hero" id="sec-hero" aria-labelledby="hero-title">
+        <canvas class="cx-hero-canvas" id="hero-canvas" role="img" aria-label="Superficie de agua formada por puntos de luz que ondula hasta el horizonte"></canvas>
+        <div class="cx-hero-inner">
+          <span class="cx-eyebrow cx-enter">Observatorio Regulatorio de Agua Potable y Saneamiento Básico</span>
+          <h1 class="cx-display-1 cx-enter cx-enter-1" id="hero-title">Datos abiertos para que el agua y el aseo <span class="cx-grad-light">lleguen a todos</span></h1>
+          <p class="cx-hero-lede cx-enter cx-enter-2">Seguimos con datos verificables los nuevos marcos tarifarios, de las grandes ciudades a los acueductos rurales.</p>
+          <div class="cx-hero-ctas cx-enter cx-enter-3">
+            <button class="cx-btn cx-btn-light" onclick="window.AppNMT.goTo('tablero')">Explorar los indicadores</button>
+            <button class="cx-btn cx-btn-glass" onclick="window.AppNMT.goTo('prestadores')">Buscar mi prestador</button>
+          </div>
+          <ul class="cx-pillars cx-enter cx-enter-4" aria-label="Alcance del seguimiento">
+            <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-1032">—</span><span class="cx-pillar-label">grandes prestadores · Res. CRA 1032</span></li>
+            <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-1038">—</span><span class="cx-pillar-label">pequeños y comunitarios · Res. CRA 1038</span></li>
+            <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-deptos">—</span><span class="cx-pillar-label">departamentos</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 2 · Cifras clave: bento -->
+      <section class="cx-section cx-bg-page" id="sec-cifras" aria-labelledby="cifras-title">
+        <div class="cx-inner">
+          <header class="cx-head cx-head-center" data-reveal>
+            <span class="cx-eyebrow">Cifras clave</span>
+            <h2 class="cx-display-2" id="cifras-title">La implementación, <span class="cx-grad">en números</span></h2>
+          </header>
+          <div class="cx-bento" id="portada-cifras"></div>
+        </div>
+      </section>
+
+      <!-- 3 · Mensajes clave -->
+      <section class="cx-section cx-bg-white" id="sec-mensajes" aria-labelledby="mensajes-title">
+        <div class="cx-inner">
+          <header class="cx-head" data-reveal>
+            <span class="cx-eyebrow">Mensajes clave</span>
+            <h2 class="cx-display-2" id="mensajes-title">Lo que muestran <span class="cx-grad">los datos</span></h2>
+          </header>
+          <div class="cx-bento" id="portada-mensajes"></div>
+        </div>
+      </section>
+
+      <!-- 4 · Temas: tarjetas con foto a sangre -->
+      <section class="cx-section cx-bg-ice" id="sec-temas" aria-labelledby="temas-title">
+        <div class="cx-inner-wide">
+          <header class="cx-head cx-head-center" data-reveal>
+            <span class="cx-eyebrow">Explore por tema</span>
+            <h2 class="cx-display-2" id="temas-title">Siga los nuevos <span class="cx-grad">marcos tarifarios</span></h2>
+          </header>
+          <div class="cx-doors">
+            <a class="cx-door cx-door-lg" data-reveal href="#tablero" onclick="event.preventDefault(); window.AppNMT.goTo('tablero')">
+              <span class="cx-door-img" style="background-image:url('assets/img/perdidas.jpg')"></span>
+              <span class="cx-door-tag">Res. CRA 1032 de 2026</span>
+              <span class="cx-door-title">Grandes prestadores de acueducto y alcantarillado</span>
+              <span class="cx-door-desc">Adopción, tarifas por estrato, pérdidas de agua y riesgo sectorial en los cuatro segmentos.</span>
+              <span class="cx-door-more">Ver indicadores</span>
+            </a>
+            <a class="cx-door cx-door-lg" data-reveal data-reveal-delay="1" href="#nmtpp" onclick="event.preventDefault(); window.AppNMT.goTo('nmtpp')">
+              <span class="cx-door-img" style="background-image:url('assets/img/continuidad.jpg')"></span>
+              <span class="cx-door-tag">Res. CRA 1038 de 2026</span>
+              <span class="cx-door-title">Pequeños prestadores y comunidades rurales</span>
+              <span class="cx-door-desc">Metas adaptativas de continuidad, cobertura y micromedición para acueductos de hasta 5.000 suscriptores.</span>
+              <span class="cx-door-more">Ver seguimiento</span>
+            </a>
+            <a class="cx-door" data-reveal href="#ciclo" onclick="event.preventDefault(); window.AppNMT.goTo('ciclo', 'asequibilidad')">
+              <span class="cx-door-img" style="background-image:url('assets/img/hogar.jpg')"></span>
+              <span class="cx-door-tag">Hogares</span>
+              <span class="cx-door-title">Asequibilidad de la factura</span>
+              <span class="cx-sr">Simule cuánto pesa la factura de agua en el ingreso de un hogar según su estrato y consumo.</span>
+              <span class="cx-door-more">Abrir calculadora</span>
+            </a>
+            <a class="cx-door" data-reveal data-reveal-delay="1" href="#metodologia" onclick="event.preventDefault(); window.AppNMT.goTo('metodologia')">
+              <span class="cx-door-img" style="background-image:url('assets/img/calidad.jpg')"></span>
+              <span class="cx-door-tag">Calidad del dato</span>
+              <span class="cx-door-title">Metodología y fichas de indicadores</span>
+              <span class="cx-sr">Cómo se calcula cada indicador, de dónde viene el dato y qué tan confiable es.</span>
+              <span class="cx-door-more">Consultar fichas</span>
+            </a>
+            <a class="cx-door cx-door-graphic" data-reveal data-reveal-delay="2" href="#ciclo" onclick="event.preventDefault(); window.AppNMT.goTo('ciclo')">
+              <span class="cx-door-img" aria-hidden="true">
+                <svg viewBox="0 0 300 340" preserveAspectRatio="xMidYMid slice">
+                  <defs><radialGradient id="door-orb" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#e0f4ff"/><stop offset=".45" stop-color="#38bdf8"/><stop offset="1" stop-color="#0b4f8a"/></radialGradient></defs>
+                  <g fill="none" stroke="#9fdcff" stroke-opacity=".3" stroke-width="1.4"><circle cx="190" cy="120" r="34"/><circle cx="190" cy="120" r="66"/><circle cx="190" cy="120" r="98"/><circle cx="190" cy="120" r="130"/></g>
+                  <circle cx="190" cy="120" r="20" fill="url(#door-orb)"/>
+                  <g fill="url(#door-orb)"><circle cx="190" cy="54" r="7"/><circle cx="256" cy="120" r="9"/><circle cx="121" cy="189" r="8"/><circle cx="92" cy="120" r="6"/><circle cx="282" cy="212" r="7"/></g>
+                </svg>
+              </span>
+              <span class="cx-door-tag">Enfoque OCDE</span>
+              <span class="cx-door-title">Impacto y gobernanza regulatoria</span>
+              <span class="cx-sr">Ciclo de implementación E0–E9, principios de gobernanza del agua y evaluación ex-post.</span>
+              <span class="cx-door-more">Ver enfoque</span>
+            </a>
+            <a class="cx-door cx-door-graphic cx-door-graphic-alt" data-reveal data-reveal-delay="3" href="#mapa" onclick="event.preventDefault(); window.AppNMT.goTo('mapa')">
+              <span class="cx-door-img" aria-hidden="true">
+                <svg viewBox="0 0 300 340" preserveAspectRatio="xMidYMid slice">
+                  <defs><radialGradient id="door-pin" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#9fdcff"/><stop offset="1" stop-color="#1664b0"/></radialGradient></defs>
+                  <g fill="#e0f4ff" fill-opacity=".2"><circle cx="70" cy="70" r="26"/><circle cx="170" cy="110" r="40"/><circle cx="240" cy="60" r="20"/><circle cx="110" cy="180" r="30"/><circle cx="230" cy="190" r="34"/></g>
+                  <g fill="url(#door-pin)"><circle cx="70" cy="70" r="7"/><circle cx="170" cy="110" r="11"/><circle cx="240" cy="60" r="6"/><circle cx="110" cy="180" r="8"/><circle cx="230" cy="190" r="9"/></g>
+                </svg>
+              </span>
+              <span class="cx-door-tag">Territorio</span>
+              <span class="cx-door-title">Mapa de prestadores</span>
+              <span class="cx-sr">Ubique a los prestadores monitoreados y su estado de adopción en cada departamento.</span>
+              <span class="cx-door-more">Abrir mapa</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 · Ciclo regulatorio E0–E9: el anillo es el control -->
+      <section class="cx-section cx-bg-navy cx-on-dark" id="sec-ciclo" aria-labelledby="ciclo-title">
+        <div class="cx-inner">
+          <header class="cx-head cx-head-center" data-reveal>
+            <span class="cx-eyebrow">Ciclo de implementación · Res. CRA 1032 de 2026</span>
+            <h2 class="cx-display-2" id="ciclo-title">¿En qué etapa <span class="cx-grad-light">va el marco?</span></h2>
+          </header>
+          <div class="cx-cycle" id="portada-ciclo" data-reveal></div>
+        </div>
+      </section>
+
+      <!-- 6 · Cómo publicamos -->
+      <section class="cx-section cx-bg-white" id="sec-reglas" aria-labelledby="principios-title">
+        <div class="cx-inner">
+          <header class="cx-head" data-reveal>
+            <span class="cx-eyebrow">Cómo publicamos</span>
+            <h2 class="cx-display-2" id="principios-title">Reglas que protegen <span class="cx-grad">la lectura de los datos</span></h2>
+          </header>
+          <div class="cx-bento">
+            <article class="cx-tile cx-tile-ice cx-span-3" data-reveal>
+              <span class="cx-tile-label">01</span>
+              <h3 class="cx-display-3">Sin rankings</h3>
+              <p class="cx-tile-note">Ningún puntaje único ni orden de mejor a peor.</p>
+              <svg class="cx-rule-art" viewBox="0 0 420 150" role="img" aria-label="Cinco prestadores representados como esferas iguales, sin orden ni podio">
+                <defs><radialGradient id="rule-orb" cx="34%" cy="28%" r="78%"><stop offset="0" stop-color="#bfe3ff"/><stop offset=".5" stop-color="#2a78d6"/><stop offset="1" stop-color="#0a2f55"/></radialGradient></defs>
+                <ellipse cx="210" cy="128" rx="190" ry="10" fill="#0a2f55" fill-opacity=".1"/>
+                <g fill="url(#rule-orb)"><circle cx="50" cy="80" r="34"/><circle cx="130" cy="80" r="34"/><circle cx="210" cy="80" r="34"/><circle cx="290" cy="80" r="34"/><circle cx="370" cy="80" r="34"/></g>
+              </svg>
+            </article>
+            <article class="cx-tile cx-tile-ice cx-span-3" data-reveal data-reveal-delay="1">
+              <span class="cx-tile-label">02</span>
+              <h3 class="cx-display-3">Tarifas por estrato</h3>
+              <p class="cx-tile-note">Por estrato y uso. Nunca una tarifa promedio.</p>
+              <svg class="cx-rule-art" viewBox="0 0 420 150" role="img" aria-label="Seis columnas separadas, una por cada estrato del 1 al 6">
+                <defs><linearGradient id="rule-col" x1="0" x2="1"><stop offset="0" stop-color="#6fb0ee"/><stop offset=".4" stop-color="#1f6fc4"/><stop offset="1" stop-color="#0a2f55"/></linearGradient></defs>
+                <g fill="url(#rule-col)"><rect x="20" y="86" width="50" height="54" rx="10"/><rect x="86" y="74" width="50" height="66" rx="10"/><rect x="152" y="60" width="50" height="80" rx="10"/><rect x="218" y="46" width="50" height="94" rx="10"/><rect x="284" y="30" width="50" height="110" rx="10"/><rect x="350" y="14" width="50" height="126" rx="10"/></g>
+                <g fill="#fff" font-family="Inter, sans-serif" font-weight="700" font-size="18" text-anchor="middle"><text x="45" y="128">1</text><text x="111" y="128">2</text><text x="177" y="128">3</text><text x="243" y="128">4</text><text x="309" y="128">5</text><text x="375" y="128">6</text></g>
+              </svg>
+            </article>
+            <article class="cx-tile cx-tile-ice cx-span-3" data-reveal>
+              <span class="cx-tile-label">03</span>
+              <h3 class="cx-display-3">Cada cifra con su semáforo</h3>
+              <p class="cx-tile-note">Calidad, fecha de corte y ficha de cálculo, siempre visibles.</p>
+              <svg class="cx-rule-art" viewBox="0 0 420 150" role="img" aria-label="Tres señales de calidad con forma y color distintos: círculo verde verificado, triángulo ámbar observado y rombo rojo en cuarentena">
+                <defs>
+                  <linearGradient id="rule-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ee7b7"/><stop offset="1" stop-color="#047857"/></linearGradient>
+                  <linearGradient id="rule-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fcd34d"/><stop offset="1" stop-color="#b45309"/></linearGradient>
+                  <linearGradient id="rule-r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fca5a5"/><stop offset="1" stop-color="#b91c1c"/></linearGradient>
+                </defs>
+                <ellipse cx="210" cy="134" rx="180" ry="9" fill="#0a2f55" fill-opacity=".1"/>
+                <circle cx="80" cy="74" r="48" fill="url(#rule-g)"/>
+                <path d="M58 76l15 15 30-32" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M210 22l56 98H154z" fill="url(#rule-a)" stroke="url(#rule-a)" stroke-width="10" stroke-linejoin="round"/>
+                <path d="M210 58v30M210 104v.5" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+                <rect x="302" y="36" width="76" height="76" rx="12" transform="rotate(45 340 74)" fill="url(#rule-r)"/>
+                <path d="M324 74h32" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+              </svg>
+            </article>
+            <article class="cx-tile cx-tile-ice cx-span-3" data-reveal data-reveal-delay="1">
+              <span class="cx-tile-label">04</span>
+              <h3 class="cx-display-3">Comparar entre pares</h3>
+              <p class="cx-tile-note">Solo dentro del mismo segmento o tamaño.</p>
+              <svg class="cx-rule-art" viewBox="0 0 420 150" role="img" aria-label="Dos grupos separados: prestadores grandes a un lado y pequeños al otro">
+                <defs><radialGradient id="rule-big" cx="34%" cy="28%" r="78%"><stop offset="0" stop-color="#bfe3ff"/><stop offset=".5" stop-color="#1664b0"/><stop offset="1" stop-color="#0a2f55"/></radialGradient><radialGradient id="rule-small" cx="34%" cy="28%" r="78%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></radialGradient></defs>
+                <g fill="url(#rule-big)"><circle cx="56" cy="76" r="44"/><circle cx="150" cy="76" r="44"/></g>
+                <path d="M222 12v126" stroke="#0a2f55" stroke-opacity=".35" stroke-width="3" stroke-dasharray="3 10" stroke-linecap="round"/>
+                <g fill="url(#rule-small)"><circle cx="268" cy="50" r="17"/><circle cx="318" cy="50" r="17"/><circle cx="368" cy="50" r="17"/><circle cx="268" cy="102" r="17"/><circle cx="318" cy="102" r="17"/><circle cx="368" cy="102" r="17"/></g>
+              </svg>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 · Recursos -->
+      <section class="cx-section cx-bg-page" id="sec-recursos" aria-labelledby="recursos-title">
+        <div class="cx-inner">
+          <header class="cx-head" data-reveal>
+            <span class="cx-eyebrow">Recursos</span>
+            <h2 class="cx-display-2" id="recursos-title">Documentos <span class="cx-grad">y datos</span></h2>
+          </header>
+          <div class="cx-resources" data-reveal>
+            <button class="cx-resource" onclick="window.AppNMT.goTo('datos')">
+              <span class="cx-tile-label">Datos abiertos</span>
+              <span class="cx-resource-title">Conjuntos de datos en CSV y JSON</span>
+              <span class="cx-resource-meta">Res. 1032 y Res. 1038 · con fecha de corte y semáforo</span>
+            </button>
+            <button class="cx-resource" onclick="window.AppNMT.goTo('metodologia')">
+              <span class="cx-tile-label">Metodología</span>
+              <span class="cx-resource-title">Fichas metodológicas de los indicadores</span>
+              <span class="cx-resource-meta">Fórmula, fuente, sustento normativo y periodicidad</span>
+            </button>
+            <button class="cx-resource" onclick="window.AppNMT.goTo('nmtpp', 'tab-aclaraciones')">
+              <span class="cx-tile-label">Normativa</span>
+              <span class="cx-resource-title">Aclaraciones normativas abiertas de la Res. 1038</span>
+              <span class="cx-resource-meta">Consultas pendientes que condicionan algunas metas</span>
+            </button>
+            <button class="cx-resource" onclick="window.ImpactoOCDE && window.ImpactoOCDE.openExecutiveReportModal()">
+              <span class="cx-tile-label">Informe</span>
+              <span class="cx-resource-title">Dictamen ejecutivo de impacto regulatorio (AIR)</span>
+              <span class="cx-resource-meta">Resumen imprimible del enfoque OCDE</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTEXTO COMPARTIDO DE LA RES. 1032 (fuentes, vacíos y filtros) -->
+    <div id="global-context" class="obs-context" hidden>
+
+    <!-- FUENTES Y VACÍOS: una línea visible cada uno; el detalle se abre al pedirlo -->
+    <div class="cx-context">
+    <!-- ARQUITECTURA DE FUENTES DE DATOS Y FACTIBILIDAD (CONTEXT LAKE V2) -->
+    <details class="source-feasibility-strip" aria-label="Disponibilidad de Fuentes">
+      <summary class="strip-label">
+        <span class="cx-ctx-dot cx-ctx-dot-blue" aria-hidden="true"></span>
+        <span><b>Fuentes:</b> SUI (Oracle) · SURICATA CRA · INS SIVICAP y DANE GEIH</span>
+      </summary>
+      <div class="strip-tiers-list">
+        <div class="strip-tier-item">
+          <span class="source-tier-pill tier-1">Tier 1 · SUI Oracle</span>
+          <span><strong>13 Esquemas Físicos</strong> (Factibilidad 2: RUPS, SUI_AGUAS, AA_IUS, ESTADOSFIN)</span>
+        </div>
+        <div class="strip-tier-item">
+          <span class="source-tier-pill tier-2">Tier 2 · SURICATA CRA</span>
+          <span><strong>Estudios de Costos 1032</strong> (Factibilidad 1: Etapa E5 en Adopción)</span>
+        </div>
+        <div class="strip-tier-item">
+          <span class="source-tier-pill tier-external">Tier 3 · Fuentes Externas</span>
+          <span><strong>INS SIVICAP / DANE GEIH</strong> (Homologación Sectorial Q-CAT-01)</span>
+        </div>
       </div>
+    </details>
+
+    <!-- TRAZABILIDAD DE VACÍOS NORMATIVOS (RF-NMT-12) -->
+    <details class="gap-alert-box" id="gap-alert-container">
+      <summary>
+        <span class="cx-ctx-dot cx-ctx-dot-amber" aria-hidden="true"></span>
+        <span><b>Vacíos normativos:</b> metas y descuentos sujetos a ratificación (Q-NMT-01, Q-NMT-02)</span>
+      </summary>
+      <p>
+        <strong>Trazabilidad Regulatoria Activa (RF-NMT-12):</strong>
+        Las metas de pérdidas (IPUF) y continuidad de las Tablas 16 y 50-51 se despliegan con valores de referencia de 6.0 m³/susc/mes sujetos a ratificación formal (Q-NMT-01).
+        Los descuentos de servicio (Tabla 31) se registran conforme al procedimiento preliminar acordado con SSPD (Q-NMT-02).
+      </p>
+    </details>
     </div>
 
     <!-- BANNER DE NO COMPARABILIDAD (RN-NMT-02) -->
@@ -139,135 +411,257 @@
         <button id="btn-reset-filters" class="btn-reset-filters">Limpiar Filtros</button>
       </div>
     </section>
+    </div>
+    <!-- /CONTEXTO COMPARTIDO -->
 
     <!-- PESTAÑA 1: TABLERO PRINCIPAL NMT -->
-    <div id="pane-tablero" class="tab-content-pane">
+    <div id="pane-tablero" class="tab-content-pane" style="display: none;">
       <!-- Tarjetas KPI -->
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Indicadores de seguimiento · Res. 1032</span>
+        <h2>Ocho indicadores, <span class="cx-grad">cada uno con su semáforo</span></h2>
+        <p>Se recalculan con los filtros. Cada uno enlaza a su ficha metodológica.</p>
+      </header>
       <section class="kpi-grid" id="kpi-cards-container" aria-label="Indicadores Clave NMT"></section>
 
       <!-- Gráficas Analíticas -->
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Análisis por segmento y estrato</span>
+        <h2>Cada segmento se compara <span class="cx-grad">solo consigo mismo</span></h2>
+        <p>Toda gráfica tiene su tabla de datos equivalente.</p>
+      </header>
       <section class="charts-grid">
-        <div class="chart-card">
+        <figure class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Tasa de Adopción por Segmento (NMT-ADO-01)</h3>
-              <span class="chart-subtitle">Proporción de prestadores con estudio de costos formalmente cargado en SUI/SURICATA</span>
+              <span class="chart-code">NMT-ADO-01 · Adopción</span>
+              <h3 class="chart-title">¿Cuántos prestadores ya radicaron su estudio de costos?</h3>
+              <span class="chart-subtitle">Prestadores de cada segmento con estudio cargado en SUI/SURICATA.</span>
             </div>
-            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-ADO-01')">Ficha</a>
+            <a class="kpi-footer-link" role="button" tabindex="0" onclick="window.ModalsFichas.open('NMT-ADO-01')">Ficha</a>
           </div>
           <div class="chart-body">
-            <canvas id="chart-adoption-segment"></canvas>
+            <canvas id="chart-adoption-segment" role="img" aria-label="Barras apiladas de adopción del marco por segmento"></canvas>
           </div>
-        </div>
+          <figcaption class="chart-source">Fuente: SUI / SURICATA · Corte 31 ago 2026</figcaption>
+        </figure>
 
-        <div class="chart-card">
+        <figure class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Variación Tarifaria de Transición por Estrato (NMT-TAR-01)</h3>
-              <span class="chart-subtitle">Desagregación obligatoria (RN-PORTAL-04) vs Res. 688/2014 en pesos constantes 2024</span>
+              <span class="chart-code">NMT-TAR-01 · Tarifas</span>
+              <h3 class="chart-title">¿Cuánto cambia la tarifa en cada estrato?</h3>
+              <span class="chart-subtitle">Frente a la Res. 688 de 2014, en pesos constantes de 2024. Siempre por estrato y uso, nunca un promedio general.</span>
             </div>
-            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-TAR-01')">Ficha</a>
+            <a class="kpi-footer-link" role="button" tabindex="0" onclick="window.ModalsFichas.open('NMT-TAR-01')">Ficha</a>
           </div>
           <div class="chart-body">
-            <canvas id="chart-tariff-variation"></canvas>
+            <canvas id="chart-tariff-variation" role="img" aria-label="Barras horizontales de variación tarifaria por estrato y uso"></canvas>
           </div>
-        </div>
+          <figcaption class="chart-source">Fuente: estudios de costos radicados · Corte 31 ago 2026</figcaption>
+        </figure>
 
-        <div class="chart-card">
+        <figure class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Brecha de Pérdidas IPUF vs Meta de 6 m³ (NMT-EST-02)</h3>
-              <span class="chart-subtitle">IPUF observado (m³/susc/mes) con banda de incertidumbre percentil p10-p90 (RF-BENCH-03)</span>
+              <span class="chart-code">NMT-EST-02 · Pérdidas</span>
+              <h3 class="chart-title">¿Qué tan lejos están las pérdidas de la meta de 6 m³?</h3>
+              <span class="chart-subtitle">IPUF en m³/susc/mes frente a la meta de referencia, con banda p10–p90.</span>
             </div>
-            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-EST-02')">Ficha</a>
+            <a class="kpi-footer-link" role="button" tabindex="0" onclick="window.ModalsFichas.open('NMT-EST-02')">Ficha</a>
           </div>
           <div class="chart-body">
-            <canvas id="chart-losses-gap"></canvas>
+            <canvas id="chart-losses-gap" role="img" aria-label="Barras de pérdidas por segmento con línea de meta"></canvas>
           </div>
-        </div>
+          <figcaption class="chart-source">Fuente: SUI (IRD1) · Meta sujeta a ratificación (Q-NMT-01)</figcaption>
+        </figure>
 
-        <div class="chart-card">
+        <figure class="chart-card">
           <div class="chart-header">
             <div>
-              <h3 class="chart-title">Distribución de Riesgo IUS - SSPD (NMT-RIE-01)</h3>
-              <span class="chart-subtitle">Indicador Único Sectorial (Fase I 2020-2026) · Escala donde mayor riesgo es peor</span>
+              <span class="chart-code">NMT-RIE-01 · Riesgo</span>
+              <h3 class="chart-title">¿Cuántos prestadores están en cada nivel de riesgo?</h3>
+              <span class="chart-subtitle">Indicador Único Sectorial de la SSPD (Fase I 2020–2026). A mayor nivel, mayor riesgo.</span>
             </div>
-            <a class="kpi-footer-link" onclick="window.ModalsFichas.open('NMT-RIE-01')">Ficha</a>
+            <a class="kpi-footer-link" role="button" tabindex="0" onclick="window.ModalsFichas.open('NMT-RIE-01')">Ficha</a>
           </div>
           <div class="chart-body">
-            <canvas id="chart-ius-risk"></canvas>
+            <canvas id="chart-ius-risk" role="img" aria-label="Barras de número de prestadores por nivel de riesgo IUS"></canvas>
+          </div>
+          <figcaption class="chart-source">Fuente: SSPD · Publicación anual IUS</figcaption>
+        </figure>
+      </section>
+    </div>
+
+    <!-- PESTAÑA: PEQUEÑOS PRESTADORES Y RURALES (RES. CRA 1038 DE 2026) -->
+    <div id="pane-nmtpp" class="tab-content-pane" style="display: none;">
+      <!-- BANNER PERMANENTE DE DATOS SINTÉTICOS (INV-01 / RF-PROTO-06) -->
+      <div class="synthetic-banner-top" role="alert" aria-label="Aviso de datos sintéticos">
+        <div class="synthetic-banner-content">
+          <span class="synthetic-icon">⚠️</span>
+          <span>
+            <strong>DATOS SINTÉTICOS PARA PROTOTIPO — NO SON INFORMACIÓN REAL.</strong>
+            Prestadores, municipios, radicados, publicaciones del ISE y valores son ficticios. Los parámetros regulatorios (metas, pisos, porcentajes) sí son los de la Res. CRA 1038 de 2026.
+          </span>
+        </div>
+        <span class="badge-sim">Res. CRA 1038/2026</span>
+      </div>
+
+      <section class="oecd-hero" aria-label="Verificación del motor de estados">
+        <!-- Barra de Integridad y Verificación (Oráculo vs Motor) -->
+        <div class="verification-subbar analyst-only" style="margin-top: 14px; background: rgba(255,255,255,0.9); padding: 10px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div id="oraculo-verification-banner" class="oracle-status">
+            <span style="color: var(--text-muted);">Verificando consistencia del motor determinista...</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div class="sim-switch-pill analyst-only" title="Simula que la CRA aclaró la equivalencia de 24 horas para continuidad del S1" style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem;">
+              <input type="checkbox" id="check-sim-q01" onchange="window.AppNMTPP && window.AppNMTPP.toggleSimulacionQ01(this.checked)" />
+              <label for="check-sim-q01" style="cursor: pointer; font-weight: 600;">Simular Q-NMTPP-01 (Continuidad 24h)</label>
+            </div>
+            <div style="font-size: 0.76rem; color: var(--text-muted); font-family: var(--font-mono);">
+              Motor v1.0.4 • Corte: <strong>2028-09-15</strong>
+            </div>
           </div>
         </div>
       </section>
+
+      <!-- BARRA DE SUB-PESTAÑAS NMTPP -->
+      <nav class="nav-tabs-wrapper" aria-label="Navegación temática de pequeños prestadores" style="margin: 16px 0;">
+        <div class="nav-tabs" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <button class="nav-tab-btn active" data-tab="tab-resumen" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-resumen')">
+            <span>🌊</span> 1. Panorama General <span class="tab-badge">Adopción</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-calendario" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-calendario')">
+            <span>📅</span> 2. Calendario y Plazos <span class="tab-badge">2026-2036</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-nivel-servicio" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-nivel-servicio')">
+            <span>💧</span> 3. Nivel de Servicio <span class="tab-badge">Metas Adaptativas</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-ise-incentivos" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-ise-incentivos')">
+            <span>⚡</span> 4. Eficiencia e Incentivos <span class="tab-badge">ISE CRA</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-regimen-especial" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-regimen-especial')">
+            <span>🛡️</span> 5. Zonas Especiales <span class="tab-badge">Régimen S2 / PDET</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-aclaraciones" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-aclaraciones')">
+            <span>⚖️</span> 6. Aclaraciones Normativas <span class="tab-badge">14 Consultas</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-metodologia-nmtpp" onclick="window.AppNMTPP && window.AppNMTPP.mostrarTab('tab-metodologia-nmtpp')">
+            <span>📖</span> 7. Guía Metodológica <span class="tab-badge">25 Fichas</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- BARRA DE FILTROS GLOBALES NMTPP -->
+      <section class="filters-bar" aria-label="Filtros NMTPP" style="background: #ffffff; padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-light); margin-bottom: 20px;">
+        <div class="filters-container" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;">
+          <div class="filter-item">
+            <label for="filtro-segmento" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">Tipo de Operador:</label>
+            <select id="filtro-segmento" class="filter-select">
+              <option value="todos">Todos los operadores</option>
+              <option value="S1">Empresas de Acueducto (Segmento 1)</option>
+              <option value="S2">Gestores Comunitarios del Agua (Segmento 2)</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="filtro-subsegmento" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">Tamaño del Acueducto:</label>
+            <select id="filtro-subsegmento" class="filter-select">
+              <option value="todos">Todos los tamaños</option>
+              <option value="S1-1">Empresas: 3.201 a 5.000 suscriptores (S1-1)</option>
+              <option value="S1-2">Empresas: 1.401 a 3.200 suscriptores (S1-2)</option>
+              <option value="S1-3">Empresas: 601 a 1.400 suscriptores (S1-3)</option>
+              <option value="S1-4">Empresas: hasta 600 suscriptores (S1-4)</option>
+              <option value="S2-1">Comunitarios: más de 1.600 suscriptores (S2-1)</option>
+              <option value="S2-2">Comunitarios: 501 a 1.600 suscriptores (S2-2)</option>
+              <option value="S2-3">Comunitarios: 301 a 500 suscriptores (S2-3)</option>
+              <option value="S2-4">Comunitarios: hasta 300 suscriptores (S2-4)</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="filtro-regimen" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">Territorios Especiales:</label>
+            <select id="filtro-regimen" class="filter-select">
+              <option value="todos">Todos los territorios</option>
+              <option value="con_condicion">Con trato especial (Islas, vulnerabilidad o PDET)</option>
+              <option value="sin_condicion">En régimen estándar</option>
+            </select>
+          </div>
+          <div class="filter-item" style="flex: 1; min-width: 200px;">
+            <label for="filtro-busqueda" style="display: block; font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px;">Búsqueda:</label>
+            <input type="text" id="filtro-busqueda" class="filter-input" placeholder="Buscar por acueducto, municipio o ID..." />
+          </div>
+          <button type="button" class="btn-reset-filters" onclick="window.AppNMTPP && window.AppNMTPP.resetFiltros()" title="Limpiar todos los filtros aplicados">
+            ↺ Restablecer
+          </button>
+        </div>
+      </section>
+
+      <!-- PANELES DE CONTENIDO NMTPP -->
+      <div id="tab-resumen" class="tab-pane active"></div>
+      <div id="tab-calendario" class="tab-pane"></div>
+      <div id="tab-nivel-servicio" class="tab-pane"></div>
+      <div id="tab-ise-incentivos" class="tab-pane"></div>
+      <div id="tab-regimen-especial" class="tab-pane"></div>
+      <div id="tab-aclaraciones" class="tab-pane"></div>
+      <div id="tab-metodologia-nmtpp" class="tab-pane"></div>
     </div>
 
     <!-- PESTAÑA 2: MODELO OCDE & IMPACTO REGULATORIO -->
     <div id="pane-ciclo" class="tab-content-pane" style="display: none;">
-      <section class="timeline-section-card">
-        <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-              <span class="banner-badge" style="background: var(--color-deep-navy); color: #fff;">Metodología OCDE</span>
-              <span class="quality-badge badge-verified">AIR EX-POST ACTIVA</span>
-            </div>
-            <h3 class="section-title">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Monitoreo de Impacto Regulatorio bajo el Modelo OCDE · Res. CRA 1032/2026
-            </h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; max-width: 920px;">
-              Alineado con las directrices de la <strong>Organización para la Cooperación y el Desarrollo Económicos (OCDE)</strong> sobre Gobernanza y Política Regulatoria. 
-              Evalúa sistemáticamente la efectividad, eficiencia, asequibilidad social, sostenibilidad hídrica y gobernanza del nuevo marco tarifario de grandes prestadores.
-            </p>
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <button class="btn-export-quick" onclick="window.ImpactoOCDE.openExecutiveReportModal()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Dictamen Ejecutivo AIR
-            </button>
-          </div>
+      <section class="cxo-root" aria-label="Seguimiento con referentes OCDE · Res. CRA 1032 de 2026">
+        <!-- Alcance: seguimiento informativo, no evaluación ex post formal (AGENTS.md, fuera de alcance) -->
+        <div class="cxo-topbar">
+          <p class="cxo-scope">
+            <span class="cx-eyebrow">Referentes OCDE · Res. CRA 1032 de 2026</span>
+            Seguimiento informativo, sin efecto jurídico. No es una evaluación ex post formal ni califica el cumplimiento; la verificación es de la SSPD.
+          </p>
+          <button type="button" class="cx-link" onclick="window.ImpactoOCDE.openExecutiveReportModal()">Síntesis ejecutiva de seguimiento</button>
         </div>
 
-        <!-- SUBNAVEGACIÓN INTERNA OCDE -->
-        <div class="ocde-subnav-bar">
-          <button class="ocde-subnav-btn active" data-ocde-target="dimensiones">
-            5 Dimensiones de Impacto (AIR)
+        <!-- SUBNAVEGACIÓN INTERNA OCDE: control de primer nivel -->
+        <div class="ocde-subnav-bar cx-seg cxo-subnav" role="group" aria-label="Vistas del seguimiento con referentes OCDE">
+          <button type="button" class="ocde-subnav-btn active" data-ocde-target="dimensiones" aria-pressed="true" aria-controls="ocde-pane-dimensiones">
+            <span class="cxo-subnav-n" aria-hidden="true">01</span><span>Cinco dimensiones</span>
           </button>
-          <button class="ocde-subnav-btn" data-ocde-target="radar">
-            12 Principios de Gobernanza del Agua
+          <button type="button" class="ocde-subnav-btn" data-ocde-target="radar" aria-pressed="false" aria-controls="ocde-pane-radar">
+            <span class="cxo-subnav-n" aria-hidden="true">02</span><span>Gobernanza del agua</span>
           </button>
-          <button class="ocde-subnav-btn" data-ocde-target="asequibilidad">
-            Calculadora de Asequibilidad Social
+          <button type="button" class="ocde-subnav-btn" data-ocde-target="asequibilidad" aria-pressed="false" aria-controls="ocde-pane-asequibilidad">
+            <span class="cxo-subnav-n" aria-hidden="true">03</span><span>Asequibilidad</span>
           </button>
-          <button class="ocde-subnav-btn" data-ocde-target="ciclo">
-            Línea de Tiempo del Ciclo (E0-E9)
+          <button type="button" class="ocde-subnav-btn" data-ocde-target="ciclo" aria-pressed="false" aria-controls="ocde-pane-ciclo">
+            <span class="cxo-subnav-n" aria-hidden="true">04</span><span>Ciclo E0–E9</span>
           </button>
         </div>
 
         <!-- SUBPANEL 1: 5 DIMENSIONES DE IMPACTO OCDE & SCORECARD -->
         <div id="ocde-pane-dimensiones" class="ocde-subpane">
-          <div class="ocde-dimensions-grid" id="ocde-dimensions-grid"></div>
+          <header class="cx-block-head">
+            <span class="cx-eyebrow">Cinco dimensiones · Res. CRA 1032</span>
+            <h2>Cinco lecturas del <span class="cx-grad">nuevo marco</span></h2>
+            <p>Una cifra por dimensión, frente a su referencia.</p>
+          </header>
+          <div class="ocde-dimensions-grid cx-bento cxo-bento" id="ocde-dimensions-grid"></div>
 
-          <!-- MATRIZ AIR EX-POST (SCORECARD COMPARATIVO) -->
-          <div class="scorecard-section-card" style="margin-top: 24px;">
-            <div class="section-header">
-              <div>
-                <h4 class="section-title">Matriz de Evaluación de Impacto Regulatorio Ex-Post (AIR Scorecard)</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
-                  Comparativa canónica entre Línea Base Pre-Regulación, Meta Regulatoria OCDE / CRA y Resultado Observado bajo la Res. CRA 1032/2026.
-                </p>
-              </div>
-            </div>
+          <!-- MATRIZ DE SEGUIMIENTO (referentes AIR): se conserva como tabla porque es dato -->
+          <header class="cx-block-head">
+            <span class="cx-eyebrow">Matriz de seguimiento · referentes AIR</span>
+            <h2>Línea base, referencia y <span class="cx-grad">observado</span></h2>
+            <p>Estados informativos, sin efecto jurídico.</p>
+          </header>
+          <div class="cxo-table-card">
             <div class="table-responsive">
-              <table class="table-cra" id="air-scorecard-table">
+              <table class="table-cra cxo-table" id="air-scorecard-table">
+                <caption class="cx-sr">Matriz de seguimiento: línea base, referencia, valor observado y estado informativo por dimensión</caption>
                 <thead>
                   <tr>
-                    <th>Dimensión OCDE</th>
-                    <th>Indicador Canónico</th>
-                    <th>Línea Base</th>
-                    <th>Meta Regulatoria OCDE</th>
-                    <th>Observado 2026</th>
-                    <th>Calificación AIR</th>
-                    <th>Sustento Normativo</th>
+                    <th scope="col">Dimensión</th>
+                    <th scope="col">Indicador</th>
+                    <th scope="col">Línea base</th>
+                    <th scope="col">Referencia</th>
+                    <th scope="col">Observado 2026</th>
+                    <th scope="col">Estado informativo</th>
+                    <th scope="col">Fuente</th>
+                    <th scope="col">Sustento normativo</th>
                   </tr>
                 </thead>
                 <tbody id="air-scorecard-tbody"></tbody>
@@ -277,158 +671,159 @@
         </div>
 
         <!-- SUBPANEL 2: RADAR DE LOS 12 PRINCIPIOS DE GOBERNANZA DEL AGUA -->
-        <div id="ocde-pane-radar" class="ocde-subpane" style="display: none;">
-          <div class="scorecard-section-card">
-            <div class="section-header">
-              <div>
-                <h4 class="section-title">Radar de los 12 Principios de Gobernanza del Agua de la OCDE</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
-                  Evaluación estructurada en los 3 pilares de la OCDE: 
-                  <strong>Efectividad</strong> (P1 a P4), <strong>Eficiencia</strong> (P5 a P8) y <strong>Confianza & Participación</strong> (P9 a P12) para el sector de agua en Colombia.
-                </p>
-              </div>
-            </div>
-            <div class="radar-container" style="position: relative; height: 440px; margin-top: 12px;">
+        <div id="ocde-pane-radar" class="ocde-subpane" hidden>
+          <header class="cx-block-head">
+            <span class="cx-eyebrow">12 principios de gobernanza del agua · OCDE</span>
+            <h2>Doce principios, <span class="cx-grad">tres pilares</span></h2>
+            <p>Nivel de referencia frente al recomendado por la OCDE.</p>
+          </header>
+          <div class="scorecard-section-card cxo-radar-card">
+            <!-- Leyenda visual: cada pilar tiñe sus ejes en el radar -->
+            <ul class="cxo-pillars" aria-label="Pilares de la OCDE y sus principios">
+              <li class="cxo-pillar cxo-pillar-1"><i aria-hidden="true"></i><b>Efectividad</b><span>P1–P4</span></li>
+              <li class="cxo-pillar cxo-pillar-2"><i aria-hidden="true"></i><b>Eficiencia</b><span>P5–P8</span></li>
+              <li class="cxo-pillar cxo-pillar-3"><i aria-hidden="true"></i><b>Confianza y participación</b><span>P9–P12</span></li>
+            </ul>
+            <div class="radar-container cxo-radar" role="img" aria-label="Radar de los 12 principios de gobernanza del agua de la OCDE: nivel de referencia en Colombia frente al nivel recomendado, agrupados en los pilares de efectividad, eficiencia y confianza y participación. La tabla de datos está debajo.">
               <canvas id="chart-radar-ocde"></canvas>
             </div>
-            <div class="radar-legend-clusters" style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
-              <div class="cluster-box cluster-efectividad">
-                <strong style="color: var(--color-deep-navy);">Pilar I: Efectividad (P1-P4)</strong>
-                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
-                  Roles regulatorios asignados (CRA / SSPD), gestión por escalas territoriales diferenciadas (Segmentos 1 al 4), coherencia sectorial y fortalecimiento de capacidades.
-                </p>
-              </div>
-              <div class="cluster-box cluster-eficiencia">
-                <strong style="color: var(--color-deep-navy);">Pilar II: Eficiencia (P5-P8)</strong>
-                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
-                  Datos oficiales del SUI, tarifas eficientes sostenibles (Res. 1032), marcos regulatorios proporcionados y adopción de mejores prácticas analíticas.
-                </p>
-              </div>
-              <div class="cluster-box cluster-confianza">
-                <strong style="color: var(--color-deep-navy);">Pilar III: Confianza y Participación (P9-P12)</strong>
-                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">
-                  Transparencia activa, control social con vocales de control, compensaciones equitativas (subsidios cruzados E1-E6) y evaluación ex-post AIR sistemática.
-                </p>
-              </div>
-            </div>
+            <ul class="cxo-radar-key" aria-hidden="true">
+              <li><i class="cxo-key-obs"></i>Nivel de referencia · Colombia</li>
+              <li><i class="cxo-key-ref"></i>Recomendado · OCDE</li>
+            </ul>
+            <details class="cx-more">
+              <summary>Leer más</summary>
+              <p><strong>Pilar I · Efectividad (P1–P4).</strong> Roles regulatorios asignados (CRA / SSPD), gestión por escalas territoriales diferenciadas (Segmentos 1 al 4), coherencia sectorial y fortalecimiento de capacidades.</p>
+              <p><strong>Pilar II · Eficiencia (P5–P8).</strong> Datos oficiales del SUI, tarifas eficientes sostenibles (Res. 1032), marcos regulatorios proporcionados y adopción de mejores prácticas analíticas.</p>
+              <p><strong>Pilar III · Confianza y participación (P9–P12).</strong> Transparencia activa, control social con vocales de control, compensaciones equitativas (subsidios cruzados E1-E6) y monitoreo sistemático con referentes AIR.</p>
+              <p>Solo P4, P5, P6 y P12 se derivan de los datos de prestadores; los demás principios son valores de referencia fijados en la configuración del prototipo. No es una calificación ni un puntaje de cumplimiento.</p>
+            </details>
           </div>
         </div>
 
         <!-- SUBPANEL 3: CALCULADORA Y SIMULADOR DE ASEQUIBILIDAD SOCIAL -->
-        <div id="ocde-pane-asequibilidad" class="ocde-subpane" style="display: none;">
-          <div class="scorecard-section-card">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
-              <div>
-                <h4 class="section-title">Calculadora y Simulador de Asequibilidad Social (OECD Water Affordability)</h4>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
-                  Directriz OCDE: El gasto mensual en agua potable y saneamiento para hogares vulnerables debe ser inferior al <strong>3.0% del ingreso familiar</strong>. 
-                  Simule aquí el impacto real de la factura por estrato socioeconómico y volumen de consumo.
-                </p>
+        <div id="ocde-pane-asequibilidad" class="ocde-subpane" hidden>
+          <!-- Escena protagonista: simulador con control deslizante (Principio 6 OCDE · Ley 142 de 1994) -->
+          <div class="cxo-scene cx-on-dark">
+            <header class="cx-block-head cxo-scene-head">
+              <span class="cx-eyebrow">Asequibilidad · Principio 6 OCDE · Ley 142 de 1994</span>
+              <h2>¿Cuánto del ingreso <span class="cx-grad-light">se va en agua?</span></h2>
+              <p>Mueva el consumo y el estrato. La línea marca el umbral de referencia.</p>
+            </header>
+
+            <div class="cxo-sim">
+              <div class="cxo-sim-controls">
+                <div class="cxo-field">
+                  <span class="cxo-field-label" id="calc-estrato-label">Estrato del hogar</span>
+                  <div id="calc-estrato-select" class="cx-seg cxo-estratos" role="group" aria-labelledby="calc-estrato-label" data-value="1">
+                    <button type="button" data-estrato="1" aria-pressed="true" aria-label="Estrato 1, bajo-bajo">1</button>
+                    <button type="button" data-estrato="2" aria-pressed="false" aria-label="Estrato 2, bajo">2</button>
+                    <button type="button" data-estrato="3" aria-pressed="false" aria-label="Estrato 3, medio-bajo">3</button>
+                    <button type="button" data-estrato="4" aria-pressed="false" aria-label="Estrato 4, medio">4</button>
+                    <button type="button" data-estrato="5" aria-pressed="false" aria-label="Estrato 5, medio-alto">5</button>
+                    <button type="button" data-estrato="6" aria-pressed="false" aria-label="Estrato 6, alto">6</button>
+                  </div>
+                  <span class="cxo-field-note" id="calc-subsidio-label">Subsidio Ley 142/94</span>
+                </div>
+
+                <div class="cxo-field">
+                  <div class="cxo-field-row">
+                    <label for="calc-consumo-slider" class="cxo-field-label">Consumo mensual</label>
+                    <output id="calc-consumo-value" for="calc-consumo-slider" class="cxo-output">11 m³/mes</output>
+                  </div>
+                  <input type="range" id="calc-consumo-slider" min="5" max="25" step="1" value="11" class="calc-slider cxo-range" aria-valuetext="11 metros cúbicos al mes" />
+                  <div class="cxo-range-ticks" aria-hidden="true">
+                    <span style="--p:0">5<small>mínimo vital</small></span>
+                    <span style="--p:.3">11<small>frío</small></span>
+                    <span style="--p:.4">13<small>templado</small></span>
+                    <span style="--p:.55">16<small>cálido</small></span>
+                    <span style="--p:1">25</span>
+                  </div>
+                </div>
+
+                <dl class="cxo-bill">
+                  <div><dt>Factura bruta</dt><dd id="calc-factura-bruta">$0 COP</dd></div>
+                  <div><dt>Factura neta al usuario</dt><dd id="calc-factura-neta">$0 COP</dd></div>
+                  <div><dt>Ingreso de referencia</dt><dd id="calc-ingreso-ref">—</dd></div>
+                </dl>
+                <p class="cxo-ref">Referencia: <b id="calc-target-provider-name">Promedio del grupo seleccionado</b></p>
               </div>
-              <span class="quality-badge badge-verified">Principio 6 OCDE · Ley 142/94</span>
-            </div>
 
-            <div class="calc-grid-layout" style="margin-top: 16px;">
-              <div class="calc-controls-box">
-                <div class="filter-group" style="margin-bottom: 14px;">
-                  <label for="calc-estrato-select" class="filter-label">Estrato Socioeconómico del Hogar</label>
-                  <select id="calc-estrato-select" class="filter-select">
-                    <option value="1">Estrato 1 (Bajo-Bajo) · Subsidio hasta 70%</option>
-                    <option value="2">Estrato 2 (Bajo) · Subsidio hasta 40%</option>
-                    <option value="3">Estrato 3 (Medio-Bajo) · Subsidio hasta 15%</option>
-                    <option value="4">Estrato 4 (Medio) · Tarifa Plena (Sin subsidio ni aporte)</option>
-                    <option value="5">Estrato 5 (Medio-Alto) · Aporte Solidario +50%</option>
-                    <option value="6">Estrato 6 (Alto) · Aporte Solidario +60%</option>
-                  </select>
-                </div>
-
-                <div class="filter-group" style="margin-bottom: 14px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <label for="calc-consumo-slider" class="filter-label" style="margin: 0;">Consumo Mensual Simulado</label>
-                    <span id="calc-consumo-value" class="mono font-bold" style="color: var(--color-cra-blue); font-size: 0.95rem;">11 m³/mes</span>
+              <div class="cxo-gauge-wrap">
+                <div class="cxo-gauge" id="calc-gauge" role="img" aria-label="Esfuerzo tarifario frente al umbral de referencia del 3 %">
+                  <div class="cxo-gauge-scale" aria-hidden="true">
+                    <span style="--p:1">4 %</span><span style="--p:.75" class="is-umbral">3 %</span><span style="--p:.5">2 %</span><span style="--p:.25">1 %</span><span style="--p:0">0 %</span>
                   </div>
-                  <input type="range" id="calc-consumo-slider" min="5" max="25" step="1" value="11" class="calc-slider" style="width: 100%; cursor: pointer;" />
-                  <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
-                    <span>5 m³ (Mínimo vital)</span>
-                    <span>11 m³ (Frío)</span>
-                    <span>13 m³ (Templado)</span>
-                    <span>16 m³ (Cálido)</span>
-                    <span>25 m³</span>
+                  <div class="cxo-tank" aria-hidden="true">
+                    <div class="cxo-liquid" id="calc-liquid"><svg class="cxo-wave" viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M0 10 Q25 0 50 10 T100 10 T150 10 T200 10 V20 H0Z"/></svg></div>
+                    <div class="cxo-umbral" style="--p:.75"><span>Umbral 3 %</span></div>
                   </div>
                 </div>
-
-                <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--color-ice-blue); padding: 12px; border-radius: 8px; border-left: 3px solid var(--color-cra-blue);">
-                  <span><strong>Prestador / Grupo de Referencia:</strong> <span id="calc-target-provider-name" style="font-weight: 700; color: var(--color-deep-navy);">Promedio del Grupo Seleccionado</span></span>
+                <div class="cxo-gauge-read">
+                  <span class="cxo-gauge-num" id="calc-esfuerzo-pct">0,00 %</span>
+                  <span class="cxo-gauge-cap">del ingreso del hogar</span>
                 </div>
-              </div>
-
-              <div class="calc-results-box">
-                <div class="calc-metric-cards-row">
-                  <div class="dim-metric-box">
-                    <span class="dim-metric-label">Factura Bruta (Costo Real)</span>
-                    <span class="dim-metric-val mono" id="calc-factura-bruta">$0 COP</span>
-                    <span class="dim-metric-sub">CMA + CMO*m³</span>
-                  </div>
-                  <div class="dim-metric-box">
-                    <span class="dim-metric-label">Factura Neta al Usuario</span>
-                    <span class="dim-metric-val mono text-primary" id="calc-factura-neta">$0 COP</span>
-                    <span class="dim-metric-sub" id="calc-subsidio-label">Subsidio Ley 142/94</span>
-                  </div>
-                  <div class="dim-metric-box">
-                    <span class="dim-metric-label">Esfuerzo Tarifario</span>
-                    <span class="dim-metric-val mono" id="calc-esfuerzo-pct">0.0%</span>
-                    <span class="dim-metric-sub">del ingreso del hogar</span>
-                  </div>
-                  <div class="dim-metric-box">
-                    <span class="dim-metric-label">Umbral Límite OCDE</span>
-                    <span class="dim-metric-val mono">3.00%</span>
-                    <span class="dim-metric-sub">Techo de asequibilidad</span>
-                  </div>
-                </div>
-
-                <div id="calc-asequibilidad-status-box" style="margin-top: 14px;"></div>
               </div>
             </div>
+
+            <div id="calc-asequibilidad-status-box" class="cxo-status" aria-live="polite"></div>
+
+            <details class="cx-more">
+              <summary>Cómo se calcula</summary>
+              <p>Factura bruta = CMA + (CMO + CMI + CMT) × m³, con los costos de referencia del prestador seleccionado o el promedio del grupo filtrado. La factura neta aplica el factor de subsidio o aporte solidario del estrato (Ley 142 de 1994). El esfuerzo es la factura neta sobre el ingreso mensual de referencia del estrato, una estimación del prototipo, no un dato oficial. El umbral del 3 % del ingreso es el referente internacional OCDE / Banco Mundial.</p>
+            </details>
           </div>
         </div>
 
         <!-- SUBPANEL 4: LÍNEA DE TIEMPO DEL CICLO REGULATORIO (E0-E9) -->
-        <div id="ocde-pane-ciclo" class="ocde-subpane" style="display: none;">
-          <div class="analyst-only gap-alert-box" style="margin-bottom: 16px;">
+        <div id="ocde-pane-ciclo" class="ocde-subpane" hidden>
+          <header class="cx-block-head">
+            <span class="cx-eyebrow">Ciclo regulatorio E0–E9</span>
+            <h2>Diez etapas, <span class="cx-grad" id="ciclo-ocde-titular">una en curso</span></h2>
+            <p>Toque una etapa para ver su fecha y responsable.</p>
+          </header>
+
+          <div class="analyst-only gap-alert-box cxo-analyst">
             <strong>Vista Analista CRA (RF-NMT-11):</strong>
-            Alerta activa para prestadores con fecha límite de estudio de costos vencida (31 de agosto de 2026). 
+            Alerta activa para prestadores con fecha límite de estudio de costos vencida (31 de agosto de 2026).
             Los prestadores que no han reportado están en fase de requerimiento formal conjunto con la SSPD.
           </div>
 
-          <div class="timeline-ocde-container" id="timeline-ocde-view"></div>
+          <div class="cxo-cycle-scene cx-on-dark">
+            <div class="cx-cycle cxo-cycle" id="timeline-ocde-view"></div>
+          </div>
         </div>
       </section>
     </div>
 
-    <!-- PESTAÑA 3: DIRECTORIO DE PRESTADORES (ADR-0005) -->
+    <!-- PESTAÑA: DIRECTORIO UNIVERSAL DE PRESTADORES (ADR-0005) -->
     <div id="pane-prestadores" class="tab-content-pane" style="display: none;">
-      <section class="providers-section-card">
-        <div class="section-header">
-          <div>
-            <h3 class="section-title">Directorio Oficial de Grandes Prestadores (>5.000 Suscriptores)</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
-              Publicación a nivel de prestador individual con semáforo de calidad y derecho de contradicción (ADR-0005). 
-              Haga clic en cualquier prestador para consultar su ficha técnica detallada.
-            </p>
+      <section class="providers-section-card cx-directory">
+        <header class="cx-directory-head">
+          <div class="cx-block-head">
+            <span class="cx-eyebrow">Directorio · publicación por prestador (ADR-0005)</span>
+            <h2>Cada prestador, <span class="cx-grad">con su ficha y su semáforo</span></h2>
+            <p>Cada marco va en su propio grupo: no se comparan entre sí. <span class="obs-count-pill" id="filtered-count-badge"></span></p>
           </div>
-        </div>
+          <!-- Selector de Ámbito Regulatorio -->
+          <div class="cx-seg cx-seg-ink" role="group" aria-label="Filtrar por marco normativo">
+            <button id="btn-ambito-todos" class="mode-btn active" aria-pressed="true" onclick="window.AppNMT.setAmbitoPrestadores('todos')">Ambos marcos</button>
+            <button id="btn-ambito-1032" class="mode-btn" aria-pressed="false" onclick="window.AppNMT.setAmbitoPrestadores('1032')">Grandes · Res. 1032</button>
+            <button id="btn-ambito-1038" class="mode-btn" aria-pressed="false" onclick="window.AppNMT.setAmbitoPrestadores('1038')">Pequeños · Res. 1038</button>
+          </div>
+        </header>
 
         <div class="table-responsive">
           <table class="table-cra" id="providers-table">
             <thead>
               <tr>
-                <th>ID SUI</th>
-                <th>Prestador / Sigla</th>
+                <th>ID / Código</th>
+                <th>Prestador / Razón Social</th>
                 <th>Municipio (Depto)</th>
-                <th>Segmento</th>
-                <th>Suscriptores</th>
+                <th>Marco & Clasificación</th>
+                <th>Suscriptores / Familias</th>
                 <th>Estudio Costos</th>
-                <th>Var. Tarifa E3</th>
+                <th>Desglose Tarifario</th>
                 <th>Calidad</th>
                 <th>Acción</th>
               </tr>
@@ -441,121 +836,130 @@
 
     <!-- PESTAÑA 4: MAPA TERRITORIAL -->
     <div id="pane-mapa" class="tab-content-pane" style="display: none;">
-      <section class="providers-section-card">
-        <div class="section-header">
-          <div>
-            <h3 class="section-title">Distribución Geográfica de Prestadores del Ámbito NMT</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
-              Ubicación espacial de los prestadores en Colombia. Los marcadores azules indican adopción formal del estudio de costos; los marcadores rojos señalan reporte pendiente.
-            </p>
-          </div>
-        </div>
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Territorio</span>
+        <h2>Dónde está cada prestador <span class="cx-grad">y si ya adoptó</span></h2>
+        <p>Azul: estudio de costos radicado. Rojo: reporte pendiente. Verde: pequeños y comunitarios, en su departamento.</p>
+      </header>
+      <section class="cx-map-card" aria-label="Mapa de prestadores del ámbito de los nuevos marcos tarifarios">
         <div id="map-container"></div>
       </section>
     </div>
 
     <!-- PESTAÑA 5: METODOLOGÍA Y COMPUERTA -->
     <div id="pane-metodologia" class="tab-content-pane" style="display: none;">
-      <section class="providers-section-card">
-        <div class="section-header">
-          <div>
-            <h3 class="section-title">Compuerta de Calidad y Catálogo de Fichas Metodológicas</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
-              En cumplimiento del <strong>ADR-0003</strong>, ningún indicador se publica sin ficha metodológica aprobada, 
-              fórmula canónica, sustento normativo y semáforo de confiabilidad.
-            </p>
-          </div>
-        </div>
 
-        <div class="kpi-grid">
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-ADO-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-ADO-01</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
-            <div class="kpi-label">Tasa de Adopción del Marco 1032</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Proporción de prestadores con estudio de costos formalmente radicado ante SUI/SURICATA.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-ADO-02')">
-            <div class="kpi-header"><span class="kpi-code">NMT-ADO-02</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
-            <div class="kpi-label">Oportunidad de Adopción</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Días calendario transcurridos desde expedición hasta la primera factura emitida bajo Res. 1032.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-TAR-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-TAR-01</span><span class="quality-badge badge-warning">DESAGREGADO</span></div>
-            <div class="kpi-label">Variación Tarifaria de Transición</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Comparación de factura resultante por estrato socioeconómico (RN-PORTAL-04: sin tarifa promedio).</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-LB-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-LB-01</span><span class="quality-badge badge-warning">EN ALISTAMIENTO</span></div>
-            <div class="kpi-label">Cobertura de Línea Base 2026</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Porcentaje de prestadores con información histórica completa reportada para el cierre 2026.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-EST-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-EST-01</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
-            <div class="kpi-label">Cumplimiento Estándares IDH/IRD</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Continuidad (IDH2), calidad del agua (IRCA IDH5) y presión frente a metas del segmento.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-EST-02')">
-            <div class="kpi-header"><span class="kpi-code">NMT-EST-02</span><span class="quality-badge badge-verified">VERIFICADO</span></div>
-            <div class="kpi-label">Brecha de Pérdidas con Banda de Incertidumbre</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Diferencia entre IPUF observado y meta estándar de 6 m³, con banda percentil p10-p90.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-INC-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-INC-01</span><span class="quality-badge badge-warning">EN TRÁMITE</span></div>
-            <div class="kpi-label">Descuentos e Incentivos Tarifarios</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Aplicación de descuentos por fallas de servicio (Tabla 31) e incentivos por eficiencia (Tablas 17-25).</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-
-          <div class="kpi-card" onclick="window.ModalsFichas.open('NMT-RIE-01')">
-            <div class="kpi-header"><span class="kpi-code">NMT-RIE-01</span><span class="quality-badge badge-verified">SSPD IUS</span></div>
-            <div class="kpi-label">Prestadores en Riesgo Alto (IUS)</div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0;">Niveles 4 y 5 del Indicador Único Sectorial publicado oficialmente por la SSPD.</p>
-            <button class="btn-view-detail" style="width: 100%; margin-top: 8px;">Consultar Ficha Técnica</button>
-          </div>
-        </div>
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Compuerta de publicación · ADR-0003</span>
+        <h2>Cuatro llaves antes de <span class="cx-grad">publicar una cifra</span></h2>
+      </header>
+      <section class="cx-tile cx-tile-deep cx-on-dark cx-gate" aria-label="Condiciones para publicar un indicador">
+        <ol class="cx-gate-steps">
+          <li><span class="cx-gate-node" aria-hidden="true">1</span><b>Ficha metodológica</b><span>aprobada y pública</span></li>
+          <li><span class="cx-gate-node" aria-hidden="true">2</span><b>Fórmula canónica</b><span>versionada</span></li>
+          <li><span class="cx-gate-node" aria-hidden="true">3</span><b>Sustento normativo</b><span>norma vigente, con artículo</span></li>
+          <li><span class="cx-gate-node" aria-hidden="true">4</span><b>Semáforo de calidad</b><span>y fecha de corte</span></li>
+        </ol>
+        <p class="cx-gate-out"><span aria-hidden="true">✓</span> Solo entonces se publica</p>
       </section>
+
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Semáforo de calidad · grandes prestadores</span>
+        <h2>Cada cifra dice <span class="cx-grad">qué tan confiable es</span></h2>
+        <p>Estado de la información de los grandes prestadores de la Res. 1032.</p>
+      </header>
+      <div class="cx-quality" id="metodologia-calidad">
+        <article class="cx-q-tile" data-q="VERIFIED"><span class="cx-q-icon"></span><b class="cx-q-count">—</b><h3>Verificado</h3><p>Reporte completo, con cierre de la ventana previa del SUI.</p></article>
+        <article class="cx-q-tile" data-q="WARNING"><span class="cx-q-icon"></span><b class="cx-q-count">—</b><h3>Observado</h3><p>Línea base parcial: se publica con advertencia.</p></article>
+        <article class="cx-q-tile" data-q="QUARANTINE"><span class="cx-q-icon"></span><b class="cx-q-count">—</b><h3>En cuarentena</h3><p>En revisión: no se usa en agregados.</p></article>
+        <article class="cx-q-tile" data-q="NO_REPORT"><span class="cx-q-icon"></span><b class="cx-q-count">—</b><h3>No reportó</h3><p>Sin reporte al SUI: se muestra como ausente, nunca como cero.</p></article>
+      </div>
+
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Fichas metodológicas · Res. 1032</span>
+        <h2>Un indicador, <span class="cx-grad">una ficha</span></h2>
+      </header>
+      <div class="cx-fichas">
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-ADO-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-ADO-01</span><span class="quality-badge badge-verified">VERIFICADO</span></span>
+          <span class="cx-ficha-title">Tasa de adopción del marco 1032</span>
+          <span class="cx-ficha-desc">Prestadores con estudio de costos radicado ante SUI/SURICATA.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-ADO-02')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-ADO-02</span><span class="quality-badge badge-verified">VERIFICADO</span></span>
+          <span class="cx-ficha-title">Oportunidad de adopción</span>
+          <span class="cx-ficha-desc">Días desde la expedición hasta la primera factura bajo la Res. 1032.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-TAR-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-TAR-01</span><span class="quality-badge badge-warning">DESAGREGADO</span></span>
+          <span class="cx-ficha-title">Variación tarifaria de transición</span>
+          <span class="cx-ficha-desc">Factura resultante por estrato; nunca una tarifa promedio (RN-PORTAL-04).</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-LB-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-LB-01</span><span class="quality-badge badge-warning">EN ALISTAMIENTO</span></span>
+          <span class="cx-ficha-title">Cobertura de línea base 2026</span>
+          <span class="cx-ficha-desc">Prestadores con información histórica completa para el cierre 2026.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-EST-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-EST-01</span><span class="quality-badge badge-verified">VERIFICADO</span></span>
+          <span class="cx-ficha-title">Cumplimiento de estándares IDH/IRD</span>
+          <span class="cx-ficha-desc">Continuidad, calidad del agua y presión frente a las metas del segmento.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-EST-02')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-EST-02</span><span class="quality-badge badge-verified">VERIFICADO</span></span>
+          <span class="cx-ficha-title">Brecha de pérdidas con banda de incertidumbre</span>
+          <span class="cx-ficha-desc">IPUF observado frente a la meta de referencia, con banda p10–p90.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-INC-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-INC-01</span><span class="quality-badge badge-warning">EN TRÁMITE</span></span>
+          <span class="cx-ficha-title">Descuentos e incentivos tarifarios</span>
+          <span class="cx-ficha-desc">Descuentos por fallas (Tabla 31) e incentivos por eficiencia (Tablas 17-25).</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+        <button type="button" class="cx-ficha" onclick="window.ModalsFichas.open('NMT-RIE-01')">
+          <span class="cx-ficha-top"><span class="kpi-code">NMT-RIE-01</span><span class="quality-badge badge-verified">SSPD IUS</span></span>
+          <span class="cx-ficha-title">Prestadores en riesgo alto (IUS)</span>
+          <span class="cx-ficha-desc">Niveles 4 y 5 del Indicador Único Sectorial publicado por la SSPD.</span>
+          <span class="cx-link">Consultar ficha</span>
+        </button>
+      </div>
+
+      <a class="cx-door cx-door-graphic cx-door-banner" href="#nmtpp" onclick="event.preventDefault(); window.AppNMT.goTo('nmtpp', 'tab-metodologia-nmtpp')">
+        <span class="cx-door-img" aria-hidden="true"></span>
+        <span class="cx-door-tag">Res. CRA 1038 de 2026</span>
+        <span class="cx-door-title">Fichas de los pequeños prestadores y gestores comunitarios</span>
+        <span class="cx-door-more">Abrir la guía metodológica</span>
+      </a>
     </div>
 
-    <!-- PESTAÑA 6: DATOS ABIERTOS & API -->
+    <!-- PESTAÑA: DATOS ABIERTOS & API -->
     <div id="pane-datos" class="tab-content-pane" style="display: none;">
-      <section class="providers-section-card">
-        <div class="section-header">
-          <div>
-            <h3 class="section-title">Descarga de Datos Abiertos y Espejo de API</h3>
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
-              En cumplimiento de la Ley 1712 de 2014 (Transparencia) y la Resolución MinTIC 1519 de 2020. 
-              Los datos se descargan con trazabilidad, llaves canónicas y semáforo de calidad.
-            </p>
+      <header class="cx-block-head">
+        <span class="cx-eyebrow">Ley 1712 de 2014 · Res. MinTIC 1519 de 2020</span>
+        <h2>Descargue los datos <span class="cx-grad">con su linaje</span></h2>
+        <p>Cada archivo lleva fecha de corte, semáforo de calidad y llaves canónicas.</p>
+      </header>
+
+      <div class="cx-bento cx-datasets">
+        <!-- Bloque 1: Grandes Prestadores (Res. CRA 1032) -->
+        <article class="cx-tile cx-tile-deep cx-on-dark cx-span-3 cx-dataset">
+          <span class="cx-tile-label">Res. CRA 1032 de 2026 · grandes prestadores</span>
+          <div class="cx-stat cx-grad-light" data-cx-count="1032">—</div>
+          <h3 class="cx-display-3">prestadores urbanos de más de 5.000 suscriptores</h3>
+          <p class="cx-tile-note">Serie histórica y de transición, desde 13 esquemas Oracle del SUI y SURICATA. Se descarga con los filtros activos.</p>
+          <div class="cx-downloads">
+            <button type="button" class="cx-dl" onclick="window.DataExport.exportCSV(window.AppNMT.filteredProviders)"><b>CSV</b><span>Prestadores filtrados</span></button>
+            <button type="button" class="cx-dl" onclick="window.DataExport.exportJSON(window.AppNMT.filteredProviders)"><b>JSON</b><span>Prestadores filtrados</span></button>
           </div>
-        </div>
-
-        <div style="display: flex; gap: 16px; margin-bottom: 24px;">
-          <button class="mode-btn active" style="padding: 10px 20px; font-size: 0.88rem;" onclick="window.DataExport.exportCSV(window.AppNMT.filteredProviders)">
-            Descargar Dataset en CSV (Filtrado)
-          </button>
-          <button class="btn-export-quick" style="padding: 10px 20px; font-size: 0.88rem;" onclick="window.DataExport.exportJSON(window.AppNMT.filteredProviders)">
-            Descargar Dataset en JSON (Filtrado)
-          </button>
-        </div>
-
-        <div class="info-block">
-          <div class="info-block-title">Contrato de API REST / Zona de Publicación (ADR-0007 / RF-PORTAL-03)</div>
-          <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;">
-            Endpoint canónico previsto para consumo público de la serie de monitoreo:
-          </p>
-          <pre class="mono" style="background: #ffffff; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); font-size: 0.78rem; overflow-x: auto;">
-GET /api/v1/nmt/res-1032/prestadores?segmento={segmento}&periodo=2026-08
+          <details class="cx-more">
+            <summary>Contrato de la API (ADR-0007 / RF-PORTAL-03)</summary>
+            <pre class="cx-code">GET /api/v1/nmt/res-1032/prestadores?segmento={segmento}&amp;periodo=2026-08
 Headers:
   Accept: application/json
 Response:
@@ -565,10 +969,40 @@ Response:
     "total": 188,
     "quality_gateway": "APPROVED",
     "data": [ ... ]
-  }
-          </pre>
-        </div>
-      </section>
+  }</pre>
+          </details>
+        </article>
+
+        <!-- Bloque 2: Pequeños Prestadores y Rurales (Res. CRA 1038) -->
+        <article class="cx-tile cx-span-3 cx-dataset">
+          <span class="cx-tile-label">Res. CRA 1038 de 2026 · pequeños y comunitarios</span>
+          <div class="cx-stat cx-grad" data-cx-count="1038">—</div>
+          <h3 class="cx-display-3">prestadores del universo piloto, <span class="cx-synthetic">datos sintéticos</span></h3>
+          <p class="cx-tile-note">Cada CSV lleva en su primera línea el aviso de datos sintéticos de prototipo.</p>
+          <div class="cx-downloads">
+            <button type="button" class="cx-dl" onclick="window.Exportar && window.Exportar.descargar('prestadores')"><b>CSV</b><span>Prestadores</span></button>
+            <button type="button" class="cx-dl" onclick="window.Exportar && window.Exportar.descargar('estados')"><b>CSV</b><span>Estados evaluados <em data-cx-count="estados"></em></span></button>
+            <button type="button" class="cx-dl" onclick="window.Exportar && window.Exportar.descargar('ise')"><b>CSV</b><span>ISE CRA e incentivos</span></button>
+            <button type="button" class="cx-dl" onclick="window.Exportar && window.Exportar.descargar('tarifas')"><b>CSV</b><span>Tarifas E1 a E6</span></button>
+            <button type="button" class="cx-dl" onclick="window.Exportar && window.Exportar.descargar('adopcion')"><b>CSV</b><span>Adopción por subsegmento</span></button>
+          </div>
+          <details class="cx-more">
+            <summary>Contrato de la API (ADR-0007 / RF-NMTPP-19)</summary>
+            <pre class="cx-code">GET /api/v1/nmtpp/res-1038/prestadores?subsegmento={subsegmento}&amp;anio=2027
+Headers:
+  Accept: application/json
+Response:
+  {
+    "status": "success",
+    "norma": "Resolución CRA 1038 de 2026",
+    "fecha_corte": "2028-09-15",
+    "total": 40,
+    "quality_gateway": "VERIFIED_DETERMINISTIC",
+    "data": [ ... ]
+  }</pre>
+          </details>
+        </article>
+      </div>
     </div>
 
   </main>
@@ -601,9 +1035,9 @@ Response:
       <div class="modal-header">
         <div class="modal-title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Dictamen Ejecutivo de Impacto Regulatorio (AIR OCDE)
+          Síntesis ejecutiva de seguimiento · referentes AIR OCDE
         </div>
-        <button class="modal-close-btn" onclick="window.ImpactoOCDE.closeExecutiveReportModal()">&times;</button>
+        <button class="modal-close-btn" aria-label="Cerrar la síntesis" onclick="window.ImpactoOCDE.closeExecutiveReportModal()">&times;</button>
       </div>
       <div class="modal-body" id="air-report-content" style="padding: 24px;"></div>
       <div class="modal-footer" style="padding: 16px 24px; background: var(--color-ice-blue); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color);">
@@ -619,37 +1053,52 @@ Response:
     </div>
   </div>
 
+  <!-- MODAL: FICHA INTEGRAL DE PEQUEÑO PRESTADOR (RES. CRA 1038/2026) -->
+  <div class="modal-overlay" id="modal-perfil-prestador" style="display: none;">
+    <div class="modal-content" style="max-width: 900px; max-height: 90vh;">
+      <div class="modal-header">
+        <div id="modal-perfil-title" class="modal-title">Ficha Integral del Prestador</div>
+        <button class="modal-close-btn" onclick="window.Prestadores ? window.Prestadores.cerrarModal() : (document.getElementById('modal-perfil-prestador').style.display = 'none')">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-perfil-body" style="padding: 24px;"></div>
+    </div>
+  </div>
+
   <!-- PIE DE PÁGINA INSTITUCIONAL -->
-  <footer class="footer-cra">
-    <div class="footer-container">
-      <div class="footer-col">
-        <div class="footer-title">Observatorio Regulatorio CRA</div>
-        <div class="footer-desc">
-          Órgano de monitoreo, analítica y transparencia del sector de agua potable y saneamiento básico en Colombia. 
-          Desarrollado bajo el modelo metodológico del Context Lake y los estándares de evaluación regulatoria de la OCDE.
-        </div>
+  <footer class="obs-footer">
+    <div class="obs-wrap obs-footer-grid">
+      <div class="obs-footer-brand">
+        <div class="obs-footer-name">Observatorio CRA</div>
+        <p>Datos abiertos para que el agua y el aseo lleguen a todos.</p>
+        <p class="obs-footer-canonical">Observatorio Regulatorio de Agua Potable y Saneamiento Básico – CRA</p>
       </div>
-      <div class="footer-col">
-        <div class="footer-title">Marco Institucional</div>
-        <div class="footer-desc">
-          Comisión de Regulación de Agua Potable y Saneamiento Básico<br>
-          Edificio CRA, Carrera 12 No. 97-80, Bogotá D.C., Colombia<br>
-          Línea Gratuita Nacional: 01 8000 517 565
-        </div>
+      <div>
+        <div class="obs-footer-title">Explorar</div>
+        <ul class="obs-footer-links">
+          <li><button onclick="window.AppNMT.goTo('tablero')">Grandes prestadores</button></li>
+          <li><button onclick="window.AppNMT.goTo('nmtpp')">Pequeños prestadores y rurales</button></li>
+          <li><button onclick="window.AppNMT.goTo('ciclo')">Impacto regulatorio</button></li>
+          <li><button onclick="window.AppNMT.goTo('prestadores')">Directorio de prestadores</button></li>
+        </ul>
       </div>
-      <div class="footer-col">
-        <div class="footer-title">Gobernanza y Salvaguardas</div>
-        <div class="footer-desc">
-          • Prohibición de rankings compuestos (RN-PORTAL-05)<br>
-          • Desagregación tarifaria por estrato (RN-PORTAL-04)<br>
-          • Semáforos de calidad y trazabilidad oficial (ADR-0003)<br>
-          • Publicación por prestador con ventana previa (ADR-0005)
-        </div>
+      <div>
+        <div class="obs-footer-title">Transparencia</div>
+        <ul class="obs-footer-links">
+          <li><button onclick="window.AppNMT.goTo('metodologia')">Metodología y compuerta de calidad</button></li>
+          <li><button onclick="window.AppNMT.goTo('datos')">Datos abiertos y API</button></li>
+          <li>Ley 1712 de 2014 · Res. MinTIC 1519 de 2020</li>
+        </ul>
+      </div>
+      <div>
+        <div class="obs-footer-title">Comisión de Regulación de Agua Potable y Saneamiento Básico</div>
+        <p>Carrera 12 No. 97-80, Bogotá D.C., Colombia<br>Línea gratuita nacional: 01 8000 517 565</p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA). Todos los derechos reservados.</span>
-      <span>Versión MVP 1.0.0 · Corte de Datos 2026-08-31</span>
+    <div class="obs-footer-legal">
+      <div class="obs-wrap obs-footer-legal-inner">
+        <span>Seguimiento informativo, sin efecto jurídico; la verificación del cumplimiento es de la SSPD.</span>
+        <span>&copy; 2026 CRA · Prototipo v1.1.0, versión final en validación · Corte de datos 2026-08-31</span>
+      </div>
     </div>
   </footer>
 
@@ -657,10 +1106,17 @@ Response:
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <!-- DATASET CANÓNICO EMBEBIDO -->
-  <script src="js/data_nmt.js"></script>
+  <!-- TEMA EDITORIAL DE GRÁFICAS Y TABLAS ACCESIBLES -->
+  <script src="js/theme_charts.js"></script>
 
-  <!-- COMPONENTES ANALÍTICOS Y VISUALES -->
+  <!-- DATASETS CANÓNICOS EMBEBIDOS -->
+  <script src="js/data_nmt.js"></script>
+  <script src="data/datos-sinteticos-prototipo.js"></script>
+
+  <!-- MOTOR DETERMINISTA NMTPP (RES. 1038) -->
+  <script src="js/motor_estados.js"></script>
+
+  <!-- COMPONENTES ANALÍTICOS Y VISUALES (RES. 1032 GRANDES PRESTADORES & OCDE) -->
   <script src="js/components/timeline_ocde.js"></script>
   <script src="js/components/impacto_ocde.js"></script>
   <script src="js/components/kpi_cards.js"></script>
@@ -670,7 +1126,27 @@ Response:
   <script src="js/components/modals_fichas.js"></script>
   <script src="js/components/data_export.js"></script>
 
-  <!-- CONTROLADOR PRINCIPAL -->
+  <!-- COMPONENTES ANALÍTICOS (RES. 1038 PEQUEÑOS PRESTADORES) -->
+  <script src="js/components/nmtpp/resumen_adopcion.js"></script>
+  <script src="js/components/nmtpp/calendario_hitos.js"></script>
+  <script src="js/components/nmtpp/nivel_servicio.js"></script>
+  <script src="js/components/nmtpp/ise_incentivos.js"></script>
+  <script src="js/components/nmtpp/regimen_especial.js"></script>
+  <script src="js/components/nmtpp/aclaraciones.js"></script>
+  <script src="js/components/nmtpp/fichas.js"></script>
+  <script src="js/components/nmtpp/prestadores.js"></script>
+  <script src="js/components/nmtpp/exportar.js"></script>
+
+  <!-- PORTADA -->
+  <script src="js/cinematica_kit.js"></script>
+  <script src="js/components/nmtpp/hero_cifras.js"></script>
+  <script src="js/components/encabezados.js"></script>
+  <script src="js/components/paginas.js"></script>
+  <script src="js/components/portada_contenido.js"></script>
+  <script src="js/components/portada.js"></script>
+
+  <!-- CONTROLADORES PRINCIPALES -->
+  <script src="js/app_nmtpp.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

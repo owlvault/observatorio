@@ -79,10 +79,12 @@
                 btn.classList.toggle('active', btn.getAttribute('data-tab') === tabId);
             });
 
-            // Actualizar paneles
-            const panes = document.querySelectorAll('.tab-pane');
+            // Actualizar paneles dentro de pane-nmtpp
+            const panes = document.querySelectorAll('#pane-nmtpp .tab-pane');
             panes.forEach(pane => {
-                pane.classList.toggle('active', pane.id === tabId);
+                const isActive = (pane.id === tabId);
+                pane.classList.toggle('active', isActive);
+                pane.style.display = isActive ? 'block' : 'none';
             });
 
             this.renderVistaActiva();
@@ -112,7 +114,8 @@
                     if (window.Aclaraciones) window.Aclaraciones.render('tab-aclaraciones');
                     break;
                 case 'tab-metodologia':
-                    if (window.Fichas) window.Fichas.render('tab-metodologia');
+                case 'tab-metodologia-nmtpp':
+                    if (window.Fichas) window.Fichas.render(document.getElementById('tab-metodologia-nmtpp') ? 'tab-metodologia-nmtpp' : 'tab-metodologia');
                     break;
                 case 'tab-datos':
                     if (window.Exportar) window.Exportar.render('tab-datos');

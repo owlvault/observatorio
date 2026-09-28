@@ -164,81 +164,93 @@
             }
         ],
 
+        filtroPrioridad: 'todas',
+
+        setPrioridad(p) {
+            this.filtroPrioridad = p;
+            // Se ocultan con hidden; las casillas no se desmontan
+            document.querySelectorAll('#tab-aclaraciones .cxpp-q').forEach(el => {
+                el.hidden = p !== 'todas' && el.getAttribute('data-prio') !== p;
+            });
+            document.querySelectorAll('#tab-aclaraciones .cxpp-seg button').forEach(b => {
+                b.setAttribute('aria-pressed', String(b.getAttribute('data-prio') === p));
+            });
+        },
+
         render(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
 
+            const U = window.CxPP;
             const appState = window.AppNMTPP || { modo: 'analista' };
-            const fechaCorte = (window.CRA_NMTPP_DATA && window.CRA_NMTPP_DATA._meta) ? window.CRA_NMTPP_DATA._meta.fecha_corte_simulada : '2028-09-15';
+            const fechaCorte = (window.CRA_NMTPP_DATA && window.CRA_NMTPP_DATA._meta) ? window.CRA_NMTPP_DATA._meta.fecha_corte_simulada : appState.fechaCorte;
+            const analista = appState.modo === 'analista';
+            const qs = this.ACLARACIONES;
+            const prios = ['Crítica', 'Alta', 'Media'];
+            const n = {};
+            prios.forEach(p => { n[p] = qs.filter(q => q.prioridad === p).length; });
+            const vencidas = qs.filter(q => q.fechaLimite < fechaCorte).length;
+            const claseP = p => (p === 'Crítica' ? 'c' : (p === 'Alta' ? 'a' : 'm'));
+            const forma = { 'Crítica': '◆', 'Alta': '▲', 'Media': '●' };
 
-            let html = `
-                <div class="dashboard-panel">
-                    <div class="panel-header">
-                        <div class="panel-header-title">
-                            <h2>Consultas y Aclaraciones Normativas (Mecanismo de Transparencia)</h2>
-                            <p>Seguimiento público a dudas prácticas, vacíos técnicos y coordinación interinstitucional entre la CRA, la SSPD y los acueductos (RF-NMTPP-18)</p>
-                        </div>
+            const html = `
+                ${U.cabecera('Aclaraciones normativas · RF-NMTPP-18',
+                    `${qs.length} preguntas abiertas <span class="cx-grad">frenan indicadores</span>`,
+                    'Mientras no hay respuesta, el indicador se marca "pendiente de aclaración" o "sin fuente confirmada", nunca con un valor supuesto.')}
+
+                <div class="cxpp-controls">
+                    <span class="cxpp-controls-label" id="acl-sel-label">Prioridad</span>
+                    <div class="cx-seg cxpp-seg" role="group" aria-labelledby="acl-sel-label">
+                        <button type="button" data-prio="todas" aria-pressed="${this.filtroPrioridad === 'todas'}" onclick="Aclaraciones.setPrioridad('todas')">Todas <b class="cxpp-cnt">${qs.length}</b></button>
+                        ${prios.map(p => `<button type="button" data-prio="${p}" aria-pressed="${this.filtroPrioridad === p}" onclick="Aclaraciones.setPrioridad('${p}')"><span aria-hidden="true" class="cxpp-prio-ic cxpp-prio-ic-${claseP(p)}">${forma[p]}</span> ${p} <b class="cxpp-cnt">${n[p]}</b></button>`).join('')}
                     </div>
+                    ${analista && vencidas ? `<span class="cxpp-venc analyst-only"><span aria-hidden="true">✕</span> ${vencidas} con fecha útil vencida al corte</span>` : ''}
+                </div>
 
-                    <div class="notice-box info">
-                        <span>⚖️</span>
-                        <div>
-                            <strong>¿Por qué esta sección protege a las comunidades y a los acueductos?:</strong>
-                            Al implementar una nueva regulación, surgen preguntas prácticas sobre qué formularios oficiales usar, cómo reportar en zonas rurales o cómo interpretar ciertas fórmulas matemáticas.
-                            <br>
-                            En lugar de aplicar sanciones arbitrarias o inventar reglas por nuestra cuenta, el Observatorio hace visibles estas consultas técnicas.
-                            Mientras una duda se resuelve formalmente entre las entidades de gobierno, los indicadores correspondientes <strong>se marcan de forma transparente como "Meta pendiente de aclaración normativa" o "Sin fuente confirmada"</strong>, garantizando el debido proceso para prestadores y usuarios.
-                        </div>
-                    </div>
+                <ul class="cxpp-qgrid">
+                    ${qs.map(q => {
+                        const vencida = q.fechaLimite < fechaCorte;
+                        return `
+                        <li class="cxpp-q cxpp-q-${claseP(q.prioridad)}" data-prio="${q.prioridad}" ${this.filtroPrioridad !== 'todas' && this.filtroPrioridad !== q.prioridad ? 'hidden' : ''}>
+                            <div class="cxpp-q-top">
+                                <span class="cxpp-hito-code">${q.id}</span>
+                                <span class="cxpp-q-prio"><span aria-hidden="true">${forma[q.prioridad] || '●'}</span> ${q.prioridad}</span>
+                            </div>
+                            <h3 class="cxpp-q-title">${U.esc(q.tema)}</h3>
+                            <div class="cxpp-q-block">
+                                <span class="cxpp-q-lbl">Bloquea</span>
+                                <strong>${U.esc(q.bloquea)}</strong>
+                            </div>
+                            <div class="cxpp-q-foot">
+                                <span class="status-pill status-pendiente-aclaracion"><span class="status-icon" aria-hidden="true">§</span> Abierta</span>
+                                <span class="cxpp-q-date">Fecha útil ${U.fecha(q.fechaLimite)}</span>
+                                ${analista && vencida ? '<span class="chip chip-discrepancy analyst-only">Vencida a corte</span>' : ''}
+                            </div>
+                            <details class="cx-more"><summary>Detalle</summary><p><strong>${U.esc(q.tipo)}.</strong> ${U.esc(q.resumen)} <em>Responsable: ${U.esc(q.responsable)}.</em></p></details>
+                        </li>`;
+                    }).join('')}
+                </ul>
+                <p class="cxpp-meta-line cxpp-mt">Fuente: <span class="mono">specs/aclaraciones-regulatorias-nmtpp.md</span> (tabla de resumen).</p>
 
+                <div class="cxpp-chartbar">${U.btnTabla('tbl-aclaraciones')}</div>
+                <div id="tbl-aclaraciones" hidden>
                     <div class="data-table-container">
                         <table class="data-table" aria-label="Matriz de aclaraciones regulatorias">
                             <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Consulta o Pregunta en Revisión</th>
-                                    <th>Naturaleza</th>
-                                    <th>Urgencia</th>
-                                    <th>Aspectos Afectados</th>
-                                    <th>Fecha Esperada</th>
-                                    <th>Entidad Encargada</th>
-                                    <th>Estado</th>
-                                </tr>
+                                <tr><th>Código</th><th>Consulta</th><th>Naturaleza</th><th>Prioridad</th><th>Bloquea</th><th>Fecha útil</th><th>Responsable</th><th>Estado</th></tr>
                             </thead>
                             <tbody>
-                                ${this.ACLARACIONES.map(q => {
-                                    const vencida = q.fechaLimite < fechaCorte;
-                                    const prioCls = q.prioridad === 'Crítica' ? 'chip-discrepancy' : (q.prioridad === 'Alta' ? 'chip-special' : '');
-
-                                    return `
-                                        <tr>
-                                            <td><strong class="mono">${q.id}</strong></td>
-                                            <td>
-                                                <strong>${q.tema}</strong>
-                                                <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">
-                                                    ${q.resumen}
-                                                </p>
-                                            </td>
-                                            <td><span class="chip">${q.tipo}</span></td>
-                                            <td><span class="chip ${prioCls}">${q.prioridad}</span></td>
-                                            <td style="font-size: 0.8rem; color: var(--blue-deep-navy);">
-                                                <strong>${q.bloquea}</strong>
-                                            </td>
-                                            <td class="mono">
-                                                ${q.fechaLimite}
-                                                ${appState.modo === 'analista' && vencida
-                                                    ? '<br><span class="chip chip-discrepancy">Vencida a corte</span>'
-                                                    : ''}
-                                            </td>
-                                            <td style="font-size: 0.8rem;">${q.responsable}</td>
-                                            <td>
-                                                <span class="status-pill status-pendiente-aclaracion">
-                                                    <span class="status-icon">§</span> Abierta
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    `;
-                                }).join('')}
+                                ${qs.map(q => `
+                                    <tr>
+                                        <td class="mono">${q.id}</td>
+                                        <td><strong>${U.esc(q.tema)}</strong></td>
+                                        <td>${U.esc(q.tipo)}</td>
+                                        <td>${q.prioridad}</td>
+                                        <td>${U.esc(q.bloquea)}</td>
+                                        <td class="mono">${q.fechaLimite}${analista && q.fechaLimite < fechaCorte ? ' (vencida a corte)' : ''}</td>
+                                        <td>${U.esc(q.responsable)}</td>
+                                        <td>Abierta</td>
+                                    </tr>`).join('')}
                             </tbody>
                         </table>
                     </div>
@@ -246,6 +258,7 @@
             `;
 
             container.innerHTML = html;
+            U.animar(container);
         }
     };
 

@@ -3,7 +3,7 @@ id: agents
 tipo: agents
 proyecto: observatorio-regulatorio-cra
 estado: borrador
-actualizado: 2026-09-18
+actualizado: 2026-09-28
 fuentes: [README_Context_Lake_Observatorio_Regulatorio_CRA (Drive), Plan_de_Investigacion_y_Hoja_de_Ruta_Poblamiento_Observatorio_CRA (Drive), decisiones de sesion 2026-09-13, decisiones de sesion 2026-09-14 (carpeta 09_), sesión /learn 2026-09-15 (estándares UI/UX), hoja de ruta de implementación de los NMT (sesión 2026-09-15/16), Res. CRA 1038 de 2026 y su Documento Técnico (sesión 2026-09-18)]
 ---
 
@@ -11,7 +11,7 @@ fuentes: [README_Context_Lake_Observatorio_Regulatorio_CRA (Drive), Plan_de_Inve
 
 Nombre canónico. La marca corta "Observatorio CRA" y el lema están fijados en `adr/ADR-0009`, pendiente de ratificación; ningún otro nombre es válido en este repositorio.
 
-Plataforma pública de información regulatoria del sector de acueducto, alcantarillado y aseo en Colombia, operada por la Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA). Publica indicadores comparables de prestadores —calidad, continuidad, pérdidas, eficiencia, asequibilidad y sostenibilidad— a partir de fuentes oficiales, principalmente el SUI de la Superservicios. Hoy el proyecto está en **diseño y prototipado**: el Context Lake está en construcción y hay prototipos con datos simulados (`app_observatorio_nmt/` para la Res. 1032; `app_observatorio_nmtpp/` especificado para la Res. 1038).
+Plataforma pública de información regulatoria del sector de acueducto, alcantarillado y aseo en Colombia, operada por la Comisión de Regulación de Agua Potable y Saneamiento Básico (CRA). Publica indicadores comparables de prestadores —calidad, continuidad, pérdidas, eficiencia, asequibilidad y sostenibilidad— a partir de fuentes oficiales, principalmente el SUI de la Superservicios. La **etapa de prototipo cerró el 2026-09-28**: la versión final, `app_observatorio_nmt/` (prototipo v1.1.0, etiqueta `prototipo-v1.1.0`), cubre la Res. 1032 con datos simulados y la Res. 1038 con datos sintéticos, y está **en validación del product owner** (ver `docs/entrega-prototipo.md`). El Context Lake sigue en construcción.
 
 Este repositorio es el sustrato único de verdad del dominio. Un agente que trabaje aquí **no debe inferir parámetros regulatorios**: si un dato no está, lo reporta como ausente.
 
@@ -24,6 +24,7 @@ Antes de escribir código, lee el archivo que corresponda a tu tarea:
 | entender por qué existe el Observatorio y qué optimiza | `docs/business_context.md` |
 | usar un término del dominio (IANC, APS, CMA, prestador, subsegmento, ISE) | `docs/glosario.md` |
 | entender el stack, sus límites y lo que aún no está decidido | `docs/architecture.md` |
+| saber qué se entregó del prototipo, qué se valida y qué queda pendiente | `docs/entrega-prototipo.md` |
 | ingerir o versionar datos del SUI y demás fuentes | `specs/ingesta-sui-y-fuentes.md` |
 | definir, calcular o versionar un indicador | `specs/ontologia-indicadores.md` |
 | validar, marcar o poner en cuarentena datos | `specs/calidad-de-datos.md` |
@@ -67,7 +68,7 @@ Las diez carpetas temáticas **no se reorganizan**: son el acervo de conocimient
 | Acceso a la fuente | Consulta SQL sobre la base Oracle del SUI vía VPN, solo lectura | Decidido. Ver `adr/ADR-0006`: snapshot propio obligatorio y disciplina de carga sobre el origen |
 | Ingesta | Estación de extracción operada, en franjas diarias de máximo 4 horas, días hábiles | La VPN al SUI es site-to-person: **no hay ingesta desatendida**, y el paquete debe ser segmentable y reanudable (`RF-SUI-10`). Ver `adr/ADR-0008` |
 | Portal | Micrositio dentro de la sede electrónica de la CRA; tablero propio sobre OCI como motor, con Power BI incrustado solo para exploraciones durante una fase híbrida transitoria | Decidido. Ver `adr/ADR-0010` y `adr/ADR-0011`. Debe cumplir Resolución MinTIC 1519 de 2020 y WCAG 2.1 nivel AA; lee solo `published`. Stack concreto pendiente (`Q-ARQ-10`) |
-| Prototipos | HTML + JavaScript sin framework, Chart.js por CDN, servidor local PowerShell | Solo con datos simulados o sintéticos rotulados. Ver `app_observatorio_nmt/README.md` y `specs/prototipo-tablero-nmtpp.md` |
+| Prototipo (etapa cerrada) | HTML + JavaScript sin framework, Chart.js por CDN, servidor local PowerShell | Versión final v1.1.0 congelada en validación del product owner: solo se cambia para atender sus observaciones. Solo datos simulados o sintéticos rotulados. Ver `docs/entrega-prototipo.md` |
 | Idioma | Español (Colombia) para todo lo visible; inglés para identificadores de código | Convención del sector público colombiano |
 
 ## Reglas de oro
@@ -99,10 +100,9 @@ Las diez carpetas temáticas **no se reorganizan**: son el acervo de conocimient
 
 | Acción | Comando |
 |---|---|
-| prototipo Res. 1032 | `powershell -ExecutionPolicy Bypass -File app_observatorio_nmt/server.ps1` |
-| pruebas prototipo Res. 1032 | `powershell -ExecutionPolicy Bypass -File app_observatorio_nmt/test_nmt_mvp.ps1` |
+| prototipo del portal (Res. 1032 y 1038) | `powershell -ExecutionPolicy Bypass -File app_observatorio_nmt/server.ps1` |
+| pruebas del prototipo (incluye invariantes Res. 1038) | `powershell -ExecutionPolicy Bypass -File app_observatorio_nmt/test_nmt_mvp.ps1` |
 | regenerar datos sintéticos Res. 1038 | `python specs/nmtpp/generar_datos_sinteticos_nmtpp.py` |
-| prototipo Res. 1038 (cuando exista) | `powershell -ExecutionPolicy Bypass -File app_observatorio_nmtpp/server.ps1` |
 | pipeline productivo | pendiente — sin repositorio de código de producción |
 
 ## Índice de specs
@@ -172,3 +172,5 @@ Las diez carpetas temáticas **no se reorganizan**: son el acervo de conocimient
 | 2026-09-15 | Estándares UI/UX: fondo blanco, gama azul, mapa geográfico real y Visual-First | Sesión /learn (`.agents/rules/ui-ux-design-standards.md`) |
 | 2026-09-16 | `specs/seguimiento-implementacion-nmt.md` al índice de specs; regla de oro 10; fuera de alcance ampliado con la evaluación de impacto de los NMT; `Q-NMT-01` a `Q-NMT-04` abiertas | Sesión con Camilo Carvajalino |
 | 2026-09-18 | Componente de la Res. 1038: tres specs nuevas, catálogo y 25 fichas NMTPP, `specs/nmtpp/` (parámetros, DDL, datos sintéticos y generador), ADR-0013 a ADR-0015; reglas de oro 6, 9 y 10 precisadas; reglas 11 y 12 nuevas; `Q-NMT-03` cerrada; `Q-NMTPP-01..14` abiertas; unificación de esta versión con la del repositorio local (fila del 2026-09-15) | Sesión con Camilo Carvajalino; diagnóstico de viabilidad 2026-09-18 |
+| 2026-09-28 | Cierre de la etapa de prototipo: versión final v1.1.0 (etiqueta `prototipo-v1.1.0`) en validación del product owner; `docs/entrega-prototipo.md` con alcance, criterios de validación y pendientes P-01..P-08 | Decisión de Camilo Carvajalino |
+| 2026-09-28 | Prototipo único: `app_observatorio_nmtpp/` se integra en `app_observatorio_nmt/` (sección de pequeños prestadores); pruebas de invariantes Res. 1038 unificadas en `test_nmt_mvp.ps1`; capa visual común para todas las páginas | Solicitud de Camilo Carvajalino |

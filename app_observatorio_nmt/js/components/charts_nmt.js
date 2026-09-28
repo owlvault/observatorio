@@ -6,6 +6,7 @@
 
 window.ChartsNMT = {
   instances: {},
+  C: function() { return window.OBS_CHART || {}; },
 
   renderAll: function(filteredProviders) {
     this.renderAdoptionBySegment(filteredProviders);
@@ -51,16 +52,18 @@ window.ChartsNMT = {
         labels: ['S1 (>100k)', 'S2 (30k-100k)', 'S3 (15k-30k)', 'S4 (5k-15k)'],
         datasets: [
           {
-            label: '% Con Estudio de Costos (Adoptado)',
+            label: 'Con estudio de costos radicado',
             data: adoptionData,
-            backgroundColor: '#0b5e87',
-            borderRadius: 6
+            backgroundColor: this.C().primary,
+            borderColor: '#ffffff',
+            borderWidth: { right: 0, left: 0, top: 2, bottom: 0 },
+            borderRadius: 0
           },
           {
-            label: '% En Trámite / Pendiente',
+            label: 'En trámite o pendiente',
             data: pendingData,
-            backgroundColor: '#e2e8f0',
-            borderRadius: 6
+            backgroundColor: this.C().remainder,
+            borderRadius: { topLeft: 4, topRight: 4 }
           }
         ]
       },
@@ -69,13 +72,13 @@ window.ChartsNMT = {
         maintainAspectRatio: false,
         scales: {
           x: { stacked: true, grid: { display: false } },
-          y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } }
+          y: { stacked: true, max: 100, ticks: { callback: v => v + ' %', stepSize: 25 } }
         },
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { position: 'top', align: 'start' },
           tooltip: {
             callbacks: {
-              label: ctx => `${ctx.dataset.label}: ${ctx.raw}%`
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} %`
             }
           }
         }
@@ -99,17 +102,17 @@ window.ChartsNMT = {
       return parseFloat((sum / providers.length).toFixed(1));
     });
 
-    const colors = avgDeltas.map(val => val >= 0 ? '#0284c7' : '#059669');
+    const colors = avgDeltas.map(val => val >= 0 ? this.C().primary : this.C().seq5[1]);
 
     this.instances['tariff'] = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: strata,
         datasets: [{
-          label: 'Variación % vs Res. 688/2014',
+          label: 'Variación media del estrato (%)',
           data: avgDeltas,
           backgroundColor: colors,
-          borderRadius: 6
+          maxBarThickness: 22
         }]
       },
       options: {
@@ -118,8 +121,7 @@ window.ChartsNMT = {
         maintainAspectRatio: false,
         scales: {
           x: {
-            ticks: { callback: v => (v > 0 ? '+' : '') + v + '%' },
-            grid: { color: '#e2e8f0' }
+            ticks: { callback: v => (v > 0 ? '+' : '') + v + ' %' }
           },
           y: { grid: { display: false } }
         },
@@ -127,7 +129,7 @@ window.ChartsNMT = {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: ctx => `Variación promedio: ${ctx.raw > 0 ? '+' : ''}${ctx.raw}% en ${ctx.label}`
+              label: ctx => ` ${ctx.label}: ${ctx.raw > 0 ? '+' : ''}${ctx.raw} % frente a la Res. 688/2014`
             }
           }
         }
@@ -171,21 +173,24 @@ window.ChartsNMT = {
         labels: labels,
         datasets: [
           {
-            label: 'IPUF Observado Promedio',
+            label: 'IPUF observado (media del segmento)',
             data: avgIpuf,
-            backgroundColor: '#0b5e87',
-            borderRadius: 6
+            backgroundColor: this.C().primary,
+            maxBarThickness: 56,
+            order: 2
           },
           {
-            label: 'Meta Regulatoria Estándar (6 m³)',
+            label: 'Meta de referencia (6 m³)',
             data: [6.0, 6.0, 6.0, 6.0],
             type: 'line',
-            borderColor: '#dc2626',
+            borderColor: this.C().reference,
             borderWidth: 2,
             borderDash: [6, 4],
-            pointRadius: 4,
-            pointBackgroundColor: '#dc2626',
-            fill: false
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            pointStyle: 'line',
+            fill: false,
+            order: 1
           }
         ]
       },
@@ -194,13 +199,13 @@ window.ChartsNMT = {
         maintainAspectRatio: false,
         scales: {
           y: {
-            title: { display: true, text: 'm³/suscriptor/mes' },
+            title: { display: true, text: 'm³ por suscriptor al mes', color: this.C().muted },
             min: 0,
             max: 16
           }
         },
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { position: 'top', align: 'start' },
           tooltip: {
             callbacks: {
               afterLabel: ctx => {
@@ -230,31 +235,31 @@ window.ChartsNMT = {
       }
     });
 
+    // Escala ordinal no invertida (RN-NMT-04): más oscuro = mayor riesgo
     this.instances['ius'] = new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: {
-        labels: ['Nivel 1 (Bajo)', 'Nivel 2 (Medio-Bajo)', 'Nivel 3 (Medio)', 'Nivel 4 (Alto)', 'Nivel 5 (Crítico)'],
+        labels: [['Nivel 1', 'Bajo'], ['Nivel 2', 'Medio-bajo'], ['Nivel 3', 'Medio'], ['Nivel 4', 'Alto'], ['Nivel 5', 'Crítico']],
         datasets: [{
+          label: 'Prestadores',
           data: counts,
-          backgroundColor: [
-            '#059669', // Verde
-            '#0ea5e9', // Azul cielo
-            '#f59e0b', // Amarillo
-            '#ea580c', // Naranja
-            '#dc2626'  // Rojo
-          ],
-          borderWidth: 2,
-          borderColor: '#ffffff'
+          backgroundColor: this.C().seq5,
+          maxBarThickness: 64
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+          x: { grid: { display: false } },
+          y: { beginAtZero: true, ticks: { precision: 0 }, title: { display: true, text: 'Número de prestadores', color: this.C().muted } }
+        },
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { display: false },
           tooltip: {
             callbacks: {
-              label: ctx => ` ${ctx.label}: ${ctx.raw} prestadores (${Math.round((ctx.raw / providers.length) * 100)}%)`
+              title: items => items[0].label.join(' · '),
+              label: ctx => ` ${ctx.raw} prestadores (${Math.round((ctx.raw / providers.length) * 100)}%)`
             }
           }
         }

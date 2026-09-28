@@ -2,8 +2,8 @@
 id: spec-prototipo-tablero-nmtpp
 tipo: spec
 proyecto: observatorio-regulatorio-cra
-estado: borrador
-actualizado: 2026-09-18
+estado: implementada — prototipo cerrado, en validación del product owner
+actualizado: 2026-09-28
 fuentes: [specs/seguimiento-nmt-pequenos-prestadores.md, 05_/nmtpp/catalogo-nmtpp.md, specs/nmtpp/*, app_observatorio_nmt/README.md (convenciones del prototipo de la Res. 1032), .agents/rules/ui-ux-design-standards.md, adr/ADR-0015]
 ---
 
@@ -28,30 +28,31 @@ Esta spec define lo que un agente de código necesita para construir, **sin preg
 
 ## 1. Ubicación y estructura
 
-El prototipo va en una carpeta **hermana** de `app_observatorio_nmt/`. No se integra en ella porque la regla de oro 10 y RN-NMTPP-02 prohíben mezclar datos de la 1032 y la 1038 en las mismas vistas.
+El prototipo vive **dentro del portal** `app_observatorio_nmt/`, como la sección "Pequeños prestadores y rurales" (`#nmtpp`). Hasta el 2026-09-28 fue una carpeta hermana (`app_observatorio_nmtpp/`); se integró para mantener una sola versión.
+
+La integración no relaja la regla de oro 10 ni RN-NMTPP-02: **ninguna vista mezcla datos de la 1032 y de la 1038**. Cada marco tiene su sección, sus filtros y sus gráficas. Donde el portal muestra ambos marcos a la vez (portada, directorio, mapa), cada uno va en su propio grupo, rotulado, y sus cifras nunca se suman en un total común.
 
 ```
-app_observatorio_nmtpp/
-├── index.html                 # Shell accesible; banner "DATOS SINTÉTICOS" fijo
-├── README.md                  # Cómo ejecutar; aviso de datos sintéticos; enlaces a specs
-├── server.ps1                 # Copia de app_observatorio_nmt/server.ps1 con puerto 8081
-├── test_nmtpp_prototipo.ps1   # Pruebas de aceptación §9 (patrón de test_nmt_mvp.ps1)
-├── css/styles.css             # Reutiliza tokens de color de app_observatorio_nmt/css/styles.css
+app_observatorio_nmt/
+├── index.html                 # Shell del portal; la sección #nmtpp lleva el banner "DATOS SINTÉTICOS" fijo
+├── test_nmt_mvp.ps1           # Pruebas del portal; la sección 11 son las pruebas de aceptación §9 de este componente
+├── css/nmtpp.css              # Estilos base del componente
 ├── data/
-│   └── datos-sinteticos-prototipo.js   # COPIA de specs/nmtpp/ (no editar a mano)
+│   └── datos-sinteticos-prototipo.js   # COPIA de specs/nmtpp/ (no editar a mano; la prueba NMTPP-10 lo verifica)
 └── js/
-    ├── app.js                 # Estado global, navegación por pestañas, modo ciudadano/analista, filtros
+    ├── app_nmtpp.js           # Estado, subpestañas, modo ciudadano/analista y filtros del componente
     ├── motor_estados.js       # Motor de estados §6 (única lógica de evaluación)
-    ├── components/
-    │   ├── resumen_adopcion.js
-    │   ├── calendario_hitos.js
-    │   ├── nivel_servicio.js
-    │   ├── ise_incentivos.js
-    │   ├── prestadores.js     # tabla + perfil de prestador (modal)
-    │   ├── regimen_especial.js
-    │   ├── aclaraciones.js
-    │   ├── fichas.js          # visor de fichas (texto embebido de las 25 fichas)
-    │   └── exportar.js        # CSV UTF-8 de cada vista
+    └── components/nmtpp/
+        ├── resumen_adopcion.js
+        ├── calendario_hitos.js
+        ├── nivel_servicio.js
+        ├── ise_incentivos.js
+        ├── prestadores.js     # perfil de prestador (modal); el listado vive en el directorio del portal
+        ├── regimen_especial.js
+        ├── aclaraciones.js
+        ├── fichas.js          # visor de fichas (texto embebido de las 25 fichas)
+        ├── exportar.js        # CSV UTF-8 de cada vista; se muestra en la sección "Datos abiertos" del portal
+        └── hero_cifras.js     # cifras del encabezado, calculadas desde los datos
 ```
 
 ## 2. Invariantes que el prototipo DEBE respetar
@@ -307,21 +308,22 @@ Con los 40 prestadores sintéticos, el cambio de filtro DEBE repintar la vista a
 
 > **ASUNCIÓN (sin validar):** 300 ms; no hay medición de referencia. Recalibrar con el primer despliegue.
 
-## 9. Pruebas de aceptación (`test_nmtpp_prototipo.ps1`)
+## 9. Pruebas de aceptación (sección 11 de `app_observatorio_nmt/test_nmt_mvp.ps1`)
 
-Siguen el patrón `Assert-Check` de `app_observatorio_nmt/test_nmt_mvp.ps1`:
+Se ejecutan con la suite del portal (`powershell -ExecutionPolicy Bypass -File app_observatorio_nmt/test_nmt_mvp.ps1`), con el prefijo `NMTPP-`:
 
-1. Existen `index.html`, `js/app.js`, `js/motor_estados.js` y `data/datos-sinteticos-prototipo.js`.
+1. Existen `js/app_nmtpp.js`, `js/motor_estados.js` y `data/datos-sinteticos-prototipo.js`.
 2. El archivo de datos contiene `"sintetico": true` y el texto del aviso.
-3. `js/*.js` no contiene los literales de metas `97.26`, `86.3`, `11.82`, `11.68`, `11.41` ni `11.35` (INV-02). Se permite el 24 de la conversión de horas.
+3. El código del componente (`js/components/nmtpp/`, `js/app_nmtpp.js`, `js/motor_estados.js`) no contiene los literales de metas `97.26`, `86.3`, `11.82`, `11.68`, `11.41` ni `11.35` (INV-02). Se permite el 24 de la conversión de horas.
 4. No existe ningún campo `tarifa_promedio` (INV-08).
 5. Ninguna cadena de estado fuera del catálogo de RN-NMTPP-03 aparece en `motor_estados.js`.
 6. `index.html` contiene el banner SINTÉTICO y la leyenda de RN-NMTPP-05.
 7. Hay 40 prestadores y 239 estados esperados.
 8. `ise_incentivos.js` no contiene `sort(` sobre campos del ISE (INV-04).
 9. En `motor_estados.js`, ninguna rama asigna a IRCA un estado distinto de `sin fuente confirmada` (INV-05).
+10. La copia `data/datos-sinteticos-prototipo.js` es idéntica al archivo generado en `specs/nmtpp/`.
 
-Las pruebas 1 a 9 son estáticas. RF-PROTO-01 y RF-PROTO-05 se verifican en el navegador con el aviso del modo analista.
+Las pruebas 1 a 10 son estáticas. RF-PROTO-01 y RF-PROTO-05 se verifican en el navegador con el aviso del modo analista.
 
 ## Fuera de alcance de esta spec
 
@@ -332,10 +334,11 @@ Conexión real al SUI y a Oracle; autenticación de prestadores; ventana de revi
 | ID | Pregunta | Bloquea | Responsable |
 |---|---|---|---|
 | Q-PROTO-01 | ¿El prototipo se muestra a prestadores o solo a funcionarios de la CRA? Si lo ven prestadores, el aviso SINTÉTICO debe reforzarse con una marca de agua | Presentación | Subdirección Técnica de Regulación |
-| Q-PROTO-02 | ¿Se confirma el puerto 8081 para no chocar con `app_observatorio_nmt` (8080)? | `server.ps1` | CIO |
 
 ## Historial
 
 | Fecha | Cambio | Origen |
 |---|---|---|
 | 2026-09-18 | Versión inicial | Spec del componente NMTPP; convenciones de `app_observatorio_nmt/` |
+| 2026-09-28 | Cierre de la etapa de prototipo: implementada en el prototipo v1.1.0, en validación del product owner (`docs/entrega-prototipo.md`) | Decisión de Camilo Carvajalino |
+| 2026-09-28 | El prototipo se integra en `app_observatorio_nmt/` y se retira `app_observatorio_nmtpp/`; las pruebas §9 pasan a la suite del portal; Q-PROTO-02 (puerto 8081) deja de aplicar | Solicitud de Camilo Carvajalino: una sola versión |
