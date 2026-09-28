@@ -43,3 +43,9 @@ env/
 node_modules/
 __pycache__/
 *.pyc
+
+# cra-acq-cli: la zona cruda vive en OCI Object Storage (ADR-0006, ADR-0007), nunca en git;
+# este repositorio es público. Tampoco se versionan credenciales locales ni artefactos de empaquetado.
+cra-acq-cli/storage_local_raw/
+*.egg-info/
+.env

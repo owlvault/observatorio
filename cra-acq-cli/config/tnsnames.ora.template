@@ -1,0 +1,17 @@
+# =============================================================================
+# PLANTILLA TNSNAMES.ORA PARA LA ESTACIÓN DE EXTRACCIÓN
+# =============================================================================
+
+# 1. Entrada hacia la base Oracle del SUI (SSPD) accesible por túnel VPN
+SUI_ORACLE_PROD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = <HOST_SUI>)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = <SERVICIO_SUI>)
+    )
+  )
+
+# 2. Entrada hacia la Autonomous Database de OCI (Se incluye en el Wallet mTLS)
+# cra_observatorio_high =
+#   (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-ashburn-1.oraclecloud.com))(connect_data=(service_name=xxxx_craobservatorio_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
