@@ -12,58 +12,58 @@ window.AppNMT = {
   pageMeta: {
     tablero: {
       crumb: 'Grandes prestadores',
-      eyebrow: 'Resolución CRA 1032 de 2026',
-      title: 'Grandes prestadores de acueducto',
-      accent: 'y alcantarillado',
-      lead: 'Adopción, tarifas por estrato, pérdidas y riesgo en prestadores urbanos de más de 5.000 suscriptores.',
+      eyebrow: 'Resolución CRA 1032 de 2026 · Ámbito Urbano',
+      title: 'Grandes prestadores de acueducto:',
+      accent: 'eficiencia y tarifas justas',
+      lead: 'Monitoreo a costos eficientes, estándares de calidad IDH y variación tarifaria en prestadores de más de 5.000 suscriptores.',
       img: 'assets/img/perdidas.jpg'
     },
     nmtpp: {
       crumb: 'Pequeños prestadores y rurales',
-      eyebrow: 'Resolución CRA 1038 de 2026',
-      title: 'Agua potable para pequeñas poblaciones',
-      accent: 'y comunidades rurales',
-      lead: 'Metas de continuidad, cobertura y micromedición que avanzan al ritmo de cada territorio.',
+      eyebrow: 'Resolución CRA 1038 de 2026 · Equidad Territorial',
+      title: 'Agua potable comunitaria y rural:',
+      accent: 'metas que respetan la escala',
+      lead: 'Metas adaptativas de continuidad, calidad y micromedición que avanzan al ritmo de pequeñas poblaciones y zonas vulnerables.',
       img: 'assets/img/continuidad.jpg'
     },
     ciclo: {
       crumb: 'Impacto regulatorio',
       eyebrow: 'Enfoque OCDE de política regulatoria',
-      title: 'Impacto y gobernanza',
-      accent: 'del nuevo marco tarifario',
-      lead: 'Cinco dimensiones, 12 principios de gobernanza del agua, asequibilidad y el ciclo E0 a E9.',
+      title: 'Impacto social, asequibilidad',
+      accent: 'y gobernanza del agua',
+      lead: 'Cinco dimensiones de impacto, simulador de esfuerzo en la factura del hogar (umbral 3 % OCDE) y evaluación del ciclo E0 a E9.',
       img: 'assets/img/hogar.jpg'
     },
     prestadores: {
-      crumb: 'Prestadores',
-      eyebrow: 'Directorio',
-      title: 'Encuentre',
-      accent: 'a su prestador',
-      lead: 'La ficha de cada prestador: adopción, tarifas por estrato y semáforo de calidad.',
+      crumb: 'Directorio',
+      eyebrow: 'Transparencia individual (ADR-0005)',
+      title: 'Directorio universal auditable:',
+      accent: 'conozca a su prestador',
+      lead: 'Radiografía técnica de cada operador: estado de adopción, estructura tarifaria por estrato y compuerta de calidad.',
       img: ''
     },
     mapa: {
-      crumb: 'Mapa',
-      eyebrow: 'Territorio',
-      title: 'Prestadores',
-      accent: 'en el territorio',
-      lead: 'Dónde está cada prestador y si ya adoptó su estudio de costos.',
+      crumb: 'Mapa territorial',
+      eyebrow: 'Georreferenciación del servicio',
+      title: 'Presencia territorial y avance',
+      accent: 'en cada departamento',
+      lead: 'Visualice la distribución geográfica de los operadores y su nivel de radicación de estudios de costos en el país.',
       img: 'assets/img/hero-ptar.jpg'
     },
     metodologia: {
       crumb: 'Metodología',
-      eyebrow: 'Calidad del dato',
-      title: 'Metodología y',
-      accent: 'compuerta de calidad',
-      lead: 'Ningún indicador se publica sin ficha, fórmula, sustento normativo y semáforo (ADR-0003).',
+      eyebrow: 'Rigor y compuerta analítica (ADR-0003)',
+      title: 'Compuerta de calidad:',
+      accent: 'ninguna cifra sin evidencia',
+      lead: 'Todo indicador cuenta con ficha técnica pública, fórmula canónica, sustento normativo explícito y semáforo de verificación.',
       img: 'assets/img/calidad.jpg'
     },
     datos: {
       crumb: 'Datos abiertos',
-      eyebrow: 'Ley 1712 de 2014',
-      title: 'Datos abiertos',
-      accent: 'y API',
-      lead: 'Conjuntos de datos con fecha de corte, semáforo y versión de ficha, y el contrato de la API.',
+      eyebrow: 'Ley 1712 de 2014 y Gobierno Digital',
+      title: 'Datos abiertos certificados',
+      accent: 'e interoperabilidad API',
+      lead: 'Microdatos descargables en CSV/JSON con trazabilidad de linaje (SUI Oracle / SURICATA) para auditoría y control social.',
       img: ''
     }
   },

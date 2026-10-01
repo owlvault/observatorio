@@ -26,6 +26,7 @@ window.KpiCards = {
           <span class="kpi-value mono">${o.value}</span>
           <span class="kpi-unit">${o.unit}</span>
         </div>
+        ${o.insight ? `<div class="kpi-insight">${o.insight}</div>` : ''}
         <div class="cx-kpi-visual">${o.visual}</div>
         <div class="kpi-subinfo">
           <span><span class="source-tier-pill ${o.tierCls}" title="${o.tierTitle}">${o.tier}</span> ${o.source}</span>
@@ -104,6 +105,7 @@ window.KpiCards = {
         cls: 'cx-kpi-hero', code: 'NMT-ADO-01', badge: generalFlag, badgeText: flagText,
         label: 'Adopción del marco 1032',
         value: `${this.fmt(fAdop * 100)} %`, unit: `${reportaron} de ${total} prestadores con estudio de costos radicado`,
+        insight: `${reportaron} prestadores en SURICATA en ruta hacia costos eficientes auditados.`,
         visual: K.ring(fAdop, { size: 150, stroke: 16, tone: 'light', label: `${this.fmt(fAdop * 100)} % con estudio radicado` }),
         tier: 'Tier 2 · SURICATA', tierCls: 'tier-2', tierTitle: 'Factibilidad 1: captura en proceso bajo el nuevo marco', source: 'Radicación SURICATA / RUD (etapa E5)'
       }),
@@ -111,6 +113,7 @@ window.KpiCards = {
         code: 'NMT-ADO-02', badge: 'badge-verified', badgeText: 'VERIFICADO',
         label: 'Oportunidad de adopción',
         value: promDias === null ? '—' : promDias, unit: 'días en promedio',
+        insight: 'Velocidad de respuesta regulatoria desde la expedición hasta la primera factura emitida.',
         visual: tramos.length ? K.columns(tramos.map((x, i) => ({ v: x.v, label: x.label, hi: i === tramoMayor })),
           { height: 64, label: 'Prestadores por tramo de días: ' + tramos.map(x => `${x.rango}: ${x.v}`).join('; ') }) : '',
         tier: 'Tier 2 · SURICATA', tierCls: 'tier-2', tierTitle: 'Factibilidad 1: fecha de expedición frente a primera factura', source: 'SURICATA + SUI comercial'
@@ -119,6 +122,7 @@ window.KpiCards = {
         code: 'NMT-TAR-01', badge: 'badge-warning', badgeText: 'DESAGREGADO',
         label: 'Variación tarifaria, estrato 3',
         value: `${sg(varE3)} %`, unit: 'pesos constantes de 2024, frente a la Res. 688',
+        insight: 'Sin promedios ciegos: variación focalizada con subsidio de la Ley 142 en estrato 3.',
         visual: K.columns(estratos.map(x => ({ v: x.v, label: `E${x.e}`, hi: x.e === 3 })),
           { height: 64, label: 'Variación por estrato: ' + estratos.map(x => `estrato ${x.e} ${sg(x.v)} %`).join(', ') }),
         tier: 'Tier 1 → Tier 2', tierCls: 'tier-1', tierTitle: 'Factibilidad 2 para Res. 688; Factibilidad 1 para Res. 1032', source: 'TARIFAS_AA2015 → SURICATA'
@@ -127,6 +131,7 @@ window.KpiCards = {
         code: 'NMT-LB-01', badge: 'badge-warning', badgeText: 'EN ALISTAMIENTO',
         label: 'Línea base 2026 completa',
         value: `${this.fmt(lbCompleta / total * 100)} %`, unit: `${lbCompleta} de ${total} prestadores`,
+        insight: 'Alistamiento de contabilidad regulatoria e información histórica para cierre quinquenal.',
         visual: `<div class="cx-kpi-ring">${K.ring(lbCompleta / total, { size: 84, stroke: 11, label: `${lbCompleta} de ${total} con línea base completa` })}</div>`,
         tier: 'Tier 2 · SURICATA', tierCls: 'tier-2', tierTitle: 'Factibilidad 1: cierre de línea base al término de 2026', source: 'SURICATA'
       }),
@@ -134,6 +139,7 @@ window.KpiCards = {
         code: 'NMT-EST-01', badge: 'badge-verified', badgeText: 'VERIFICADO',
         label: 'Continuidad del servicio (IDH2)',
         value: this.fmt(promCont), unit: `horas/día · ${enMetaCont} de ${total} en meta`,
+        insight: `${enMetaCont} prestadores cumplen o superan la meta de horas de agua continua al día.`,
         visual: K.meter(promCont / 24, { marker: metaCont / 24, markerLabel: `meta ${this.fmt(metaCont, 0)} h` }) + '<div class="cx-kpi-scale"><span>0 h</span><span>24 h</span></div>',
         tier: 'Tier 1 · SUI Oracle', tierCls: 'tier-1', tierTitle: 'Factibilidad 2: datos físicos confirmados en Oracle SUI', source: 'SUI_AGUAS.CAR_T1057'
       }),
@@ -141,6 +147,7 @@ window.KpiCards = {
         code: 'NMT-EST-02', badge: 'badge-verified', badgeText: 'VERIFICADO',
         label: 'Pérdidas por suscriptor (IPUF)',
         value: this.fmt(promIpuf, 2), unit: `m³/susc/mes · brecha ${sg(brecha)} frente a la meta`,
+        insight: `Brecha de ${sg(brecha)} m³ que orienta planes de sectorización y reducción de fugas.`,
         visual: K.meter(promIpuf / escalaIpuf, { marker: metaIpuf / escalaIpuf, markerLabel: `meta ${this.fmt(metaIpuf)}` }) + `<div class="cx-kpi-scale"><span>0</span><span>${this.fmt(escalaIpuf, 0)} m³</span></div>`,
         tier: 'Tier 1 · SUI Oracle', tierCls: 'tier-1', tierTitle: 'Factibilidad 2: balances de volúmenes en SUI_AGUAS', source: 'SUI_AGUAS · meta sujeta a Q-NMT-01'
       }),
@@ -148,6 +155,7 @@ window.KpiCards = {
         code: 'NMT-INC-01', badge: 'badge-warning', badgeText: 'EN TRÁMITE',
         label: 'Prestadores con descuento de servicio',
         value: `${this.fmt(conDescuento / total * 100)} %`, unit: `${conDescuento} de ${total} prestadores`,
+        insight: 'Compensaciones aplicables al usuario por fallas o rezagos en la calidad del servicio.',
         visual: `<div class="cx-kpi-ring">${K.ring(conDescuento / total, { size: 84, stroke: 11, label: `${conDescuento} de ${total} con descuento` })}</div>`,
         tier: 'Tier 2 · SURICATA', tierCls: 'tier-2', tierTitle: 'Factibilidad 1 / bloqueado por Q-NMT-02', source: 'Tabla 31 · regla SSPD pendiente (Q-NMT-02)'
       }),
@@ -155,6 +163,7 @@ window.KpiCards = {
         code: 'NMT-RIE-01', badge: 'badge-verified', badgeText: 'SSPD IUS',
         label: 'Prestadores en riesgo alto (IUS 4 y 5)',
         value: `${this.fmt(riesgoAlto / total * 100)} %`, unit: `${riesgoAlto} de ${total} prestadores`,
+        insight: `Vigilancia preventiva SSPD: ${riesgoAlto} prestadores en observación para asegurar viabilidad.`,
         visual: K.columns(niveles.map(x => ({ v: x.v, label: `N${x.n}`, hi: x.n >= 4 })),
           { height: 64, label: 'Prestadores por nivel IUS: ' + niveles.map(x => `nivel ${x.n}: ${x.v}`).join(', ') }),
         tier: 'Tier 1 · SUI Oracle', tierCls: 'tier-1', tierTitle: 'Factibilidad 2: esquema AA_IUS_906', source: 'AA_IUS_906 · publicación anual SSPD'

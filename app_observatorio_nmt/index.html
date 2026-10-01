@@ -113,53 +113,66 @@
          ================================================================ -->
     <div id="pane-inicio" class="tab-content-pane">
 
-      <!-- 1 · Hero: escena de agua sobre Deep Navy (lema de ADR-0009) -->
+      <!-- 1 · Hero: escena de agua sobre Deep Navy (Acto I: El Gancho) -->
       <section class="cx-hero" id="sec-hero" aria-labelledby="hero-title">
         <canvas class="cx-hero-canvas" id="hero-canvas" role="img" aria-label="Superficie de agua formada por puntos de luz que ondula hasta el horizonte"></canvas>
         <div class="cx-hero-inner">
-          <span class="cx-eyebrow cx-enter">Observatorio Regulatorio de Agua Potable y Saneamiento Básico</span>
-          <h1 class="cx-display-1 cx-enter cx-enter-1" id="hero-title">Datos abiertos para que el agua y el aseo <span class="cx-grad-light">lleguen a todos</span></h1>
-          <p class="cx-hero-lede cx-enter cx-enter-2">Seguimos con datos verificables los nuevos marcos tarifarios, de las grandes ciudades a los acueductos rurales.</p>
+          <span class="cx-eyebrow cx-enter">Observatorio Regulatorio de Agua Potable y Saneamiento Básico · CRA</span>
+          <h1 class="cx-display-1 cx-enter cx-enter-1" id="hero-title">Datos abiertos y rigor técnico para que el agua y el saneamiento <span class="cx-grad-light">lleguen a todos</span></h1>
+          <p class="cx-hero-lede cx-enter cx-enter-2">Monitoreamos la transición hacia los Nuevos Marcos Tarifarios 2026: costos eficientes para las grandes ciudades y equidad adaptativa para las comunidades rurales, sin rankings distorsionados ni promedios ciegos.</p>
           <div class="cx-hero-ctas cx-enter cx-enter-3">
-            <button class="cx-btn cx-btn-light" onclick="window.AppNMT.goTo('tablero')">Explorar los indicadores</button>
+            <button class="cx-btn cx-btn-light" onclick="window.AppNMT.goTo('tablero')">Explorar grandes prestadores (1032)</button>
+            <button class="cx-btn cx-btn-glass" onclick="window.AppNMT.goTo('nmtpp')">Acueductos rurales (1038)</button>
             <button class="cx-btn cx-btn-glass" onclick="window.AppNMT.goTo('prestadores')">Buscar mi prestador</button>
           </div>
           <ul class="cx-pillars cx-enter cx-enter-4" aria-label="Alcance del seguimiento">
             <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-1032">—</span><span class="cx-pillar-label">grandes prestadores · Res. CRA 1032</span></li>
             <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-1038">—</span><span class="cx-pillar-label">pequeños y comunitarios · Res. CRA 1038</span></li>
-            <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-deptos">—</span><span class="cx-pillar-label">departamentos</span></li>
+            <li class="cx-pillar"><span class="cx-pillar-value cx-grad-light" id="hero-pilar-deptos">—</span><span class="cx-pillar-label">departamentos con cobertura</span></li>
           </ul>
         </div>
       </section>
 
-      <!-- 2 · Cifras clave: bento -->
+      <!-- 2 · Acto II: El Reto Sectorial (Por qué una nueva regulación en Colombia) -->
+      <section class="cx-section cx-bg-white" id="sec-reto" aria-labelledby="reto-title">
+        <div class="cx-inner">
+          <header class="cx-head cx-head-center" data-reveal>
+            <span class="cx-eyebrow">El reto sectorial · Acto II</span>
+            <h2 class="cx-display-2" id="reto-title">Por qué una nueva regulación <span class="cx-grad">del agua en Colombia</span></h2>
+            <p class="cx-lede">Comprender los desafíos estructurales que motivaron los marcos de 2026 es clave para evaluar el verdadero impacto en las tarifas y el servicio.</p>
+          </header>
+          <div class="cx-bento" id="portada-reto-grid"></div>
+        </div>
+      </section>
+
+      <!-- 3 · Acto III: Cifras clave de adopción (Bento) -->
       <section class="cx-section cx-bg-page" id="sec-cifras" aria-labelledby="cifras-title">
         <div class="cx-inner">
           <header class="cx-head cx-head-center" data-reveal>
-            <span class="cx-eyebrow">Cifras clave</span>
-            <h2 class="cx-display-2" id="cifras-title">La implementación, <span class="cx-grad">en números</span></h2>
+            <span class="cx-eyebrow">El pulso de la adopción · Acto III</span>
+            <h2 class="cx-display-2" id="cifras-title">La transición hacia costos eficientes, <span class="cx-grad">en cifras vivas</span></h2>
           </header>
           <div class="cx-bento" id="portada-cifras"></div>
         </div>
       </section>
 
-      <!-- 3 · Mensajes clave -->
+      <!-- 4 · Acto IV: Mensajes clave (Lo que revelan los datos) -->
       <section class="cx-section cx-bg-white" id="sec-mensajes" aria-labelledby="mensajes-title">
         <div class="cx-inner">
           <header class="cx-head" data-reveal>
-            <span class="cx-eyebrow">Mensajes clave</span>
-            <h2 class="cx-display-2" id="mensajes-title">Lo que muestran <span class="cx-grad">los datos</span></h2>
+            <span class="cx-eyebrow">Evidencia y diagnóstico · Acto IV</span>
+            <h2 class="cx-display-2" id="mensajes-title">Lo que revelan <span class="cx-grad">los datos auditados</span></h2>
           </header>
           <div class="cx-bento" id="portada-mensajes"></div>
         </div>
       </section>
 
-      <!-- 4 · Temas: tarjetas con foto a sangre -->
+      <!-- 5 · Temas: tarjetas con foto a sangre -->
       <section class="cx-section cx-bg-ice" id="sec-temas" aria-labelledby="temas-title">
         <div class="cx-inner-wide">
           <header class="cx-head cx-head-center" data-reveal>
-            <span class="cx-eyebrow">Explore por tema</span>
-            <h2 class="cx-display-2" id="temas-title">Siga los nuevos <span class="cx-grad">marcos tarifarios</span></h2>
+            <span class="cx-eyebrow">Rutas analíticas de exploración</span>
+            <h2 class="cx-display-2" id="temas-title">Profundice en los <span class="cx-grad">dos marcos regulatorios</span></h2>
           </header>
           <div class="cx-doors">
             <a class="cx-door cx-door-lg" data-reveal href="#tablero" onclick="event.preventDefault(); window.AppNMT.goTo('tablero')">
@@ -221,23 +234,23 @@
         </div>
       </section>
 
-      <!-- 5 · Ciclo regulatorio E0–E9: el anillo es el control -->
+      <!-- 6 · Ciclo regulatorio E0–E9: el anillo es el control -->
       <section class="cx-section cx-bg-navy cx-on-dark" id="sec-ciclo" aria-labelledby="ciclo-title">
         <div class="cx-inner">
           <header class="cx-head cx-head-center" data-reveal>
-            <span class="cx-eyebrow">Ciclo de implementación · Res. CRA 1032 de 2026</span>
-            <h2 class="cx-display-2" id="ciclo-title">¿En qué etapa <span class="cx-grad-light">va el marco?</span></h2>
+            <span class="cx-eyebrow">Ciclo de implementación OCDE · Res. CRA 1032 de 2026</span>
+            <h2 class="cx-display-2" id="ciclo-title">¿En qué etapa <span class="cx-grad-light">va la política pública?</span></h2>
           </header>
           <div class="cx-cycle" id="portada-ciclo" data-reveal></div>
         </div>
       </section>
 
-      <!-- 6 · Cómo publicamos -->
+      <!-- 7 · Cómo publicamos -->
       <section class="cx-section cx-bg-white" id="sec-reglas" aria-labelledby="principios-title">
         <div class="cx-inner">
           <header class="cx-head" data-reveal>
-            <span class="cx-eyebrow">Cómo publicamos</span>
-            <h2 class="cx-display-2" id="principios-title">Reglas que protegen <span class="cx-grad">la lectura de los datos</span></h2>
+            <span class="cx-eyebrow">Gobernanza y rigor metodológico</span>
+            <h2 class="cx-display-2" id="principios-title">Reglas éticas que protegen <span class="cx-grad">la lectura de los datos</span></h2>
           </header>
           <div class="cx-bento">
             <article class="cx-tile cx-tile-ice cx-span-3" data-reveal>
@@ -294,12 +307,12 @@
         </div>
       </section>
 
-      <!-- 7 · Recursos -->
+      <!-- 8 · Recursos -->
       <section class="cx-section cx-bg-page" id="sec-recursos" aria-labelledby="recursos-title">
         <div class="cx-inner">
           <header class="cx-head" data-reveal>
-            <span class="cx-eyebrow">Recursos</span>
-            <h2 class="cx-display-2" id="recursos-title">Documentos <span class="cx-grad">y datos</span></h2>
+            <span class="cx-eyebrow">Caja de herramientas y control social</span>
+            <h2 class="cx-display-2" id="recursos-title">Microdatos certificados <span class="cx-grad">y documentos clave</span></h2>
           </header>
           <div class="cx-resources" data-reveal>
             <button class="cx-resource" onclick="window.AppNMT.goTo('datos')">

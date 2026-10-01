@@ -220,3 +220,45 @@
   .filter-label, .filter-item label { font-size: .64rem !important; margin-bottom: 4px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .filter-select, .filter-input { min-height: 44px; font-size: .86rem !important; padding: 8px 10px !important; }
 }
+
+/* ------------------------------------------------ Storytelling: Tarjetas del Reto Sectorial (Acto II) */
+.cx-challenge-card {
+  transition: transform .4s var(--cx-ease), box-shadow .4s var(--cx-ease), border-color .4s var(--cx-ease);
+  border: 1px solid rgba(10, 47, 85, .08);
+  display: flex;
+  flex-direction: column;
+}
+.cx-challenge-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -15px rgba(10, 47, 85, .15);
+  border-color: rgba(42, 120, 214, .3);
+}
+.cx-challenge-card .cx-display-3 {
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 1.2;
+  margin: 4px 0 8px;
+}
+.cx-challenge-card .cx-tile-note {
+  font-size: .92rem;
+  line-height: 1.55;
+  color: var(--cx-text);
+  margin-bottom: 12px;
+}
+
+/* ------------------------------------------------ Storytelling: Micro-historias en KPIs */
+.kpi-insight {
+  font-size: .82rem;
+  line-height: 1.4;
+  color: var(--cx-text);
+  background: rgba(10, 47, 85, .04);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border-left: 3px solid var(--cx-blue-500);
+  margin: 10px 0 6px;
+}
+.cx-kpi-hero .kpi-insight {
+  background: rgba(255, 255, 255, .1);
+  color: #dbe8f6;
+  border-left-color: var(--cx-sky-300);
+}
+

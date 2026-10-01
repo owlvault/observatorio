@@ -37,10 +37,28 @@ window.Portada = {
 
     window.HeroNmtpp.render(pp);
     this.renderHero(P, pp);
+    this.renderReto();
     this.renderCifras(P, pp);
     this.renderMensajes(P, meta);
     this.renderCiclo(meta);
     if (window.CineKit) window.CineKit.initReveal();
+  },
+
+  // ------------------------------------------------------------------ Reto Sectorial (Acto II)
+  renderReto: function() {
+    const el = document.getElementById('portada-reto-grid');
+    if (!el || !window.PORTADA_COPY.reto) return;
+    const R = window.PORTADA_COPY.reto;
+    el.innerHTML = R.pilares.map((p, i) => `
+      <article class="cx-tile cx-span-2 cx-challenge-card" data-reveal data-reveal-delay="${i}">
+        <span class="cx-tile-label">${p.tag}</span>
+        <h3 class="cx-display-3">${p.titulo}</h3>
+        <p class="cx-tile-note">${p.desc}</p>
+        <div class="cx-tile-foot">
+          <button class="cx-link" onclick="${this.irA(p.ir)}">${p.cta}</button>
+        </div>
+      </article>
+    `).join('');
   },
 
   // ------------------------------------------------------------------ Hero

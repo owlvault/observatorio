@@ -16,35 +16,35 @@ window.PORTADA_COPY = {
   cifras: {
     adopcion: {
       etiqueta: 'Adopción del marco',
-      titular: 'Estudios de costos radicados',
+      titular: 'El pulso de la transición: estudios de costos radicados',
       marcos: {
-        '1032': { boton: 'Grandes · Res. 1032', apoyo: 'grandes prestadores de los segmentos 1 a 4 cargaron su estudio en SUI/SURICATA.', cta: 'Ver adopción por segmento', ir: ['tablero'] },
-        '1038': { boton: 'Pequeños · Res. 1038', apoyo: 'pequeños prestadores y gestores comunitarios del universo piloto tienen estudio inicial radicado.', cta: 'Ver seguimiento Res. 1038', ir: ['nmtpp'] }
+        '1032': { boton: 'Grandes · Res. 1032', apoyo: 'grandes prestadores de los segmentos 1 a 4 ya cargaron su estudio en SUI/SURICATA para migrar a costos eficientes verificados.', cta: 'Ver adopción por segmento', ir: ['tablero'] },
+        '1038': { boton: 'Pequeños · Res. 1038', apoyo: 'pequeños prestadores y gestores comunitarios del universo piloto iniciaron su ruta de adopción adaptativa.', cta: 'Ver seguimiento Res. 1038', ir: ['nmtpp'] }
       }
     },
-    prestadores: { etiqueta: 'Universo', titular: 'Dos marcos, dos universos que no se suman', leyenda1032: 'grandes (Res. 1032)', leyenda1038: 'pequeños y comunitarios (Res. 1038)', cta: 'Ver directorio', ir: ['prestadores'] },
-    suscriptores: { etiqueta: 'Alcance', unidad: 'millones de suscriptores de acueducto', apoyo: 'Atendidos por los grandes prestadores de la Res. 1032.', cta: 'Ver en el mapa', ir: ['mapa'] }
+    prestadores: { etiqueta: 'Universo', titular: 'Dos realidades territoriales, dos marcos que nunca se mezclan', leyenda1032: 'grandes prestadores urbanos (Res. 1032)', leyenda1038: 'pequeños y comunitarios rurales (Res. 1038)', cta: 'Explorar directorio de prestadores', ir: ['prestadores'] },
+    suscriptores: { etiqueta: 'Alcance', unidad: 'millones de suscriptores de acueducto', apoyo: 'Población urbana con seguimiento continuo a la calidad del servicio y tarifas justas bajo la Res. 1032.', cta: 'Ubicar en el mapa territorial', ir: ['mapa'] }
   },
 
   mensajes: {
     perdidas: {
       etiqueta: 'Pérdidas de agua',
-      titular: (n, total) => `${n} de ${total} pierden más agua que la meta`,
-      detalle: (n, total, meta, segs) => `${n} de ${total} grandes prestadores tienen pérdidas por encima de la meta de referencia de ${meta} m³ por suscriptor al mes. La mediana supera la meta en ${segs} de los 4 segmentos. La meta está sujeta a ratificación formal (Q-NMT-01).`,
+      titular: (n, total) => `La eficiencia en juego: ${n} de ${total} prestadores superan el tope de pérdidas`,
+      detalle: (n, total, meta, segs) => `${n} de ${total} grandes prestadores registran pérdidas por encima del umbral de referencia de ${meta} m³ por suscriptor al mes. La mediana supera la meta en ${segs} de los 4 segmentos. La regulación orienta planes de inversión para evitar el desperdicio de agua tratada (meta sujeta a ratificación formal Q-NMT-01).`,
       leyendaSobre: 'Por encima de la meta',
       leyendaEn: 'En la meta o por debajo',
       ir: ['tablero']
     },
     tarifas: {
       etiqueta: 'Tarifas por estrato',
-      titular: 'La tarifa se lee estrato por estrato',
-      detalle: (e1, e6) => `La variación tarifaria de transición se publica estrato por estrato: la mediana es ${e1} en estrato 1 y ${e6} en estrato 6, frente a la Res. 688 de 2014. Nunca se publica una tarifa promedio.`,
+      titular: 'Justicia y focalización: la tarifa se evalúa estrato por estrato',
+      detalle: (e1, e6) => `La variación tarifaria de transición no oculta realidades bajo promedios ciegos: la mediana es ${e1} en estrato 1 y ${e6} en estrato 6 frente a la Res. 688 de 2014. Así se verifica que los subsidios protejan a los hogares más vulnerables mientras se garantiza la sostenibilidad de la red.`,
       ir: ['tablero']
     },
     calidad: {
       etiqueta: 'Calidad del dato',
-      titular: (verif, noRep) => `${verif} verificados, ${noRep} sin reportar`,
-      detalle: (verif, noRep) => `${verif} prestadores tienen su información verificada y ${noRep} aún no reportan al SUI. Cada cifra muestra su semáforo para que se lea con la cautela adecuada.`,
+      titular: (verif, noRep) => `Rigor y compuerta activa: ${verif} verificados y ${noRep} en seguimiento`,
+      detalle: (verif, noRep) => `${verif} prestadores superaron las validaciones de la compuerta de calidad en SUI y SURICATA. Para los ${noRep} sin reporte al SUI, el observatorio muestra la ausencia explícita como alerta visible de control, nunca como cero.`,
       estados: {
         VERIFIED: 'Verificado',
         WARNING: 'Observado',
@@ -53,6 +53,35 @@ window.PORTADA_COPY = {
       },
       ir: ['metodologia']
     }
+  },
+
+  reto: {
+    etiqueta: 'El reto sectorial',
+    titular: 'Por qué una nueva regulación <span class="cx-grad">del agua en Colombia</span>',
+    bajada: 'Comprender los desafíos estructurales que motivaron los marcos de 2026 es clave para evaluar el verdadero impacto en las tarifas y el servicio.',
+    pilares: [
+      {
+        tag: 'Pérdidas de agua',
+        titulo: 'Frenar el desperdicio de agua potable',
+        desc: 'Millones de metros cúbicos de agua tratada se pierden en redes obsoletas. La nueva metodología fija incentivos y topes de 6 m³/susc/mes para exigir renovación sin recargar ineficiencias al usuario.',
+        cta: 'Ver brecha de pérdidas',
+        ir: ['tablero']
+      },
+      {
+        tag: 'Diferenciación territorial',
+        titulo: 'Reconocer la realidad comunitaria y rural',
+        desc: 'Durante años se exigió la misma complejidad a una metrópoli que a un acueducto veredal. La Res. 1038 introduce metas adaptativas, subsidios diferenciados y tratamiento especial para zonas PDET e insulares.',
+        cta: 'Ver marco rural 1038',
+        ir: ['nmtpp']
+      },
+      {
+        tag: 'Asequibilidad familiar',
+        titulo: 'Tarifas sostenibles sin asfixiar al hogar',
+        desc: 'El observatorio monitorea que la factura neta se mantenga por debajo del umbral de referencia del 3 % del ingreso del hogar (estándar OCDE / Banco Mundial), focalizando los subsidios de la Ley 142 de 1994.',
+        cta: 'Abrir simulador familiar',
+        ir: ['ciclo', 'asequibilidad']
+      }
+    ]
   },
 
   // Nombre corto y descripción de cada etapa; estado y fechas vienen del dataset
